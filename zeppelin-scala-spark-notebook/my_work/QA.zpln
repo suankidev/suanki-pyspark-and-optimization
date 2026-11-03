@@ -1,0 +1,538 @@
+{
+  "id": "IYHW6GT4V",
+  "name": "QA",
+  "paragraphs": [
+    {
+      "text": "**`Question.  i have a table transaction and customer, with cust_id`**\n\nsample data\n\n```+----------+----------+----------+---------------+----------+----+-----+---+-------------+------+-----------+\n|cust_id   |start_date|end_date  |txn_id         |date      |year|month|day|expense_type |amt   |city       |\n+----------+----------+----------+---------------+----------+----+-----+---+-------------+------+-----------+\n|C0YDPQWPBJ|2010-07-01|2018-12-01|TZ5SMKZY9S03OQJ|2018-10-07|2018|10   |7  |Entertainment|10.42 |boston     |\n|C0YDPQWPBJ|2010-07-01|2018-12-01|TYIAPPNU066CJ5R|2016-03-27|2016|3    |27 |Motor/Travel |44.34 |portland   |\n```\n---\n1. find the city wise  total expense  on  expense_type\n2. find year and city wise total expenses on diffrent expense type\n3. find year,month and city wise total expense on diffrent expense type\n4. which month of year has max expense\n5. which month of year has max expense on Entertainment",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "86fc30b501d743f3be426"
+    },
+    {
+      "text": "%spark\nstgTableDF.printSchema",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "11574b1aba5c4023a7138"
+    },
+    {
+      "text": "%fs\nls FileStore/tables/suankiData/",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/plain_text",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "plain_text",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "ea96e581ead74069ae089"
+    },
+    {
+      "text": "%spark\ncustomerDF.show(5,false)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "62388fc9d9ca4f7688a26"
+    },
+    {
+      "text": "%spark\n\n  //appending index column to the data file to filter out header and footer\n    val fileDfWithIndex = initialDF._1.rdd.zipWithIndex().map({\n\n      case (row, index) => Row.fromSeq(row.toSeq :+ index)\n    })\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "136b3ab4848744699addf"
+    },
+    {
+      "text": "%spark\ntransactionDF.show(5,false)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "18f81fd3e24d4d6fb30c9"
+    },
+    {
+      "text": "%spark\nQuestion. removing header and footer from file",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "10cae58e0ea843d197e29"
+    },
+    {
+      "text": "%spark\nfinalDf.show",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "273538e06a9c4f299b8e7"
+    },
+    {
+      "text": "**`Question.  I have data 800 mb of data on hdfs for a dataset , what will be the memory partitions while reading into DF`**",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "417f178974df4ddfa5133"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "53941fabf9ee4ddd84ecb"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "afe87f07a18a421ca38de"
+    },
+    {
+      "text": "%spark\ndbutils.fs.head(\"dbfs:/FileStore/tables/suankiData/raw/stockCsv/ind_nifty100list.csv\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "ec380c3fe4044850b2a66"
+    },
+    {
+      "text": "%spark\nimport org.apache.spark.sql.{functions => f}\n\nval transactionDF = spark.read.parquet(\"dbfs:/FileStore/tables/suankiData/transaction.parquet/\")\nval customerDF = spark.read.parquet(\"dbfs:/FileStore/tables/suankiData/customer.parquet\")\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "0b13f6671eaa4014ab1b5"
+    },
+    {
+      "text": "%spark\n    \nimport org.apache.spark.sql.types.LongType\n    \n    val headerCount: Long = if (head.isEmpty) 0l else head.toLong\n    val footerCount: Long = if (foot.isEmpty) 0l else foot.toLong\n\n    val finalHeaderCount: Long = headerCount\n    val finalFooterCount: Long = if (footerCount == 0) initialDF._1.count() else initialDF._1.count() - (headerCount + footerCount)\n\n    var finalTableSchema = stgTableDF.schema.add(\"aa\", LongType, false)\n    finalTableSchema=finalTableSchema.add(\"index\", LongType, false)\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "ba27532ca74e46589f02b"
+    },
+    {
+      "text": "**`Question. How many Job and Task would get created for below along with Steps involved in Catalyst optimizer -> CBO ->Adaptive query engine`**\n\n---\njobs:\n\n1. df.filter(f.col(\"city\") === \"Boston\").filter(f.col(\"year\") === \"2018\" and f.col(\"month\").isin(\"11\",\"12\"))\n2. df.groupBy(\"city\").agg(sum(f.col(\"amt\")))\n3. df.repartion(8,col(\"city\"))\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "c0eb41fc47d34949bf391"
+    },
+    {
+      "text": "**`Question.  What is AQE, How does it works`**",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "da05c64813ad47bbb73c6"
+    },
+    {
+      "text": "%spark\ninitialDF._1.show",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "d7a1eb9398974dcda6d33"
+    },
+    {
+      "text": "%spark\n    import org.apache.spark.sql.functions.col\n    \n    val finalDf=spark.createDataFrame(fileDfWithIndex, finalTableSchema)\n      .where(col(\"index\").between(finalHeaderCount, finalFooterCount)).drop(\"index\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "122b1a164118426da333f"
+    },
+    {
+      "text": "%spark\nfileDfWithIndex.take(1)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "2f67f3f77cc54fc2bfb47"
+    },
+    {
+      "text": "%spark\nimport org.apache.spark.sql.types.{StructField,StructType}\nfinalTableSchema=StructType(\n  finalTableSchema.filter(x => x.name != \"ISIN Code\")\n)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "4f3b2d440cf642efb7671"
+    },
+    {
+      "text": "**`Question.  df2.join(df1).join(df3)  , How many Job and Task would get created`**",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "c6da09cadbce4b95a8221"
+    },
+    {
+      "text": "%spark\nval head=\"1\"\nval foot=\"0\"\nval formatType=\"csv\"\nval path=\"dbfs:/FileStore/tables/suankiData/raw/stockCsv/ind_nifty100list.csv\"\nval feedDelim=\",\"\n\nval initialDF =         ( spark\n          .read\n          .format(formatType)\n          .option(\"sep\", feedDelim)\n          .option(\"header\", \"false\")\n          .load(path),\n        spark.sparkContext.textFile(path)\n        )\n\nval stgTableDF=      {\n  spark\n          .read\n          .format(formatType)\n          .option(\"sep\", feedDelim)\n          .option(\"header\", \"true\")\n          .load(path)\n}  ",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "d2ad0381525b4607a88c6"
+    },
+    {
+      "text": "**`Question.  I have data 800 mb of data on hdfs , what will be the memory partitions while reading into DF`**",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "caa6e510d29145c297336"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "49aec3a75b1042da8e30f"
+    }
+  ],
+  "info": {},
+  "noteForms": {},
+  "noteParams": {},
+  "angularObjects": {}
+}

@@ -1,0 +1,736 @@
+{
+  "id": "I2MMY4MRV",
+  "name": "AggregationOnRdd",
+  "paragraphs": [
+    {
+      "text": "%spark\nval wordsKP = words.map(rowObject => (rowObject(0),rowObject))\nwordsKP.collect",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "c9621eda67284f3e9c5c0"
+    },
+    {
+      "text": "%spark\nval keyedChars = distinctChars.map(c => (c, new Random().nextDouble()))\nval outputPartitions = 10\nKVcharacters.join(keyedChars).collect    //96\nKVcharacters.join(keyedChars, outputPartitions).collect",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "df4eb0d87199489f85440"
+    },
+    {
+      "text": "%spark\n//keyBy\nwords.keyBy(rowObject => rowObject(0)).collect() //doing the same as words.map(row => (row(0),row))",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "0b8ba2a476764abbb794f"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "8e647c342ce44c7b82b4e"
+    },
+    {
+      "text": "###CoGroup\n*CoGroups give you the ability to group together up to three key–value RDDs together in Scala*",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "1b59526253754996810f9"
+    },
+    {
+      "text": "%spark\nKVcharacters.collect",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "1ce9b10cec2d436bb6986"
+    },
+    {
+      "text": "###cutom Serilizer",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "9630a9f621db40768b2c2"
+    },
+    {
+      "text": "%spark\n//flatMapValue\nkeyword.flatMapValues(row => row.toUpperCase).collect",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "8481087a7b994a529b218"
+    },
+    {
+      "text": "###key-value pair\n*Whenever you\nsee ByKey in a method name, it means that you can perform this only on a PairRDD type. The\neasiest way is to just map over your current RDD to a basic key–value structure. This means\nhaving two values in each record of your RDD*\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "d7b44247b3b343bebaf0b"
+    },
+    {
+      "text": "%spark\n//lookup: lookup for pariticular keys\n\nkeyword.lookup('S')  //keyword.lookup('S').length",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "32f391af34294c3f902f3"
+    },
+    {
+      "text": "%run /my_work/LowLevelApi/commonRdd",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "ae49b473b7d44b289029b"
+    },
+    {
+      "text": "%spark\n// in Scala\nimport org.apache.spark.Partitioner\nclass DomainPartitioner extends Partitioner {\ndef numPartitions = 3\ndef getPartition(key: Any): Int = {\nval customerId = key.asInstanceOf[Double].toInt\nif (customerId == 17850.0 || customerId == 12583.0) {\nreturn 0\n} else {\nreturn new java.util.Random().nextInt(2) + 1\n }\n}\n}\n\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "1dd438bb8b274452b68f4"
+    },
+    {
+      "text": "%spark\nKVcharacters.groupByKey().map(row => (row._1, row._2.reduce((x,y) => x+y))).collect()",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "7f1640aa38534b90a5bad"
+    },
+    {
+      "text": "###Custom Partitioning",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "365d2d4c100242e7aaf05"
+    },
+    {
+      "text": "###Aggregation\n*You can perform aggregations on plain RDDs or on PairRDDs, depending on the method that\nyou are using*",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "383b8ed5e9994fb28cb71"
+    },
+    {
+      "text": "%spark\nKVcharacters.countByKey",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "81e7feb7f39d45b9b8de1"
+    },
+    {
+      "text": "%spark\n//Mapping over Values\n\nval keyword = words.keyBy(row => row(0))\nkeyword.mapValues(row => row.toUpperCase).collect",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "9fa7b05eec33450e8f775"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "a350f23cc81341b3a925b"
+    },
+    {
+      "text": "%spark\nspark.range(10).toDF(\"num\")\n.partitionBy(new DomainPartitioner).map(_._1).glom().map(_.toSet.toSeq.length).take(5)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "8a969c7d6f3e46619b7a2"
+    },
+    {
+      "text": "####Understanding Aggregation Implementations\ndoing the same thing with groupByKey and reduceByKye\n\n1. reduceByKye: *implementation is much more stable because the reduce happens within each partition and\ndoesn’t need to put everything in memory. Additionally, there is less incurred shuffle during this\noperation; everything happens at each worker individually before performing a final reduce.*\n2. groupByKey:  *each executor must hold all values for a given key in memory\nbefore applying the function to them. Why is this problematic? If you have massive key skew,\nsome partitions might be completely overloaded with a ton of values for a given key, and you\nwill get OutOfMemoryErrors.*\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "d30bad784d1e405eac535"
+    },
+    {
+      "text": "%spark\nfinalflightRdd.map(x => (x(2), x)).groupByKey().map(x => (x._1, x._2.groupBy(x => x(0)))).collect",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "5bbb5629a9574ff19dbb7"
+    },
+    {
+      "text": "%spark\n\nimport scala.util.Random\nval distinctChars = words.flatMap(word => word.toLowerCase.toSeq).distinct\n\nval charRDD = distinctChars.map(c => (c, new Random().nextDouble()))\nval charRDD2 = distinctChars.map(c => (c, new Random().nextDouble()))\nval charRDD3 = distinctChars.map(c => (c, new Random().nextDouble()))\n\ncharRDD.cogroup(charRDD2, charRDD3).take(5)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "8fc528d3762a4c90af4d0"
+    },
+    {
+      "text": "####Join\nRDDs have much the same joins as we saw in the Structured API",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "e3c7fa9fe2be4a8dac418"
+    },
+    {
+      "text": "%spark\n//Zips -> to zip two rdd\n\nval numRange = sc.parallelize(0 to 17, 2)\nwords.zip(numRange).collect",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "ae56550c360b44d989aad"
+    },
+    {
+      "text": "%spark\nwordsKP.groupByKey().collect",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "413df02e3587423fb604b"
+    },
+    {
+      "text": "%spark\n//Extracting Keys and Values\nkeyword.keys.collect() \nkeyword.values.collect()",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "c4e6891787824707a7630"
+    },
+    {
+      "text": "%spark\n// spark.conf.set(\"spark.serializer\", \"org.apache.spark.serializer.KryoSerializer\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "faad5e76feeb46e1a3bfa"
+    },
+    {
+      "text": "%spark\nclass SomeClass extends Serializable {\nvar someValue = 0\ndef setSomeValue(i:Int) = {\nsomeValue = i\nthis\n}\n} \nsc.parallelize(1 to 10).map(num => new SomeClass().setSomeValue(num))",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "ed9bec1edfe34f8eab9c6"
+    },
+    {
+      "text": "%spark\nKVcharacters.groupByKey().collect",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "349f477861ca4f2883236"
+    },
+    {
+      "text": "%spark\nKVcharacters.reduceByKey((x,y) => x+y).collect()",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "cc6691b270144fe5b46ca"
+    },
+    {
+      "text": "%spark\nval chars = words.flatMap(word => word.toLowerCase.toSeq)\nval KVcharacters = chars.map(letter => (letter, 1))\nval nums = sc.parallelize(1 to 30, 5)\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "372a7d28fbf54782aab02"
+    },
+    {
+      "text": "%spark\n// words.map(row => (row,1)).countByKey\n// words.countByValue\n// words.map(row => (row,1)).reduceByKey((x,y) => x+y).collect\nwords.reduce((x,y) => if(x.length > y.length) x else y)\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "59f516521ad24b7b824b3"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "2edc412c0e2740a5a7065"
+    }
+  ],
+  "info": {},
+  "noteForms": {},
+  "noteParams": {},
+  "angularObjects": {}
+}

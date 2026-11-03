@@ -219,3 +219,120 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+data/output/
+
+# ==========================================
+# Spark & Hadoop Runtime / Local Files
+# ==========================================
+# Metastore and Derby database files created by Spark SQL / Hive
+metastore_db/
+derby.log
+
+# Spark warehouse and local event logs
+spark-warehouse/
+event-logs/
+spark-events/
+
+# Checkpoint directories (RDD & Structured Streaming)
+checkpoint/
+checkpoints/
+.checkpoint/
+
+# Hadoop & temporary scratch output directories
+hadoop-tmp/
+winutils/
+/tmp/
+/data/output/
+
+# Hadoop / Spark CRC checksum files
+*.crc
+.part-*.crc
+._SUCCESS.crc
+
+# ==========================================
+# Byte-compiled / Optimized Python Files
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging (e.g., if packaging --py-files eggs/zips)
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# ==========================================
+# Virtual Environments
+# ==========================================
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# ==========================================
+# Jupyter Notebooks & Interactive Shells
+# ==========================================
+.ipynb_checkpoints
+*-checkpoint.ipynb
+.sparkmagic/
+
+# ==========================================
+# Unit Testing & Coverage
+# ==========================================
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# ==========================================
+# Environment Variables & Sensitive Credentials
+# ==========================================
+# Cloud keys, cluster connection settings, and credentials
+.env.*
+*.pem
+*.key
+*.p12
+*.jks
+credentials.properties
+spark-defaults.conf
+
+# ==========================================
+# IDEs & OS Files
+# ==========================================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db

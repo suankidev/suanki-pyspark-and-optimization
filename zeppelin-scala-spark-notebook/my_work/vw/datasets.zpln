@@ -1,0 +1,340 @@
+{
+  "id": "TWJBHQS1M",
+  "name": "datasets",
+  "paragraphs": [
+    {
+      "text": "%spark\n.withColumn(\"genermatchedudf\",  \n   myudf(col(\"genreList1\"), col(\"genreList2\"))\n  )",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "8a9f137b68ad4b2f9a522"
+    },
+    {
+      "text": "%spark\ncase class Flight(dest_country_name:String, origin_country_name:String, count:String)\n\ncase class FlightWithAdditionalCol(dest_country_name:String, origin_country_name:String, count:String, ifExceed:Boolean)\n\nval flightDs = flightDf.as[Flight]",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "c58796aa1d7d43d5ae13f"
+    },
+    {
+      "text": "%spark\nflightDf.join(emptyDf,Seq(\"DEST_COUNTRY_NAME\"),\"left\").count",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "1f779e1d5ae54bbeac5e4"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "1dde094e95ef41b6ac108"
+    },
+    {
+      "text": "%spark\nflightDsWithAdditionalCol.show(5,false)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "928f3fbffaf648d89a060"
+    },
+    {
+      "text": "###comparing array",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "52e34fa0d8c747b88fe53"
+    },
+    {
+      "text": "%spark\ndef checkIfCountExceedHundred(t:Int) = if(t > 100) true else false\n\nval flightDsWithAdditionalCol = flightDs\n.map(\n  row =>\n\n  FlightWithAdditionalCol(\n     row.dest_country_name,\n     row.origin_country_name,\n     row.count,\n     checkIfCountExceedHundred(row.count.toInt)\n  )\n \n)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "f64e65ca658049fc8958a"
+    },
+    {
+      "text": "%spark\nval flightDf = spark\n.read\n.option(\"header\",true)\n.csv(\"dbfs:/FileStore/tables/suankiData/raw/flightData/2010_summary.csv\")\n\nflightDf.show(2,false)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "c7a31c921f054deeb12d8"
+    },
+    {
+      "text": "%spark\nimport org.apache.spark.sql.functions._\n\ndef myudf = udf( (a:List[String],b:List[String]) => {\n    b.forall(x => a.contains(x))\n   }\n)\n\ndf\n.withColumn(\"size1\",size(col(\"genreList1\")))\n.withColumn(\"size2\",size(col(\"genreList2\")))\n.withColumn(\"genermatched\", array_sort(col(\"genreList1\")) === (array_sort(col(\"genreList2\"))))\n.withColumn(\"test\", forall(col(\"genreList2\") , x => array_contains(col(\"genreList1\"),x)).and(size(col(\"genreList1\")) === size(col(\"genreList2\"))))\n.show(false)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "872f1341cdc7462f898ce"
+    },
+    {
+      "text": "###NESTED JSON FILE",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "c531592caac5478a81715"
+    },
+    {
+      "text": "%spark\nval df = List((1,Array(\"Adventure\",\"Comedy\"), Array(\"Adventure\")),\n              (2,Array(\"horror\",\"Animation\",\"Drama\",\"War\"), Array(\"War\",\"Drama\",\"Animation\",\"horror\")),\n              (3,Array(\"Adventure\",\"Drama\"),Array(\"Drama\",\"War\"))).toDF(\"movieId1\",\"genreList1\",\"genreList2\")\n\n\ndf.show(false)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "dd1463301d5041048f74f"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "3860d5eee1cb463cb49c3"
+    },
+    {
+      "text": "%spark\nimport org.apache.spark.sql.functions.col\n\nflightDsWithAdditionalCol.select(col(\"dest_country_name\")).distinct.collect.map(x => x.getAs[String](0))",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "3e16c13265254cfe884c5"
+    },
+    {
+      "text": "%spark\nflightDsWithAdditionalCol.as[Flight].show //no issue with additional column in dataset ",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "7ed558fd9cd14d5abad5e"
+    },
+    {
+      "text": "%spark\n//creating empty df\n\nprintln(flightDf.count)\n\nval emptyDf = spark.createDataFrame(sc.emptyRDD[Row], flightDf.schema)\n\n\nemptyDf.show\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "b9eff65a1fa04a898fe37"
+    }
+  ],
+  "info": {},
+  "noteForms": {},
+  "noteParams": {},
+  "angularObjects": {}
+}

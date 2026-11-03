@@ -1,0 +1,340 @@
+{
+  "id": "G3ORQ8L2P",
+  "name": "4_SparkMemoryManagement",
+  "paragraphs": [
+    {
+      "text": "\n`\nI am currently facing issues when trying to join (inner) a huge dataset (654 GB) with a smaller one (535 MB) using Spark DataFrame API.\n\nI am broadcasting the smaller dataset to the worker nodes using the broadcast() function.\n\nI am unable to do the join between those two datasets. Here is a sample of the errors I got :\n\n19/04/26 19:39:07 INFO executor.CoarseGrainedExecutorBackend: Got assigned task 1315\n19/04/26 19:39:07 INFO executor.Executor: Running task 25.1 in stage 13.0 (TID 1315)\n19/04/26 19:39:07 INFO output.FileOutputCommitter: File Output Committer Algorithm version is 1\n19/04/26 19:39:07 INFO datasources.SQLHadoopMapReduceCommitProtocol: Using output committer class org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter\n19/04/26 19:39:07 INFO datasources.FileScanRDD: Reading File path: SOMEFILEPATH, range: 3087007744-3221225472, partition values: [empty row]\n19/04/26 19:39:17 INFO datasources.FileScanRDD: Reading File path: SOMEFILEPATH, range: 15971909632-16106127360, partition values: [empty row]\n19/04/26 19:39:24 WARN hdfs.DFSClient: DFSOutputStream ResponseProcessor exception  for block isi_hdfs_pool:blk_4549851005_134218728\njava.io.IOException: Connection reset by peer\n    at sun.nio.ch.FileDispatcherImpl.read0(Native Method)\n    at sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:39)\n    at sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:223)\n    at sun.nio.ch.IOUtil.read(IOUtil.java:197)\n    at sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:380)\n    at org.apache.hadoop.net.SocketInputStream$Reader.performIO(SocketInputStream.java:57)\n    at org.apache.hadoop.net.SocketIOWithTimeout.doIO(SocketIOWithTimeout.java:142)\n    at org.apache.hadoop.net.SocketInputStream.read(SocketInputStream.java:161)\n    at org.apache.hadoop.net.SocketInputStream.read(SocketInputStream.java:131)\n    at org.apache.hadoop.net.SocketInputStream.read(SocketInputStream.java:118)\n    at java.io.FilterInputStream.read(FilterInputStream.java:83)\n    at java.io.FilterInputStream.read(FilterInputStream.java:83)\n    at org.apache.hadoop.hdfs.protocolPB.PBHelper.vintPrefixed(PBHelper.java:2280)\n    at org.apache.hadoop.hdfs.protocol.datatransfer.PipelineAck.readFields(PipelineAck.java:244)\n    at org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer$ResponseProcessor.run(DFSOutputStream.java:733)\n19/04/26 19:39:27 ERROR util.Utils: Aborting task\ncom.univocity.parsers.common.TextWritingException: Error writing row.\nInternal state when error was thrown: recordCount=458089, recordData=[\"SOMEDATA\"]\n    at com.univocity.parsers.common.AbstractWriter.throwExceptionAndClose(AbstractWriter.java:916)\n    at com.univocity.parsers.common.AbstractWriter.writeRow(AbstractWriter.java:706)\n    at org.apache.spark.sql.execution.datasources.csv.UnivocityGenerator.write(UnivocityGenerator.scala:82)\n    at org.apache.spark.sql.execution.datasources.csv.CsvOutputWriter.write(CSVFileFormat.scala:139)\n    at org.apache.spark.sql.execution.datasources.FileFormatWriter$SingleDirectoryWriteTask.execute(FileFormatWriter.scala:327)\n    at org.apache.spark.sql.execution.datasources.FileFormatWriter$$anonfun$org$apache$spark$sql$execution$datasources$FileFormatWriter$$executeTask$3.apply(FileFormatWriter.scala:258)\n    at org.apache.spark.sql.execution.datasources.FileFormatWriter$$anonfun$org$apache$spark$sql$execution$datasources$FileFormatWriter$$executeTask$3.apply(FileFormatWriter.scala:256)\n    at org.apache.spark.util.Utils$.tryWithSafeFinallyAndFailureCallbacks(Utils.scala:1375)\n    at org.apache.spark.sql.execution.datasources.FileFormatWriter$.org$apache$spark$sql$execution$datasources$FileFormatWriter$$executeTask(FileFormatWriter.scala:261)\n    at org.apache.spark.sql.execution.datasources.FileFormatWriter$$anonfun$write$1$$anonfun$apply$mcV$sp$1.apply(FileFormatWriter.scala:191)\n    at org.apache.spark.sql.execution.datasources.FileFormatWriter$$anonfun$write$1$$anonfun$apply$mcV$sp$1.apply(FileFormatWriter.scala:190)\n    at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:87)\n    at org.apache.spark.scheduler.Task.run(Task.scala:108)\n    at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:335)\n    at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)\n    at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)\n    at java.lang.Thread.run(Thread.java:748)\nCaused by: java.lang.IllegalStateException: Error closing the output.\n    at com.univocity.parsers.common.AbstractWriter.close(AbstractWriter.java:861)\n    at com.univocity.parsers.common.AbstractWriter.throwExceptionAndClose(AbstractWriter.java:903)\n    at com.univocity.parsers.common.AbstractWriter.writeRow(AbstractWriter.java:811)\n    at com.univocity.parsers.common.AbstractWriter.writeRow(AbstractWriter.java:704)\n    ... 15 more\nCaused by: java.io.IOException: All datanodes DatanodeInfoWithStorage[10.241.209.34:585,null,DISK] are bad. Aborting...\n    at org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer.setupPipelineForAppendOrRecovery(DFSOutputStream.java:1109)\n    at org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer.processDatanodeError(DFSOutputStream.java:871)\n    at org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer.run(DFSOutputStream.java:401)\n19/04/26 19:39:27 WARN util.Utils: Suppressing exception in catch: Failed on local exception: java.io.IOException: Connection reset by peer; Host Details : local host is: \"SOMENODEHOST\"; destination host is: \"SOMEDESTINATIONHOST\":SOMEPORT; \njava.io.IOException: Failed on local exception: java.io.IOException: Connection reset by peer; Host Details : local host is: \"SOMENODEHOST\"; destination host is: \"SOMEDESTINATIONHOST\":SOMEPORT; \n    at org.apache.hadoop.net.NetUtils.wrapException(NetUtils.java:776)\n    at org.apache.hadoop.ipc.Client.call(Client.java:1479)\n    at org.apache.hadoop.ipc.Client.call(Client.java:1412)\n    at org.apache.hadoop.ipc.ProtobufRpcEngine$Invoker.invoke(ProtobufRpcEngine.java:229)\n    at com.sun.proxy.$Proxy17.delete(Unknown Source)\n    at org.apache.hadoop.hdfs.protocolPB.ClientNamenodeProtocolTranslatorPB.delete(ClientNamenodeProtocolTranslatorPB.java:540)\n    at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n    at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)\n    at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n    at java.lang.reflect.Method.invoke(Method.java:498)\n    at org.apache.hadoop.io.retry.RetryInvocationHandler.invokeMethod(RetryInvocationHandler.java:191)\n    at org.apache.hadoop.io.retry.RetryInvocationHandler.invoke(RetryInvocationHandler.java:102)\n    at com.sun.proxy.$Proxy18.delete(Unknown Source)\n    at org.apache.hadoop.hdfs.DFSClient.delete(DFSClient.java:2044)\n    at org.apache.hadoop.hdfs.DistributedFileSystem$14.doCall(DistributedFileSystem.java:707)\n    at org.apache.hadoop.hdfs.DistributedFileSystem$14.doCall(DistributedFileSystem.java:703)\n    at org.apache.hadoop.fs.FileSystemLinkResolver.resolve(FileSystemLinkResolver.java:81)\n    at org.apache.hadoop.hdfs.DistributedFileSystem.delete(DistributedFileSystem.java:714)\n    at org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter.abortTask(FileOutputCommitter.java:568)\n    at org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter.abortTask(FileOutputCommitter.java:557)\n    at org.apache.spark.internal.io.HadoopMapReduceCommitProtocol.abortTask(HadoopMapReduceCommitProtocol.scala:159)\n    at org.apache.spark.sql.execution.datasources.FileFormatWriter$$anonfun$org$apache$spark$sql$execution$datasources$FileFormatWriter$$executeTask$1.apply$mcV$sp(FileFormatWriter.scala:266)\n    at org.apache.spark.util.Utils$.tryWithSafeFinallyAndFailureCallbacks(Utils.scala:1384)\n    at org.apache.spark.sql.execution.datasources.FileFormatWriter$.org$apache$spark$sql$execution$datasources$FileFormatWriter$$executeTask(FileFormatWriter.scala:261)\n    at org.apache.spark.sql.execution.datasources.FileFormatWriter$$anonfun$write$1$$anonfun$apply$mcV$sp$1.apply(FileFormatWriter.scala:191)\n    at org.apache.spark.sql.execution.datasources.FileFormatWriter$$anonfun$write$1$$anonfun$apply$mcV$sp$1.apply(FileFormatWriter.scala:190)\n    at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:87)\n    at org.apache.spark.scheduler.Task.run(Task.scala:108)\n    at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:335)\n    at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)\n    at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)\n    at java.lang.Thread.run(Thread.java:748)\nCaused by: java.io.IOException: Connection reset by peer\n    at sun.nio.ch.FileDispatcherImpl.read0(Native Method)\n    at sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:39)\n    at sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:223)\n    at sun.nio.ch.IOUtil.read(IOUtil.java:197)\n    at sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:380)\n    at org.apache.hadoop.net.SocketInputStream$Reader.performIO(SocketInputStream.java:57)\n    at org.apache.hadoop.net.SocketIOWithTimeout.doIO(SocketIOWithTimeout.java:142)\n    at org.apache.hadoop.net.SocketInputStream.read(SocketInputStream.java:161)\n    at org.apache.hadoop.net.SocketInputStream.read(SocketInputStream.java:131)\n    at java.io.FilterInputStream.read(FilterInputStream.java:133)\n    at java.io.FilterInputStream.read(FilterInputStream.java:133)\n    at org.apache.hadoop.ipc.Client$Connection$PingInputStream.read(Client.java:520)\n    at java.io.BufferedInputStream.fill(BufferedInputStream.java:246)\n    at java.io.BufferedInputStream.read(BufferedInputStream.java:265)\n    at java.io.DataInputStream.readInt(DataInputStream.java:387)\n    at org.apache.hadoop.ipc.Client$Connection.receiveRpcResponse(Client.java:1084)\n    at org.apache.hadoop.ipc.Client$Connection.run(Client.java:979)\n`\nBefore joining the large dataset with the smaller one, I tried joining 10 000 records of the first one with the entire smaller one (535 MB). I had a \"Futures timed out [300 s] error\".\n\nI then increased the spark.sql.broadcastTimeout variable to 3600 s. It worked fine. But when I try joining it with the entire dataset (654 GB), it gives me the error you can see up there (TextWriting Exception).\n\nMy questions are :\n\n    How can I monitor more efficiently my spark jobs ? And how should I proceed ?\n\n    What do you think is causing this error to happen ? How can I solve it ?\n\nYou will find below some information on the cluster, the execution and the configuration of the spark job.\nSome information/context:\n\nI am working on a production environment (see the cluster configuration below). I cannot upgrade my spark version. I do not have spark UI or yarn UI to monitor my jobs. All I can retrieve are the yarn logs.\nSample of the code\n\ndef readCsv(spark: SparkSession, path: String): DataFrame = {\n    spark.read\n      .option(\"header\", true)\n      .option(\"escape\", \"\\\"\")\n      .option(\"mode\", \"FAILFAST\")\n      .csv(path)\n  }\n\n    val uh_months = readCsv(spark, input_dir_terro + \"HDFS_PATH_OF_ALL_THE_CSV_FILES\")\n      .withColumnRenamed(\"NUM\", \"NO_NUM\")\n      .where(col(\"BEWC\").isin(\n        LIST OF VALUES))\n      .withColumn(\"january\", lit(\"1960-01-01\"))\n\n    val uh = uh_months\n      .withColumn(\"UHDIN\", datediff(to_date(unix_timestamp(col(\"UHDIN_YYYYMMDD\"), \"yyyyMMdd\").cast(TimestampType)),\n        to_date(unix_timestamp(col(\"january\"), \"yyyy-MM-dd\").cast(TimestampType))))\n      //      .withColumn(\"DVA_1\", to_date((unix_timestamp(col(\"DVA\"), \"ddMMMyyyy\")).cast(TimestampType)))\n      .withColumn(\"DVA_1\", date_format(col(\"DVA\"), \"dd/MM/yyyy\"))\n      .drop(\"UHDIN_YYYYMMDD\")\n      .drop(\"january\")\n      .drop(\"DVA\")\n\n    val uh_joined = uh.join(broadcast(smallDF), \"KEY\")\n      .select(\n        uh.col(\"*\"),\n        smallDF.col(\"PSP\"),\n        smallDF.col(\"minrel\"),\n        smallDF.col(\"Label\"),\n        smallDF.col(\"StartDate\"))\n      .where(smallDF.col(\"PSP\").isNotNull)\n      .withColumnRenamed(\"DVA_1\", \"DVA\")\n      .where(col(\"BKA\").isNotNull)\n\nsmallDF being the dataframe that is 535 MB obtained after some aggregations and transformations.\nExecution plan\n\n    == Physical Plan ==\n*Project [NO_NUM#252, DEV#153, DEBCRED#154, BDGRORI#155, BDGREUR#156, BEWC#157, MSG30_NL#158, SCAPMV#159, USERID#160, MMED#161, TNUM#162, NMTGP#163, BKA#164, CATEXT#165, SEQETAT#166, ACCTYPE#167, BRAND#168, FAMILY#169, SUBFAMILY#170, FORCED_DVA#172, BYBANK#173, CPTE_PROTEGE#174, HOURMV#175, RDFB#176, ... 30 more fields]\n+- *BroadcastHashJoin [NO_NUM#252], [NO_NUM#13], Inner, BuildRight\n   :- *Project [NUM#152 AS NO_NUM#252, DEV#153, DEBCRED#154, BDGRORI#155, BDGREUR#156, BEWC#157, MSG30_NL#158, SCAPMV#159, USERID#160, MMED#161, TNUM#162, NMTGP#163, BKA#164, CATEXT#165, SEQETAT#166, ACCTYPE#167, BRAND#168, FAMILY#169, SUBFAMILY#170, FORCED_DVA#172, BYBANK#173, CPTE_PROTEGE#174, HOURMV#175, RDFB#176, ... 26 more fields]\n   :  +- *Filter ((BEWC#157 INSET (25003,25302,25114,20113,12017,20108,25046,12018,15379,15358,11011,20114,10118,12003,25097,20106,20133,10133,10142,15402,25026,25345,28023,15376,25019,28004,21701,25001,11008,15310,15003,28020,22048,15470,25300,25514,25381,25339,15099,25301,28005,28026,25098,25018,15323,25376,15804,15414,25344,25102,15458,15313,28002,25385,22051,25214,15031,12005,15425,20145,22011,15304,25027,14020,11007,25901,15343,22049,20112,12031,20127,15339,25421,15432,28025,25340,25325,20150,28011,25368,25304,22501,25369,28022,15098,12032,15375,25002,25008,10116,10101,22502,25090,15004,20105,12030,22503,15095,22007,15809,15342,15311,25216,10103,20122,11019,20142,15097,20147,20149,25005,25205,25380,15380,10120,25015,15384,11003,10110,25016,15090,25307,15001,25390,15312,10115,25219,15806,15459,12016,15359,15395,15302,12021,11701,10111,10148,25379,15807,10102,25352,25355,12010,25095,25394,20101,25413,15385,25322,28027,11026,15533,25201,25371,10128,11028,12020,15819,10143,28028,10123,10125,11020,25029,10122,25343,15015,12033,25014,12012,25024,25375,11023,25501,25402,22001,15317,12014,16114,20501,15046,12001,12022,10104,10117,12002,25499,10145,10153,12011,15350,15300,10119,25305,15345,25374,11027,25430,28021,25202,10121,28024,25101,28001,15321,11025,25358,15333,15501,25533,15372,12008,11015,10114,10113,10112,15303,15320,28006,22002,25359,10132,15497,25353,11029,25425,15374,12019,25437,11022,15357,20148,20111,26114,25099,25354,10124,25303,11010,20120,20135,15820,15331,28029) && isnotnull(BKA#164)) && isnotnull(NUM#152))\n   :     +- *FileScan csv [UHDIN_YYYYMMDD#151,NUM#152,DEV#153,DEBCRED#154,BDGRORI#155,BDGREUR#156,BEWC#157,MSG30_NL#158,SCAPMV#159,USERID#160,MMED#161,TNUM#162,NMTGP#163,BKA#164,CATEXT#165,SEQETAT#166,ACCTYPE#167,BRAND#168,FAMILY#169,SUBFAMILY#170,DVA#171,FORCED_DVA#172,BYBANK#173,CPTE_PROTEGE#174,... 26 more fields] Batched: false, Format: CSV, Location: InMemoryFileIndex[hdfs://SOMEHOST:SOMEPORT/SOMEPATH..., PartitionFilters: [], PushedFilters: [In(BEWC, [25003,25302,25114,20113,12017,20108,25046,12018,15379,15358,11011,20114,10118,12003,25..., ReadSchema: struct<UHDIN_YYYYMMDD:string,NUM:string,DEV:string,DEBCRED:string,BDGRORI:string,BDGREUR:string,B...\n   +- BroadcastExchange HashedRelationBroadcastMode(List(input[0, string, true]))\n      +- *Project [NO_NUM#13, minrel#370, PSP#82, Label#105, StartDate#106]\n         +- *SortMergeJoin [PSP#381], [PSP#82], Inner\n            :- *Sort [PSP#381 ASC NULLS FIRST], false, 0\n            :  +- Exchange hashpartitioning(PSP#381, 200)\n            :     +- *Project [PSP#381, NO_NUM#13, minrel#370]\n            :        +- SortMergeJoin [PSP#381, C_SNUM#14, minrel#370, NO_NUM#13], [NO_PSP#47, C_SNUM_1#387, C_NRELPR#50, NO_NUM_1#400], LeftOuter\n            :           :- *Sort [PSP#381 ASC NULLS FIRST, C_SNUM#14 ASC NULLS FIRST, minrel#370 ASC NULLS FIRST, NO_NUM#13 ASC NULLS FIRST], false, 0\n            :           :  +- Exchange hashpartitioning(PSP#381, C_SNUM#14, minrel#370, NO_NUM#13, 200)\n            :           :     +- SortAggregate(key=[NO_PSP#12, C_SNUM#14, NO_NUM#13], functions=[min(C_NRELPR#15)])\n            :           :        +- *Sort [NO_PSP#12 ASC NULLS FIRST, C_SNUM#14 ASC NULLS FIRST, NO_NUM#13 ASC NULLS FIRST], false, 0\n            :           :           +- Exchange hashpartitioning(NO_PSP#12, C_SNUM#14, NO_NUM#13, 200)\n            :           :              +- SortAggregate(key=[NO_PSP#12, C_SNUM#14, NO_NUM#13], functions=[partial_min(C_NRELPR#15)])\n            :           :                 +- *Sort [NO_PSP#12 ASC NULLS FIRST, C_SNUM#14 ASC NULLS FIRST, NO_NUM#13 ASC NULLS FIRST], false, 0\n            :           :                    +- *Project [NO_PSP#12, C_SNUM#14, NO_NUM#13, C_NRELPR#15]\n            :           :                       +- *Filter (((C_NRELPR#15 IN (001,006) && C_SNUM#14 IN (030,033)) && isnotnull(NO_PSP#12)) && isnotnull(NO_NUM#13))\n            :           :                          +- *FileScan csv [NO_PSP#12,NO_NUM#13,C_SNUM#14,c_nrelpr#15] Batched: false, Format: CSV, Location: InMemoryFileIndex[hdfs://SOMEHOST:SOMEPORT/SOMEPATH..., PartitionFilters: [], PushedFilters: [In(c_nrelpr, [001,006]), In(C_SNUM, [030,033]), IsNotNull(NO_PSP), IsNotNull(NO_NUM)], ReadSchema: struct<NO_PSP:string,NO_NUM:string,C_SNUM:string,c_nrelpr:string>\n            :           +- *Sort [NO_PSP#47 ASC NULLS FIRST, C_SNUM_1#387 ASC NULLS FIRST, C_NRELPR#50 ASC NULLS FIRST, NO_NUM_1#400 ASC NULLS FIRST], false, 0\n            :              +- Exchange hashpartitioning(NO_PSP#47, C_SNUM_1#387, C_NRELPR#50, NO_NUM_1#400, 200)\n            :                 +- *Project [NO_PSP#47, NO_NUM#48 AS NO_NUM_1#400, C_SNUM#49 AS C_SNUM_1#387, c_nrelpr#50]\n            :                    +- *FileScan csv [NO_PSP#47,NO_NUM#48,C_SNUM#49,c_nrelpr#50] Batched: false, Format: CSV, Location: InMemoryFileIndex[hdfs://SOMEHOST:SOMEPORT/SOMEPATH..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<NO_PSP:string,NO_NUM:string,C_SNUM:string,c_nrelpr:string>\n            +- *Sort [PSP#82 ASC NULLS FIRST], false, 0\n               +- Exchange hashpartitioning(PSP#82, 200)\n                  +- *Project [PSP#82, Label#105, StartDate#106]\n                     +- *Filter isnotnull(PSP#82)\n                        +- *FileScan csv [PSP#82,Label#105,StartDate#106] Batched: false, Format: CSV, Location: InMemoryFileIndex[hdfs://SOMEHOST:SOMEPORT/SOMEPATH..., PartitionFilters: [], PushedFilters: [IsNotNull(PSP)], ReadSchema: struct<PSP:string,Label:string,StartDate:string>\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "c5a5eb49615249c1b48d0"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "c7481b3a87df453aa9680"
+    },
+    {
+      "text": "\n#### Data Skew\n\n1. AQE\n2. Salting",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "5dd6f999bc6147bc9ebe3"
+    },
+    {
+      "text": "\n###Memory Management ?\n  - How spark work internally\n  - where it stores what\n\n  1. Executor memory management\n  2. unified memory ( execution and storage)\n  3. off heap memoy : can be used for shuffle store",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "40955c663f0d48e2a59a2"
+    },
+    {
+      "text": "\n### paritioning\n\n  - column : we should partiton based on the column which has low cardinality\n  - filter condition:  when we use a certain column we should partition by that column",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "30757c35bce645569febb"
+    },
+    {
+      "text": "%spark\ndbutils.fs.mkdirs(\"/FileStore/tables/suankiData/raw/images\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "aaac5155be424132854b3"
+    },
+    {
+      "text": "\n**Error below from stack overflow***\n- https://stackoverflow.com/questions/55919699/spark-2-2-join-fails-with-huge-dataset",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "54b69d36e6e9414caaf01"
+    },
+    {
+      "text": "\n![img](files/tables/suankiData/raw/images/spark_executor_memory.png)\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "2966fdf7683846d5a6b47"
+    },
+    {
+      "text": "\n### Shuffle partition\n\n\n 1. data per shuffle partitions is large\n 2. data per shuffle partitions is less",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "68b4003c9ed5483eafe9c"
+    },
+    {
+      "text": "\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "f040e4803a62479a8d943"
+    },
+    {
+      "text": "\n###machine config\n - 5 node\n - 48 gb ram\n - 12 core \n\n1. \n  - 1gb and 1 core for hadoop/yarn/os,so below per node\n      47GB\n      11core\n\n2. \n   -  Total memory: 47 * 5 = 235 GB\n   -  Total Core: 11 * 5 = 55 \n\n3.\n   -  suppose we want 5 core per executor\n   \n   - so,  total executor = 55/5 = 11 executor\n\n4. leave out 1 core and 1 gb for AM\n   remaining\n         - 10 executor and total 234 Gb Memory\n      \n5. acutial memory per executor\n  - 234/10 = 13.4 gb per executor\n  - counting of (spark.yarn.executor.memory.overhead): MAX of (384 or 0.7 % of spark.executor.memory)\n  - 23.4*(1-0.7) ~=  16.4 GB per executor\n\n\n  so finally\n  ```\n   spark.executor.instance=10\n   spark.executor.memory=16.4\n   spark.driver.memory=20GB\n   spark.memory.storageFraction=0.3\n   spark.memory.fraction=0.9\n   spark.yarn.executor.memory.overhead=0.7\n\n  ```\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "0fb022f62e024351ba45e"
+    },
+    {
+      "text": "\n### Spark Executor Tuning\n\n\n1.  hadoop/yarn/os :  Leave out 1 core, 1 GB RAM\n2.  memory overhead :  max(384, 10% of spark.executor.memory)\n3. hdfs throughput  : 3 to 5 per executor\n4. yarn applicaitonmaster(AM) : leave out 1 core and 1 gb RAM",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "a1db1c62dbc14af4b22e7"
+    },
+    {
+      "text": "![](files/tables/suankiData/raw/images/leave_out_memory.png)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "6b35f572180d4ea1817c3"
+    },
+    {
+      "text": "\n[how spark submit works on cluster](https://stackoverflow.com/questions/30967247/difference-between-application-manager-and-application-master-in-yarn#30967803)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "0a581108bdf943fdbd382"
+    },
+    {
+      "text": "\n### Application Failure\n\n1. Low partition number leads to high shuffle block size",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "ab7b1e07717f4e9682cdb"
+    }
+  ],
+  "info": {},
+  "noteForms": {},
+  "noteParams": {},
+  "angularObjects": {}
+}

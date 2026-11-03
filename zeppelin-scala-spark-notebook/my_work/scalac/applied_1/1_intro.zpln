@@ -1,0 +1,274 @@
+{
+  "id": "327VSKA2Y",
+  "name": "1_intro",
+  "paragraphs": [
+    {
+      "text": "%spark\nvar x = 0\n\nwhile (x < 10) {\n  println(s\"the square of $x is ${x * x}\")\n  x += 1\n}",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "707d19eafaf14545a2b16"
+    },
+    {
+      "text": "%spark\n\ndef maxSquaredDoubled(a: Int, b: Int): Int =\n  if (a > b) {\n    val squared = a * a\n    squared * 2\n  }\n  else {\n    val squared = b * b\n    squared * 2\n  }\n\nmaxSquaredDoubled(5, 3)\n\nval divided = try {\n  a / (b - 12)\n}\ncatch {\n  case ae: ArithmeticException => 0\n}\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "bcb7c640d95f453794a96"
+    },
+    {
+      "text": "%spark\n\nx = 0\ndo {\n  println(s\"the square of $x is ${x * x}\")\n  x += 1\n  x\n} while (x < 10)\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "7018feb4177a4e2589910"
+    },
+    {
+      "text": "###simple loops",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "2e4162ad947d4b879b1b0"
+    },
+    {
+      "text": "%spark\n\nval a = 10\nval b = 12\n\nif (a > b) {\n  println(a)\n}\nelse {\n  println(b)\n}\n\nval m = if (a > b) a else b\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "7a04cd41ff124e8697362"
+    },
+    {
+      "text": "%spark\n\n1 + 2\n\nval x = 1 + 2\n\nx * 2\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "fc8f972c88854300b56e9"
+    },
+    {
+      "text": "%spark\nval x = 10\n\nvar y = x * 2\n\ny = 11\n\nfor (i <- 1 to 10) yield i * 2\n\ndef max(x: Int, y: Int): Int =\n  if (x > y) x else y\n\nmax(x, y)\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "e6529fc6c9824c1ba8362"
+    },
+    {
+      "text": "%spark\n\ndef add(x: Int, y: Int) = x + y\n\nadd(2, 3)\n\ndef addAgain(x: Int, y: Int): Int = {\n  x + y\n}\n\naddAgain(2, 3)\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "c17decabae3e4960b8b3e"
+    },
+    {
+      "text": "%spark\n// x = x * 2   // will not compile, try it\n\nvar y = 2\n\ny = y * 2\n\n// y = \"four\"  // also will not compile - types must be the same\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "ba23127a22bb49699b0dc"
+    },
+    {
+      "text": "%spark\n\nval x = someMethod(10)\n\nif(x == 10){\n  println(\"returned zero\")\n}\n\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "7e27b757edc24ce59e0a1"
+    },
+    {
+      "text": "%spark\n\nvar z=10\ndo{\n  println(z)\n  z = z-1\n}while(z > 0)\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "5f6528f88cfc438db1e2c"
+    },
+    {
+      "text": "%spark\ndef someMethod(x:Int):Int={\n  try{\n    x/0\n  }catch {\n    case e:NoSuchElementException => 0\n    case e:ArithmeticException => 10\n  }finally {\n    println(\"als\")\n  }\n}",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "4b2e0d5197fb46aea0044"
+    }
+  ],
+  "info": {},
+  "noteForms": {},
+  "noteParams": {},
+  "angularObjects": {}
+}

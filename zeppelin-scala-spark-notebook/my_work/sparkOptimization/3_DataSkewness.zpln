@@ -1,0 +1,1792 @@
+{
+  "id": "YXRRSKOK7",
+  "name": "3_DataSkewness",
+  "paragraphs": [
+    {
+      "text": "%spark\nsalted_ds2.show()",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "80dc4e8466224765a3ec0"
+    },
+    {
+      "text": "%spark\n// with AQE\n\nval join_tran_cust_df = transactionDF.join(customerDF, Seq(\"cust_id\"), \"inner\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "b4125f4022ad421e887d6"
+    },
+    {
+      "text": "%spark\ntransactionDF.show(5,false)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "56a06d182b2b43d591c5a"
+    },
+    {
+      "text": "%spark\ndf.select(  f.mean( f.col(\"amnt\") )  ,\n            f.median(f.col(\"amnt\")) , \n            f.mode(f.col(\"amnt\")) ,\n            f.skewness(f.col(\"amnt\")),\n            f.kurtosis(f.col(\"amnt\"))          \n          )\n          .show(false)\n\n//positive skewness  :  \n//negative skeweness:  \n/*\nskewenes  => mean - mode /standard deviation\n*/",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "45ff2fb78a0f44df88604"
+    },
+    {
+      "text": "%spark\n//join df without salting\ntransactionDF.join(customerDF, Seq(\"cust_id\"), \"inner\")\n.write.mode(\"overwrite\")\n.format(\"noop\")\n.save(\"FileStore/tables\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "0144429222de4e8399d57"
+    },
+    {
+      "text": "%spark\nval skew_tran_df = transactionDF.withColumn(\"salt\", lit(f.rand * 3).cast(\"int\"))\n\nskew_tran_df.show(5, false)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "ee8ba1eeaf304d9f9d17f"
+    },
+    {
+      "text": "%spark\nval join_df = skew_tran_df.join(salted_cust_Df, Seq(\"cust_id\",\"salt\"), \"inner\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "0df0cf22dac24c91a1b6c"
+    },
+    {
+      "text": "%spark\nspark.stop  //this will reset the configuration and restart the drive on node attach the note to cluster",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "23df13ae98f44c7b90f54"
+    },
+    {
+      "text": "%spark\njoin_tran_cust_df.write.format(\"noop\").mode(\"overwrite\").save(\"FileStore/tables/\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "bf4df665eb8341e0bbabd"
+    },
+    {
+      "text": "%spark\nsalted_join.show()",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "dfc742cf5025410597b64"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "fbe3b72b5c744285a0a4e"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "77f29555b1a74053bafed"
+    },
+    {
+      "text": "%spark\nval broadcastJoinedDf = transactionDF.join(customerDF, Seq(\"cust_id\"),\"inner\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "3280ff0b9b51496b8699e"
+    },
+    {
+      "text": "%spark\ntransactionDF.withColumn(\"partition\", f.spark_partition_id())\n.groupBy(\"partition\")\n.count()\n.orderBy(\"partition\")\n.show()",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "280ab4c187334ed9a1a1f"
+    },
+    {
+      "text": "%spark\nval joinCond = salted_ds1.col(\"city\") === salted_ds2.col(\"location\")  && salted_ds1.col(\"salt\") === salted_ds2.col(\"salt\")\nval salted_join = salted_ds1.join(salted_ds2.drop(\"name\"), joinCond, \"inner\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "15cb93cd908b4744b1b9f"
+    },
+    {
+      "text": "%spark\n\nbroadcastJoinedDf\n.write\n.mode(\"overwrite\")\n.format(\"noop\")\n.save(\"FileStore/tables/suankiData/processed/broadcastJoinedDf\")\n\nval endTime = System.currentTimeMillis\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "732c241050a74815853ac"
+    },
+    {
+      "text": "\n1. Symetric skewness:  mean == mediun == mode\n2. Assymetric skewness:  \n  - positive skewness:  (10,20,30,40,50,100,2000)  -> mean will departurture to bigger number:  mean>median>mode\n  - negative skewness: (80,1,70,20,40,2,4,7)  -> mode > median > mean",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "de88dfcd6acd40f8938ec"
+    },
+    {
+      "text": "%spark\ntransactionDF.rdd.getNumPartitions",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "632ad080380747de89f16"
+    },
+    {
+      "text": "%spark\nval salted_cust_Df = customerDF.withColumn(\"saltedArray\",lit( (0 to 2).toArray ) )\n.withColumn(\"salt\", f.explode(col(\"saltedArray\")))",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "5f4c6c6d5e31467fadeec"
+    },
+    {
+      "text": "%spark\njoin_df\n.withColumn(\"partitions\",f.spark_partition_id())\n.groupBy(\"cust_id\",\"partitions\")\n.count()\n.orderBy(\"cust_id\",\"partitions\")\n.show()",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "ae9515682bbf4558bfab1"
+    },
+    {
+      "text": " %run /my_work/CommonUtils/SetupData",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "e87d640703d343f987986"
+    },
+    {
+      "text": "%spark\nval saltedArray = Array(0,1,2)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "19f14a3fc18b4fcfb30ec"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "128902edbd7e43b2b44a8"
+    },
+    {
+      "text": "\n### Salting\n\n- Adding randomness to distribute uneven data evently\n- salt_number = 3 , meaning assigning number b/w (0 to 3) 3 exculded \n- and join along with key and sal column\n- during exchange will now do hash(key,saltedcol)%shuffle_partiions",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "1f585208c2e843b8a8187"
+    },
+    {
+      "text": "%spark\n//sort merge join without broadcast\nval join_tran_cust_df = transactionDF.join(customerDF, Seq(\"cust_id\"), \"inner\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "8b832a72b223466b8db8b"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "09fe5db96c4d415d9d44c"
+    },
+    {
+      "text": "\n### Enable skewd join",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "68487d8ad5614aaa95117"
+    },
+    {
+      "text": "\n1.  read both data sets  -> exchange by key  into 200 shuflle partion \n2. Aqe Shuffle read:  read the shuffle (200 ) partitions and coalesec the partitons\n2.  broadcast exchange single partions (which ever is smaller <= 10 mb>) \n3. join happens on the executors (less shuffle read and write)\n\n\n![img](files/tables/suankiData/raw/images/DAG_AQE.png)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "6cbecacac50d4d749fc73"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "84abf347583e47c59c6aa"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "38e8daa6c64d4813809c6"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "2965411cdee4418f8b33e"
+    },
+    {
+      "text": "%spark\nsalted_ds1.show()",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "01dde0260a984cddb3458"
+    },
+    {
+      "text": "\n#### How to handle skewed data in shuffle partitons:no of records in in partions_id\n A skewed data",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "c9c882e26e4a4eb3828be"
+    },
+    {
+      "text": "%spark\n//to demonstrate how salting work on join on smaller datasets\n\nval ds1  = Seq(\n  (\"sujeet\",\"1\",\"mobile\",\"40000\",\"Pune\"),\n  (\"sujeet\",\"2\",\"mobile\",\"42000\",\"Pune\"),\n  (\"sujeet\",\"3\",\"mobile\",\"43000\",\"Pune\"),\n  (\"sujeet\",\"4\",\"mobile\",\"44000\",\"Pune\"),\n  (\"sujeet\",\"5\",\"mobile\",\"45000\",\"Pune\"),\n  (\"sujeet\",\"6\",\"Tv\",\"2000\",\"Pune\"),\n  (\"sujeet\",\"7\",\"TV\",\"34000\",\"Pune\"),\n  (\"sujeet\",\"8\",\"Machine\",\"17000\",\"Pune\"),\n  (\"sujeet\",\"9\",\"Almira\",\"1000\",\"Pune\"),\n  (\"sujeet\",\"10\",\"Table\",\"3000\",\"Pune\"),\n  (\"Sahil\",\"11\",\"Chair\",\"1800\",\"Solapur\")\n).toDF(\"name\",\"txn_number\",\"expenseType\",\"amnt\",\"city\").repartition(2)\n\n\nval ds2 = Seq(\n  (\"sujeet\",\"Pune\",\"india\"),\n  (\"sahil\",\"Solapur\",\"india\")\n).toDF(\"name\",\"location\",\"nation\").repartition(2)\n\n\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "8d10cbd189bb4bc28a977"
+    },
+    {
+      "text": "%spark\nsalted_join.filter(col(\"name\") === \"sujeet\").count",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "94f07771bb7c4501bf6d5"
+    },
+    {
+      "text": "%spark\nds1.join(ds2, ds1.col(\"city\") === ds2.col(\"location\")).show()",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "ff778f5ca7984306986dc"
+    },
+    {
+      "text": "\n#### Salted join on bigger datasets",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "690df9b477814b3fad0e3"
+    },
+    {
+      "text": "\n### What happens in Sort merge join\n\nShuffle  ----> SORT   -----> MERGE",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "6d2079b5ab834db0b27b8"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "3ee5803178c94a4c97004"
+    },
+    {
+      "text": " %run /my_work/CommonUtils/SetupData",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "b4eb7cecb8c4413bbca92"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "9138cf0c4cb04d7094b3d"
+    },
+    {
+      "text": "%spark\njoin_tran_cust_df.explain\n\n//notice physical plan has //AdaptiveSparkPlan isFinalPlan=false\n//but above last case , it's not present since we disabled ",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "58af6c9725a3458290dcf"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "5af2933b71e74da59ac4b"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "380576c62481413cad097"
+    },
+    {
+      "text": "\n### Solving DATA Sqew with \n- BroadcastJoin\n- Adaptive query Execution\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "bcef0826bc5646d68ca1c"
+    },
+    {
+      "text": "%spark\nretailDF.groupBy(\"country\")\n.agg(f.mean(f.col(\"quantity\")), f.median(f.col(\"quantity\")),f.mode(f.col(\"quantity\")), f.avg(f.col(\"quantity\")))\n.show()",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "6aa5fbcc9e3b4502b6a3c"
+    },
+    {
+      "text": "%spark\nspark.conf.set(\"spark.sql.autoBroadcastJoinThreshold\",-1)\nspark.conf.set(\"spark.sql.adaptive.enabled\",false)\nspark.conf.set(\"spark.sql.adaptive.skewedJoin.enabled\",false) //default is false\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "fff0f83a1ae14e1799098"
+    },
+    {
+      "text": "%spark\nfor( i <- 1 to 100){\n   print(i+\" \")\n  // Thread.sleep(90000)\n \n}\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "4ebc0b5138414c5782010"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "79af39714e2d4a65ab4e2"
+    },
+    {
+      "text": "%spark\nbroadcastJoinedDf.explain",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "562a07a79166486094dcb"
+    },
+    {
+      "text": "%spark\nval data = Seq(\n  (101, \"imps\", 10),\n  (103, \"neft\", 50),\n  (201, \"imps\", 40),\n  (101, \"upi\",  20)\n)\n\n\nval df = data.toDF(\"trid\",\"type\",\"amnt\")\n\ndf.show()\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "6ea86fd98ec346909ca24"
+    },
+    {
+      "text": "%spark\nspark.conf.set(\"spark.sql.autoBroadcastJoinThreshold\",\"10M\")\nspark.conf.set(\"spark.sql.adaptive.enabled\",false)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "c14979e367ff43639658a"
+    },
+    {
+      "text": "### How AQE works\n\n![img](files/tables/suankiData/raw/images/spark_AQE_steps.png)\n\n\n1. read run time statistics of data actually no of bytes read and no of partions\n2. tune shuffle partitons based on distinct keys and coalesce the partions, suppose we have only 15 distinct key it would coalesce 200 to 15 partions\n3.  convert sort merge join to Broadcast join\n4. optimize skew joins by breaking bigger partions into smaller one\n\n\n[optimize skew joins](https://spark.apache.org/docs/3.5.1/sql-performance-tuning.html#adaptive-query-execution)\n\n```spark.sql.adaptive.skewJoin.enabled\nspark.sql.adaptive.skewJoin.skewedPartitionFactor\nspark.sql.adaptive.skewJoin.skewedPartitionThresholdInBytes\nspark.sql.adaptive.forceOptimizeSkewedJoin```\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "fb3b7281772645cb9de51"
+    },
+    {
+      "text": "%spark\n//before we do join lets look at the data \ntransactionDF.groupBy(\"cust_id\")\n.agg(countDistinct(\"txn_id\").alias(\"ct\"))\n.orderBy(desc(\"ct\"))\n.show(5,false)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "7fa0eb3beaec47a09b241"
+    },
+    {
+      "text": "%spark\nspark.stop",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "3d6bb888a8e64b539e308"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "687c8aa65a7f469f93fb0"
+    },
+    {
+      "text": "%spark\n(transactionDF.rdd.getNumPartitions,\ncustomerDF.rdd.getNumPartitions)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "12a372df1c8d49979366e"
+    },
+    {
+      "text": "1. similar size partiton..all the available cores in use\n\n![img](files//tables/suankiData/raw/images/similar_size_partition.png)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "11e59152ff5e43f88972a"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "da3367f85f0548529477d"
+    },
+    {
+      "text": "1. [What is mean , median, mode](https://www.khanacademy.org/math/cc-sixth-grade-math/cc-6th-data-statistics/mean-and-median/v/mean-median-and-mode)\n2. [What is skewness and kurtosis of data](https://www.youtube.com/watch?v=deoph-Rfc24&list=PLRNL7AjA6rjx0L7i1QRCJXNhdujE0mkDr)\n3. [solution to skewness](https://medium.com/@diehardankush/how-to-understanding-data-skewness-in-apache-spark-9e93b9a68f46#id_token=eyJhbGciOiJSUzI1NiIsImtpZCI6ImU0YWRmYjQzNmI5ZTE5N2UyZTExMDZhZjJjODQyMjg0ZTQ5ODZhZmYiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIyMTYyOTYwMzU4MzQtazFrNnFlMDYwczJ0cDJhMmphbTRsamRjbXMwMHN0dGcuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiIyMTYyOTYwMzU4MzQtazFrNnFlMDYwczJ0cDJhMmphbTRsamRjbXMwMHN0dGcuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDEyMzk4ODY1NTMzMTYxNjY3NzciLCJlbWFpbCI6ImplZXQuaWRlYUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmJmIjoxNzAxNTY2ODk4LCJuYW1lIjoiU3VqZWV0IEt1bWFyIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0wwSTFIaTlibnc3YzZXUFFIb2dtbVdhUDRCYlZFa1ctMTB4NGdXcElTa2FFTT1zOTYtYyIsImdpdmVuX25hbWUiOiJTdWplZXQiLCJmYW1pbHlfbmFtZSI6Ikt1bWFyIiwibG9jYWxlIjoiZW4tR0IiLCJpYXQiOjE3MDE1NjcxOTgsImV4cCI6MTcwMTU3MDc5OCwianRpIjoiNzU0ZTUxM2M3MzI3YjhiY2U2MzlmOGJhMzNkMmM5ZjkyNzk5OTY2YyJ9.ns7Ple09BIqAyir-DEWTni6hqra62-WTSYfXV7cka51uIJ7xvtb_VTqdRxUC4RzZyE9bf946k77lzoI5BBd7VInji-WL-TunYBLtYkMA_sN9NLtSj-tqgDWQqP-BVef1fNFLanG4Y3sb0XOoeAWEfdTVHHctSWkwD9gz88o5nFKiv44V3rzaLvGbeiE6TFPafAkrRDnQWr-y2EPKqt07VgNR7S5HYUNexsHqPFVCqhNQRStYykHc-umxD3NbfJ5vCQ9ndDDbPQCRAuvqL2r36hTgM5OFs9E864DoYufY9fE1F2HhtHRo-zWjvh2aUqK_BdK7-HKa2xs5sKM5M4xW9Q)\n\n\nStatics : mean , meadian, mode\n\nexample1:  4, 3, 1, 6, 1,7\n\n1. Arithmetic mean  it's like avg of data\n*It is a measure of the center of a data set*\n  - => (4 +3 +3 +1 +6 + 1 + 7) /6 = 22/6 = 3.6\n\n2. median (central tendency)->  1 1 **3 4** 6 7   => 3.5   //mean of middle number is median =>3 + 4/2  => 3.5 \n   - 0, 7, 50, 100000, 100000   //median is 50  can be calucalte \n\n3. mode(most common number in the dataset)  -> so answer is 1 for above datasets  \n\n\nexample:  we have different transaction for a diffrent cutomer\n\n```\n    cust    transaction   typeOfTransaction  transactionAmount\n     a      4567          neft                +200\n     a      6868          imps                -300\n     a      3833           balance inquirey    0\n     b      3434          imps                 +2000  \n     b      2342           balance inquirey    0\n     c      6546868        imps                +456546\n     c      3824333        balance inquirey    0\n```\ndf.groupBy(cust).agg( mean(transactionAmount), mod(transactionAmount), midian(transactionAmount))\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "e04b6dddf62943759bacd"
+    },
+    {
+      "text": "\n#### Broadcast join",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "7001c6c2c3524bbab8485"
+    },
+    {
+      "text": "%run /my_work/CommonUtils/SetupData",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "eaa80c3b8a114d8d8061d"
+    },
+    {
+      "text": "%spark\nimport org.apache.spark.sql.functions._\nimport org.apache.spark.sql.expressions.Window\n\nval simpleData = Seq((\"James\", \"Sales\", 3000),\n    (\"Michael\", \"Sales\", 4600),\n    (\"Robert\", \"Sales\", 4100),\n    (\"Maria\", \"Finance\", 3000),\n    (\"James\", \"Sales\", 3000),\n    (\"Scott\", \"Finance\", 3300),\n    (\"Jen\", \"Finance\", 3900),\n    (\"Jeff\", \"Marketing\", 3000),\n    (\"Kumar\", \"Marketing\", 2000),\n    (\"Saif\", \"Sales\", 4100)\n  )\n  val df = simpleData.toDF(\"employee_name\", \"department\", \"salary\")\n  df.show()",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "1a308b27476e491aa0674"
+    },
+    {
+      "text": "%spark\njoin_tran_cust_df.explain",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "06edec6f1d504ac3a905a"
+    },
+    {
+      "text": "%spark\n//join triggerd\njoin_tran_cust_df.write.format(\"noop\").mode(\"overwrite\").save(\"FileStore/tables/\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "049064e0a7144b7fb2cfa"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "4516a2d7293742a89f605"
+    },
+    {
+      "text": "%spark\nspark.conf.set(\"spark.sql.adaptive.enabled\",true)\nspark.conf.set(\"spark.sql.adaptive.skewedJoin.enabled\",true)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "5cceb6daa29e40689c1eb"
+    },
+    {
+      "text": "%spark\ntransactionDF.groupBy(f.col(\"cust_id\")).agg(f.count(\"txn_id\")).show() ",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "5db263243e554a618f9f3"
+    },
+    {
+      "text": "%spark\n(0 to 2).toArray",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "798cc35a41ee497da7244"
+    },
+    {
+      "text": "%spark\nval salted_ds2 = ds2.withColumn(\"salt\", lit(f.rand * 3).cast(\"int\"))\nval salted_ds1 = ds1.withColumn(\"rand_col\", lit((0 to 2).toArray)).withColumn(\"salt\",explode(f.col(\"rand_col\")))",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "e096200f261a4d479e26a"
+    },
+    {
+      "text": "%spark\n//in case of join\nspark.conf.set(\"spark.sql.autoBroadcastJoinThreshold\",-1)\nspark.conf.set(\"spark.sql.adaptive.enabled\",false)\nspark.conf.set(\"spark.sql.adaptive.coalescePartitions.enabled\",false)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "fb35ac4844e34ad6bcce0"
+    },
+    {
+      "text": "\n![img](files/tables/suankiData/raw/images/DAG_without_Aqe.png)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "40d82414ef454d1a89bb7"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "5e1e69a9608640aaa8081"
+    },
+    {
+      "text": "%spark\nspark.conf.set(\"spark.sql.shuffle.partitions\",2)\nspark.conf.set(\"spark.sql.adaptive.enabled\",false)\nspark.conf.get(\"spark.sql.shuffle.partitions\")\nspark.conf.set(\"spark.sql.autoBroadcastJoinThreshold\",-1)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "70311ffb781f4b218ba7f"
+    },
+    {
+      "text": "%spark\ntransactionDF.join(customerDF.drop(\"city\"), Seq(\"cust_id\"), \"inner\")\n.withColumn(\"partitions\",f.spark_partition_id())\n.groupBy(\"partitions\")\n.count()\n.orderBy(\"partitions\")\n.show()\n\n// 1 job and 4 stage\n// stage-1  : reading customerdf\n//stage-2 : reading trandf\n//stage-3 : join of cust and tran\n//stage-4: orderby partion",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "46c6aeeadb504e998f053"
+    },
+    {
+      "text": "\n### one of the executor taking more time withou AQE or broadcast\n\n![img](files/tables/suankiData/raw/images/more_time_without_aqe.png)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "bd3a255f419e43cb87e72"
+    },
+    {
+      "text": "%spark\nds1.withColumn(\"partition\",f.spark_partition_id).groupBy(\"partition\").count().show()\nds2.withColumn(\"partition\",f.spark_partition_id).groupBy(\"partition\").count().show()\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "84104ba060a94bf2ba2d3"
+    },
+    {
+      "text": "%spark\njoin_df.write.mode(\"overwrite\")\n.format(\"noop\")\n.save(\"FileStore/tables\")\n\n//Command took 2.80 minutes, all the executor core were working , non of them was idel",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "1d25f55e8622447e9bd09"
+    },
+    {
+      "text": "%spark\nspark.conf.set(\"spark.sql.shuffle.partitions\",3)\nspark.conf.set(\"spark.sql.adaptive.enabled\",false)\nspark.conf.set(\"spark.sql.autoBroadcastJoinThreshold\",-1)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "5eaa2176afac4a60bd1f4"
+    },
+    {
+      "text": "%spark\n\n\ntransactionDF.join(customerDF.drop(\"city\"), Seq(\"cust_id\"), \"inner\")\n.write.format(\"noop\").mode(\"overwrite\")\n.parquet(\"/FileStore/tables/suankiData/processed/joined_tran_cust\")\n\n/**\n\n0\t1102\t0\tSUCCESS\tPROCESS_LOCAL\tdriver\tip-10-172-237-216.us-west-2.compute.internal\t\t2024-05-03 20:22:42\t6.2 min\t9 s\t285.8 MiB / 12872545\t785.5 MiB / 12872573\t2.6 GiB\t716.1 MiB\t\n\n**/\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "f5dac063b57243e7a52c9"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "6ce0181192ce49e28c3a2"
+    }
+  ],
+  "info": {},
+  "noteForms": {},
+  "noteParams": {},
+  "angularObjects": {}
+}

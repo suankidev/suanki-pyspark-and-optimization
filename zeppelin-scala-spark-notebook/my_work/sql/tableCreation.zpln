@@ -1,0 +1,274 @@
+{
+  "id": "FFSBZ0R0S",
+  "name": "tableCreation",
+  "paragraphs": [
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "da4c8cb47c62418a90ff3"
+    },
+    {
+      "text": "%sql\n\ncreate database if not exists stg_db location '/FileStore/tables/suankiData/stage' ;\ncreate database if not exists transform_db location '/FileStore/tables/suankiData/transformed' ;\ncreate database if not exists processed_db location '/FileStore/tables/suankiData/processed' ;\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "d281025c9f224bb694268"
+    },
+    {
+      "text": "%spark\ndbutils.fs.mkdirs(\"/FileStore/tables/suankiData/stage\")\ndbutils.fs.mkdirs(\"/FileStore/tables/suankiData/transformed\")\ndbutils.fs.mkdirs(\"/FileStore/tables/suankiData/processed\")\ndbutils.fs.mkdirs(\"FileStore/tables/suankiData/raw\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "64f5358938614eb88d6df"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "ce9ac3ad4953455084c08"
+    },
+    {
+      "text": "%spark\n//upload oracleData file\nval tableList = {\n    List(\n      \"regions\",\n      \"countries\",\n      \"locations\",\n      \"warehouses\",\n      \"employees\",\n      \"product_categories\",\n      \"products\",\n      \"customers\",\n      \"contacts\",\n      \"orders\",\n      \"order_items\",\n      \"inventories\"\n    )\n  }\nfor(loc <- tableList){\n  dbutils.fs.mkdirs(s\"/FileStore/tables/suankiData/raw/oracleData/$loc\")\n}\n\n//now upload the files",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "32a6b90d3aa64c2997f60"
+    },
+    {
+      "text": "%run /my_work/CommonUtils/SetupData",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "0c0ce4ae91ea4ddbb6b4a"
+    },
+    {
+      "text": "%sql\nshow databases;",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "0bea823564884393b03bb"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "5006d91dc4cd467686dd5"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "8c07ff6b314a4c9caad20"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "b7ead07250aa47ad8d6ae"
+    },
+    {
+      "text": "%spark\nval regions = spark.read.parquet(\"/FileStore/tables/suankiData/raw/oracleData/regions\")\nval countries = spark.read.parquet(\"/FileStore/tables/suankiData/raw/oracleData/countries\")\nval locations = spark.read.parquet(\"/FileStore/tables/suankiData/raw/oracleData/locations\")\nval warehouses = spark.read.parquet(\"/FileStore/tables/suankiData/raw/oracleData/warehouses\")\nval employees = spark.read.parquet(\"/FileStore/tables/suankiData/raw/oracleData/employees\")\nval product_categories = spark.read.parquet(\"/FileStore/tables/suankiData/raw/oracleData/product_categories\")\nval products = spark.read.parquet(\"/FileStore/tables/suankiData/raw/oracleData/products\")\nval customers = spark.read.parquet(\"/FileStore/tables/suankiData/raw/oracleData/customers\")\nval contacts = spark.read.parquet(\"/FileStore/tables/suankiData/raw/oracleData/contacts\")\nval orders = spark.read.parquet(\"/FileStore/tables/suankiData/raw/oracleData/orders\")\nval order_items = spark.read.parquet(\"/FileStore/tables/suankiData/raw/oracleData/order_items\")\nval inventories = spark.read.parquet(\"/FileStore/tables/suankiData/raw/oracleData/inventories\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "b7babaf9928049e28bef8"
+    },
+    {
+      "text": "%spark\nregions.createOrReplaceTempView(\"regions\")\ncountries.createOrReplaceTempView(\"countries\")\nlocations.createOrReplaceTempView(\"locations\")\nwarehouses.createOrReplaceTempView(\"warehouses\")\nemployees.createOrReplaceTempView(\"employees\")\nproduct_categories.createOrReplaceTempView(\"product_categories\")\nproducts.createOrReplaceTempView(\"products\")\ncustomers.createOrReplaceTempView(\"customers\")\norders.createOrReplaceTempView(\"orders\")\norder_items.createOrReplaceTempView(\"order_items\")\ninventories.createOrReplaceTempView(\"inventories\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "3a5ed5e22f694d99ba67d"
+    }
+  ],
+  "info": {},
+  "noteForms": {},
+  "noteParams": {},
+  "angularObjects": {}
+}

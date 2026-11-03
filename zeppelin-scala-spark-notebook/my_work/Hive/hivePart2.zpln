@@ -1,0 +1,340 @@
+{
+  "id": "68NL029NZ",
+  "name": "hivePart2",
+  "paragraphs": [
+    {
+      "text": "%fs\nls /FileStore/tables/suankiData/raw/vibha",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/plain_text",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "plain_text",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "c9bbcc7467084bd5b6415"
+    },
+    {
+      "text": "%sql\ncreate external table if not exists vibha.demo(\nid int,\nname string,\nage int\n)\npartitioned by(insert_date string)\nstored as parquet\nlocation 'dbfs:/FileStore/tables/suankiData/raw/vibha/demo';",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "a208ab1ffeaa4abaa1fdc"
+    },
+    {
+      "text": "%sql\nshow partitions vibha.demo ;",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "26a2dda0d084435b946e5"
+    },
+    {
+      "text": "%sql\n\ninsert into vibha.demo_stg values\n(1, 'ram',23,'2023'),\n(2, 'ram1',24,'2023'),\n(3, 'ram2',25,'2023'),\n(4, 'ram3',26,'2024'),\n(5, 'ram4',27,'2022')\n;",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "a70da1a4af954257a9b43"
+    },
+    {
+      "text": "%sql\ndescribe database vibha;",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "3ffb695cae9f4cfb8e400"
+    },
+    {
+      "text": "%sql\nset hive.exec.dynamic.partition.mode=nonstrict;\ninsert overwrite table vibha.demo \npartition(insert_date) \nselect \ncast(id as int) as id,\n name,\ncast(age as int) as age, \ninsert_date \nfrom vibha.demo_stg;",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "97d3daec83de46e687075"
+    },
+    {
+      "text": "%fs\nput \"1|'ram'|23\\n2|'shyam'|24\"  dbfs:/FileStore/tables/suankiData/raw/vibha/demo_stg ",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/plain_text",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "plain_text",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "5f85ad2610864009a73fe"
+    },
+    {
+      "text": "%sql\ndrop database vibha cascade;\ncreate database if not exists vibha location \"/FileStore/tables/suankiData/raw/vibha\";\ndrop table if exists vibha.demo_stg;\ncreate external table if not exists vibha.demo_stg (\n id string,\n name string,\n age string,\n insert_date  string\n)\nrow format delimited\nfields terminated by '|'\nlines terminated by '\\n'\nstored as textfile\nlocation '/FileStore/tables/suankiData/raw/vibha/demo_stg'\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "a0c8b9ad57be4a6a80f0e"
+    },
+    {
+      "text": "\n###UDF in hive\n\nhttps://medium.com/@omerfarooqali/an-introduction-to-hive-udfs-in-scala-9d6d83bc427b#:~:text=Simple%20UDF&text=Add%20the%20JAR%20to%20Hive,TEMPORARY%20FUNCTION%20increment%20AS%20%27HiveUDFs.",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "07873159eebe410b93b99"
+    },
+    {
+      "text": "%sql\nselect * from vibha.demo_stg;",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "b1362bd1e63343be88e2a"
+    },
+    {
+      "text": "%sql\ninsert overwrite vibha.demo_bucket  \nselect \ncast(id as int) as id,\n name,\ncast(age as int) as age, \ncast(insert_date as int) as insert_date\nfrom vibha.demo_stg;",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "09c378d89f214dbb83696"
+    },
+    {
+      "text": "%sql\n--bucketing\ncreate external table if not exists vibha.demo_bucket(\nid int,\nname string,\nage int,\ninsert_date int\n)\nclustered by(age) into 3 buckets\nstored as parquet\nlocation 'dbfs:/FileStore/tables/suankiData/raw/vibha/demo_bucket';",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "b619557072464d7e92ce2"
+    },
+    {
+      "text": "%fs\nls dbfs:/FileStore/tables/suankiData/raw/vibha/demo_bucket",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/plain_text",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "plain_text",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "ea1c3ad573ff45c0bb449"
+    },
+    {
+      "text": "%sql\nselect * from vibha.demo_bucket  ;\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "b18a374773c34cf282bd7"
+    },
+    {
+      "text": "%sql\ndescribe formatted vibha.demo_bucket\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "d0d48d69f9e549e19ed17"
+    }
+  ],
+  "info": {},
+  "noteForms": {},
+  "noteParams": {},
+  "angularObjects": {}
+}

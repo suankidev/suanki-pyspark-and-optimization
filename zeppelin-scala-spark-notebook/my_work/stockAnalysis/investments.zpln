@@ -1,0 +1,406 @@
+{
+  "id": "ZO4T94VD3",
+  "name": "investments",
+  "paragraphs": [
+    {
+      "text": "%sql\ninsert into service.trades values\n(\"2025-03-26\", \"Prestige Estates Projects Limited\", \"1222-1230\" , 1185, 1300, 1230,0,0,0 ,false),\n(\"2025-03-26\", \"Coforge Limited\",\"7979-7990\", 7815, 8352, 7992,0,0,0,false);",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "93ba77af153b4905a5770"
+    },
+    {
+      "text": "%sql\n\ncreate database if not exists service;\n\nuse service;\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "f56a3f8d9ae14f83b8de6"
+    },
+    {
+      "text": "%spark\ndbutils.fs.rm(\"dbfs:/user/hive/warehouse/service.db/expense\",true)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "af5aa177f7cb455f95621"
+    },
+    {
+      "text": "%sql\nselect * from service.expense",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "3eea9fca1f9641b68ae86"
+    },
+    {
+      "text": "%sql\nselect sum(investedAmount) from service.investment",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "20a6eaaa3f4d4bbbb1b7f"
+    },
+    {
+      "text": "%sql\ndrop table if exists service.trades;\n\ncreate table service.trades(\n  dateOfTrade date,\n  stockName string,\n  buyRange string,\n  stopLoss double,\n  traget double,\n  openPrice double,\n  closePrice double,\n  lowPrice double,\n  highPrice double,\n  status boolean\n)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "a9773c9ffe084f4181823"
+    },
+    {
+      "text": "%sql\ninsert into service.expense values\n(\"11500\", \"room rent\"),\n(\"1100\", \"electric bill\"),\n(\"15000\", \"monthly groccery expenses\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "833331faeaa24c1383881"
+    },
+    {
+      "text": "%sql\ndrop table if exists service.investment;\ncreate table service.investment(\nstartdate  date,\ndateofexpense  date,\nexpensetype string comment \"mutual fund/ETF\" ,\nfundName string comment \"mutual fund name\",\nsipAmount double,\ninvestedAmount  double,\ndescription string\n) comment \"table has expense info by daily\"",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "e0c7616fcf7d41649eeed"
+    },
+    {
+      "text": "- out of 16400, 10000 (5000, 5000 ki rd in axis).so\n- ",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "83a1b1e4c3b348a388072"
+    },
+    {
+      "text": "%sql\ndrop table if exists service.expense;\ncreate table expense(\n  amount double,\n  expenseType String  comment 'room rent'\n)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "07ab0fac094a4d0495abd"
+    },
+    {
+      "text": "%sql\nselect sum(amount) from service.expense",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "8dd5d3055f3c476c92e62"
+    },
+    {
+      "text": "%sql\n CREATE WIDGET TEXT SALARY DEFAULT \"\"",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "1eca73e4ec1d4d1eb560b"
+    },
+    {
+      "text": "%spark\ndbutils.fs.rm(\"dbfs:/user/hive/warehouse/service.db/investment\",true)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "a99290bcb9064116a128f"
+    },
+    {
+      "text": "%sql\nselect * from service.trades;",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "63f4fc98b35146778bc5d"
+    },
+    {
+      "text": "%sql\n\ninsert into table service.investment values\n(\"2024-09-02\", \"2025-03-25\", \"Mutual Fund\", \"Kotak Nifty Next 50 Index Fund Direct Growth\", 0 , 51000, \"Ankita mother money kept for 4 yr\"),\n\n(\"2024-09-02\", \"2025-03-25\", \"Mutual Fund\", \"Edelweiss Nifty Next 50 Index Fund Direct Growth\", 10000, 84000, \"land\"),\n\n(\"2024-09-02\", \"2025-03-25\", \"Mutual Fund\", \"Nippon India Nifty Midcap 150 Index Fund Direct Growth\",5000, 49500, \"pihu marriage\"),\n(\"2025-03-31\", \"2025-03-25\", \"Mutual Fund\", \"Motilal Oswal Flexi Cap Fund Direct Growth\", 10000, 1000,\"pihu education\"),\n\n(\"2024-09-02\", \"2025-03-25\", \"Mutual Fund\", \"DSP Nifty 50 Index Fund Direct Growth\",10000, 79500, \"long term for retirment\"),\n(\"2024-09-02\", \"2025-03-25\", \"Mutual Fund\", \"ICICI Prudential Nifty Smallcap 250 Index Fund Direct Growth\", 5000, 24500, \"long term for retiremnt\"),\n(\"2024-09-02\", \"2025-03-25\", \"Mutual Fund\", \"HDFC Flexi Cap Fund Direct Plan - Growth Option\",10000, 116000, \"long term for retirement\"),\n\n(\"2025-03-02\", \"2025-03-02\", \"ETF\", \"Mirae Asset S&P 500 Top 50 ETF\",5000, 5000, \"medical expenses\"),\n(\"2025-03-02\", \"2025-03-02\", \"ETF\", \"Nippon India ETF Gold BeES\",10000,34310, \"physical gold\"),\n(\"2025-03-02\", \"2025-03-02\", \"ETF\", \"Nippon India Silver ETF\",11000,4709, \"physical gold\")\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "f9573cf9e17e44af88972"
+    },
+    {
+      "text": "%sql\nselect \n\n${SALARY} \n- (select sum(sipamount) from service.investment) \n- (select sum(amount) from service.expense)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "bbc3e1017d464e088d18f"
+    },
+    {
+      "text": "%sql\nselect * from service.investment",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "441e9669af4145d79d06c"
+    },
+    {
+      "text": "%spark\ndbutils.fs.rm(\"dbfs:/user/hive/warehouse/service.db/trades\",true)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "06f31ead64a94921871db"
+    }
+  ],
+  "info": {},
+  "noteForms": {},
+  "noteParams": {},
+  "angularObjects": {}
+}

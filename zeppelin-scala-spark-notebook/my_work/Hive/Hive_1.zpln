@@ -1,0 +1,4058 @@
+{
+  "id": "IMOD7O6AE",
+  "name": "Hive_1",
+  "paragraphs": [
+    {
+      "text": "%sql\nselect * from stg_db.suanki_employee_stg limit 5",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "bae734fa327f4ca993c94"
+    },
+    {
+      "text": "###Apache hive Functions",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "3fe34bf2becf4f43a3c28"
+    },
+    {
+      "text": "%spark\ndef remove_dir(parentDirName:String):Unit={\n  dbutils.fs.ls(\"/FileStore/tables/suankiData/transformed/\") foreach (x =>{\n   println(x.path)\n if(x.path.contains(\"DEPARTMENT_ID\")){\n  dbutils.fs.rm(x.path,true)\n }\n}\n)\n}",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "14bb877b190b4d12acaa9"
+    },
+    {
+      "text": "\n%sql\ninsert overwrite table transform_db.suanki_partition_bucketed select full_name, manager_id, employee_id,department_id from bucketingTestingdata;",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "57daffa920304b698b001"
+    },
+    {
+      "text": "%spark\nspark.sql(\"select *  from orders\").show(truncate=false)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "0a65c521d4124fc2a0bec"
+    },
+    {
+      "text": "%spark\nspark.sql(\"\"\"\ninsert into orderAsPartitionedTable select order_id,order_date,order_customer_id,order_status from orders\n\"\"\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "0c88325fca4f486ebed54"
+    },
+    {
+      "text": "###table creation\n\n#####\n[hive_doc_link](https://cwiki.apache.org/confluence/display/hive/languagemanual)\n\n[hive_tutorial](https://sparkbyexamples.com/apache-hive/hive-create-table-syntax-and-usage-with-examples/)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "eaae26eadc6144728c299"
+    },
+    {
+      "text": "%spark\nspark.sql(\"drop table if exists retail_db.orders\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "6720f4935440474296b03"
+    },
+    {
+      "text": "%sql\ndrop table if exists stg_db.suanki_employee_stg;\ncreate external table  stg_db.suanki_employee_stg(\n  EMPLOYEE_ID int comment 'employee id',\n  FIRST_NAME string,\n  LAST_NAME string,\n  EMAIL string,\n  PHONE_NUMBER string,\n  HIRE_DATE string,\n  JOB_ID string,\n  SALARY string,\n  COMMISSION_PCT string,\n  MANAGER_ID string,\n  DEPARTMENT_ID string\n)\ncomment \"test table created by sujeet\"\nrow format delimited\nfields terminated by ','\nlines terminated by '\\n'\nstored as textfile\nlocation '/FileStore/tables/suankiData/stage/suanki_employee_stg'\ntblproperties(\"skip.header.line.count\"=\"1\");\n\n-- by default it's created under \n-- hive.metastore.warehouse.dir on the confi file hive_home/conf/hive-site.xml",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "70de4a5e0c494e06b3729"
+    },
+    {
+      "text": "%spark\nspark.sql(\"describe formatted ordersAsExternalTable \").show(40,false)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "608c846fc14447d296c8c"
+    },
+    {
+      "text": "%sql\nselect count(*) from stg_db.suanki_employee_stg;",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "973d01bcf0ed48aca7cbc"
+    },
+    {
+      "text": "\n####Hive static and dynamic \n[hive static/dynmic seciont](https://cwiki.apache.org/confluence/display/Hive/Tutorial)\n\ncheck **Semantics of the dynamic partition insert statement:** section",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "f858834fbb304b4c93caa"
+    },
+    {
+      "text": "%spark\n/**\ndate_add('2018-12-30',365)\ndate_sub\ndatediff\nadd_months('2018-12-30',2)\n\n**",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "13b0bf164734455e8d058"
+    },
+    {
+      "text": "%sql\ncreate or replace view stg_db.emp_temp  as select * from  stg_db.suanki_employee_stg; \ncreate or replace temp view emp_temp_view  as select * from  stg_db.suanki_employee_stg; --temp view doesn't accept schema name",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "bd6c1dcd5088455389600"
+    },
+    {
+      "text": "%sql\ndesc formatted stg_db.suanki_employee_stg",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "065394360b9e4916b08ee"
+    },
+    {
+      "text": "%sql\nselect o.order_id, o.order_Date,o.order_status,\n   oi.order_item_product_id, oi.order_item_sub_totabl\nFROM retail_db.orders o left join retail_db.order_item oi \n    ON o.order_id = oi.order_item_order_id limit 10\n\n    --null in order_item b/c order_id 3 is not present in order_item",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "7585126350bd4e979c551"
+    },
+    {
+      "text": "%sql\n\ncreate database if not exists stg_db location '/FileStore/tables/suankiData/stage' ;\ncreate database if not exists transform_db location '/FileStore/tables/suankiData/transformed' ;\ncreate database if not exists processed_db location '/FileStore/tables/suankiData/processed' ;\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "8f70791de1604598be07f"
+    },
+    {
+      "text": "%sql\nshow tables in  stg_db;",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "96d0ba954c574a9285f2d"
+    },
+    {
+      "text": "###Insert into table\n\n```\nINSERT INTO TABLE tablename1 \n[PARTITION (partcol1=val1, partcol2=val2 ...)] \nselect_statement1 FROM from_statement;\n```",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "da817d290f0b4cdd9feda"
+    },
+    {
+      "text": "%sql\ndescribe formatted stg_db.createdWithSparkSql;\n\n--so, by default table is created under dbfs:/FileStore/tables/suankiData/stage/createdwithsparksql since ,we have setup this as warehouse location",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "d8e880da9f7a431cba4ac"
+    },
+    {
+      "text": "a. mapred.map.tasks - The default number of map tasks per job is 2. Ignored when mapred.job.tracker is \"local\". You can modify using set mapred.map.tasks = <value>\n\n\nb. mapred.reduce.tasks - The default number of reduce tasks per job is 1. Typically set to 99% of the cluster's reduce capacity, so that if a node fails the reduces can still be executed in a single wave. Ignored when mapred.job.tracker is \"local\". you can modify using set mapred.reduce.tasks = <value>",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "73b27153fe8d4a6d8ab2e"
+    },
+    {
+      "text": "%sql\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "2dca0e21e9d64fe5b4fd2"
+    },
+    {
+      "text": "%fs\nls FileStore/tables/suankiData/raw/emp.csv",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/plain_text",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "plain_text",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "e747c047d8434ebd9f45a"
+    },
+    {
+      "text": "%sql\n-- Unity Catalog automatically assigns the S3 paths securely\nCREATE DATABASE IF NOT EXISTS stg_db;\nCREATE DATABASE IF NOT EXISTS transform_db;\nCREATE DATABASE IF NOT EXISTS processed_db;\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "22c20e2e3556431ea51af"
+    },
+    {
+      "text": "",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "f9fdf513a17844b88bf52"
+    },
+    {
+      "text": "%sql\ndrop database processed_db cascade;\ndrop database stg_db cascade;\ndrop database transform_db cascade;",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "259ad4c97948466d807ee"
+    },
+    {
+      "text": "\n//load data will copy the file into hive table location, here file will be not moved to table location only copied from locat to hdfs tbale location\n//if you run below command more than one..itw will just make copy_1, copy_2....\nload data local inpath  \"somepath\"  into table swcstg   //during table creation we have define delimmited and line termination\nload data local inpath  \"somepath\"  overwrite into table swcstg    //by default it wiil append without overwrite\n\n//from hdfs once you load the data file will be moved from sometest to table location (mind it)\n\nload data inpath '/somtest/test_file.csv' into table swcstg\nload data inpath '/somtest/test_file.csv' overwrite into table swcstg\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "671e94558c504db2b1615"
+    },
+    {
+      "text": "%sql\n--creating partitioned table\ndrop table if exists transform_db.suanki_employee_partitioned;\ncreate external table transform_db.suanki_employee_partitioned(\n  id int,\n  full_name String,\n  EMAIL string,\n  phone_number string,\n  HIRE_DATE date,\n  JOB_ID string,\n  SALARY double,\n  MANAGER_ID int\n)\npartitioned by (DEPARTMENT_ID string)\nstored as orc\nlocation '/FileStore/tables/suankiData/transformed/suanki_employee_partitioned'",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "d771e46cc4d748ad83858"
+    },
+    {
+      "text": "%sql\n\n--mapside join vs reduce side join\n--by default it's map side join\n-- set hive.auto.convert.join=true  \n--hive,mapjoin.smalltable.filesize=2500000 if small table size is below this then consider map join\n-- meaning smaller table would be cached  to every node and would be join\n\n\n\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "3a4b4db6793841d6b2a71"
+    },
+    {
+      "text": "%sql\nMSCK REPAIR TABLE zipcodes SYNC PARTITIONS; //like recover partions",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "dadaf28957ce4766a5b74"
+    },
+    {
+      "text": "%fs\nls /FileStore/tables/suankiData/transformed/hiveExport/emp",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/plain_text",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "plain_text",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "5d55ea82c53e4f36a5d86"
+    },
+    {
+      "text": "%spark\n//Creating external tables\n\nspark.sql(\"\"\"\ncreate external table if not exists ordersAsExternalTable( \n  order_id int,\n  order_date string,\n  order_customer_id int,\n  order_status string\n)\nROW FORMAT DELIMITED FIELDS TERMINATED BY ','\nLINES TERMINATED BY '\\n'\nSTORED AS TEXTFILE\nLOCATION \"dbfs:/FileStore/tables/suankiData/orders/\"\n\"\"\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "be2a7d8e4b6442c08249f"
+    },
+    {
+      "text": "%fs\nls /FileStore/tables/suankiData/stage/suanki_employee_stg",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/plain_text",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "plain_text",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "ab15e57d3e084f4c945c1"
+    },
+    {
+      "text": "%fs\n\nhead /FileStore/tables/suankiData/raw/emp_copy.csv",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/plain_text",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "plain_text",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "d2c9d41c2fd144ef80ced"
+    },
+    {
+      "text": "%sql\ndescribe database stg_db;",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "16cd4893cce140f49289b"
+    },
+    {
+      "text": "%sql\nshow tables in stg_db;\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "c0970f65175d4f9096582"
+    },
+    {
+      "text": "\njavatpoint.com/hive-architecure\n\n\n\n//get the help\nhive --help\n\n--hivevar  <key=value>\n-i <file_name>   initialization sql file\n-S  silent mode in interactive shell>\n-v   verbose mode\n--database $dbName\n--hiveconf <property=value>\n\n\n//hive   Or hive --serice-cli\n\nhive --service cli --help\n\n\n\n//to redirect all the properties  -e is to use to exute the command\n\nhive -e \"SET;\" > /tmp/hive_properties.txt\n\n\n//few important properties\nhive.execution.engine=mr\n\nhive.exec.max.created.files=100000                 \nhive.exec.max.dynamic.partitions=5000          \nhive.exec.max.dynamic.partitions.pernode=2000     \nhive.exec.dynamic.partition=true                   \nhive.exec.dynamic.partition.mode=nonstrict      // load the data in partitioned table     \nhive.exec.dynamic.partition.type.conversion=true \n\nhive.exec.parallel=false\nhive.exec.parallel.thread.number=8\n\nhive.metastore.warehouse.external.dir=/warehouse/tablespace/external/hive\nhive.metastore.wareshouse.dir=/usr/hive/warehouse/tablespace/\n\n//we can set the properties  with set or using --hiveconf\n\n\nhive --hiveconf hive.exution.engine=tez\n\n     //or after connecting to hive\n     set hive.exution.engine=tez\n\n\n\n//important files\nls -lrt /etc/hive/conf\n\nmapred-site.xml\n\nhdfs-site.xml\n\nhive-site.xml --> \n        <configuration>\n            <property>hive.metastore.wareshouse.dir</property>\n            <value>/usr/hive/warehouse/tablespace/</value>\n\n            <property>hive.exe.dynamic.partition.mode</property>\n            <value>true</value>\n            ...\n            ..\n            ..\n\n        </configuration>\n\n\nhadoop-env.sh\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "5c09f6454ca947c5addc1"
+    },
+    {
+      "text": "%spark\ndbutils.fs.ls(\"FileStore/tables/suankiData\") foreach ( x => {\n  println(s\"checking for ${x.path}\")\n  println(dbutils.fs.ls(x.path) )\n  println\n}\n)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "7f2f712348704c86b7a63"
+    },
+    {
+      "text": "%sql\n--setting custom variable\nset db=transform_db;\nset hivevar:table=suanki_employee_partitioned;\n\nselect count(*) from ${hiveconf:db}.${hivevar:table}",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "4e296e6da2194a0594c84"
+    },
+    {
+      "text": "%sql\nshow functions",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "492c12150d4a4979ab0b7"
+    },
+    {
+      "text": "\n#### Bucketing and it's pro /cons\n\n1.  Hive Bucketing a.k.a (Clustering) is a technique to split the data into more manageable files, (By specifying the number of buckets to create). The value of the bucketing column will be hashed by a user-defined number into buckets.\n\n2. With partitions, Hive divides(creates a directory) the table into smaller parts for every distinct value of a column whereas with bucketing you can specify the number of buckets to create at the time of creating a Hive table.",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "abe3454dc9114261b617b"
+    },
+    {
+      "text": "###Why ORC is best for HIVE and Parquet for Spark\n\nHive has a vectorized ORC reader but no vectorized parquet reader and spark has a vectorized parquet reader and no vectorized ORC reader. Spark performs best with parquet, hive performs best with ORC.\n\nVectorization means that rows are decoded in batches, dramatically improving memory locality and cache utilization.\n\nhttps://dataninjago.com/2021/12/12/databricks-deep-dive-4-vectorised-parquet-reading/\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "90988f5c04fe43f5bf1f1"
+    },
+    {
+      "text": "%sql\nselect   p.DEPARTMENT_ID, count(*) as count \n from transform_db.suanki_employee_partitioned as p   group by p.DEPARTMENT_ID order by p.DEPARTMENT_ID desc;\n\n --empty partitions is not showing",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "85759d0bf44b44d582ee7"
+    },
+    {
+      "text": "%spark\n// /hive -hiveconf CURRENT_DATE='2012-09-16' -f test.hql --hivevar current_time=$((date + '%HH-%mh-%ss'))",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "86324b68b9d74829be235"
+    },
+    {
+      "text": "%python\ndbutils.fs.ls(\"/FileStore/tables/\")(0).path\n# dbutils.fs.rm(suankiDataPath,true)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/python",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "ebcdb82d97c3469484f72"
+    },
+    {
+      "text": "%fs\n\nls /FileStore/tables/suankiData/transformed/suanki_employee_partitioned/DEPARTMENT_ID=10",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/plain_text",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "plain_text",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "bb35048a95a347d4801f8"
+    },
+    {
+      "text": "%sql\nselect * from transform_db.suanki_employee_partitioned where HIRE_DATE is not null;\n--looks like hire_date is loaded as null , we need to overwrite the table ",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "a4e596b902914f49b27c9"
+    },
+    {
+      "text": "%sql\nselect * from stg_db.demo;",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "1085c848ca4f4c69a6b7e"
+    },
+    {
+      "text": "%sql\n--truncating partition table\ntruncate table transform_db.suanki_employee_partitioned;",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "1ef6d62c9e934bd2b3a81"
+    },
+    {
+      "text": "%sql\n--renaming paritions\n--ALTER TABLE zipcodes PARTITION (state='AL') RENAME TO PARTITION (state='NY');\n--or manually copy the partitions\n--hdfs dfs -mv /user/hive/warehouse/zipcodes/state=NY /user/hive/warehouse/zipcodes/state=AL\n--synchronize table on metastroe\n--MSCK REPAIR TABLE zipcodes SYNC PARTITIONS;",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "5e6fa4c2450e4f54b1407"
+    },
+    {
+      "text": "%sql\nshow tables in stg_db",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "0069feb8a1ab4cd8b8881"
+    },
+    {
+      "text": "%sql\nshow databases;\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "16597c0b3f1f4ec6ba2e1"
+    },
+    {
+      "text": "%python\ndbutils.fs.ls(\"s3://suanki-databricks-space\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/python",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "fd13789303414de29661c"
+    },
+    {
+      "text": "%fs\n\ncp /FileStore/tables/suankiData/raw/emp.csv /FileStore/tables/suankiData/raw/emp_copy.csv",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/plain_text",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "plain_text",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "5729d80ed78b4a5fb519f"
+    },
+    {
+      "text": "%spark\nspark.sql(\"\"\"\ncreate database if not exists retail_db\n\"\"\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "d78c70a7f5854a2bb1bba"
+    },
+    {
+      "text": "%fs\nls /FileStore/tables/suankiData/stage/demo",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/plain_text",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "plain_text",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "c3e7267268ae492f887b0"
+    },
+    {
+      "text": "%fs\nls /FileStore/tables/suankiData/transformed",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/plain_text",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "plain_text",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "20adbdc976c64e7db8058"
+    },
+    {
+      "text": "%spark\n//Creationg partitioned table in hive order_month as key\nspark.sql(\"\"\"\ncreate table if not exists orderAsPartitionedTable( \n  order_id int,\n  order_date string,\n  order_customer_id int\n)\nPARTITIONED BY (order_status STRING)\nSTORED AS PARQUET\n\"\"\")\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "985837ac487842a0af5f6"
+    },
+    {
+      "text": "%sql\ndescribe function substring",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "a4fb4e6aa6d542ff8a958"
+    },
+    {
+      "text": "\n#### Using Variable in Hive Scripts\n#####Hive stores variables in four different namespaces, namespace is a way to separate variables.\n1.  config variables( hiveconf)\n2.  customer variables (hivevar)\n3.  system variables (system)\n4.  Environment variables (env)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "1ae6c14507534decbfe45"
+    },
+    {
+      "text": "%fs \nls dbfs:/FileStore/tables/suankiData/orders/part_00000",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/plain_text",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "plain_text",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "d94748a4829d4011b7bd8"
+    },
+    {
+      "text": "%sql\nselect * , substr(order_date,1,4) as year , curdate() as curr_date from orders limit 10",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "00b53c26ef40462b8fd15"
+    },
+    {
+      "text": "%sql\ndescribe function avg;\ndescribe function extended avg;",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "8ea7041cbdf64befb1c7e"
+    },
+    {
+      "text": "%fs\nls /FileStore/tables/suankiData/raw/emp.csv",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/plain_text",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "plain_text",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "0d69b5c9bbfe43b693a27"
+    },
+    {
+      "text": "%sql\nmsck repair table transform_db.suanki_employee_partitioned",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "8790f3ccf2f648929ced7"
+    },
+    {
+      "text": "%sql\n\n-- show tables;\n-- drop table swcstg;\n-- truncate table swcstg;\n-- drop databse demo\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "7704f758c494447d939c0"
+    },
+    {
+      "text": "%sql\nshow partitions transform_db.suanki_employee_partitioned",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "a015883b960e4a4c9fc52"
+    },
+    {
+      "text": "%sql\n-- map task  --> shuffle --> reduce tasks\n-- distribution is used to distribute the data while shuffle stage\n--\nselect order_item_order_id,\nsum(order_item_sub_totabl) as order_revenue\nfrom retail_db.order_item\ngroup by order_item_order_id\ndistribute by order_item_order_id --use when global sorting is not required\nlimit 10",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "4dbe0ea3ab884091bb745"
+    },
+    {
+      "text": "%sql\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "03fbbd7ae27344cf8a5e9"
+    },
+    {
+      "text": "%sql\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "2d8ed1e69aa7498fbeac5"
+    },
+    {
+      "text": "%python\n\n# //since we have set hive.metastore.warehouse.dir = FileStore/tables/suankiData/stage , spark should wrtie the table to this location \n# //lets check\nspark.sql(\"\"\"\ncreate  table stg_db.createdWithSparkSql(\n  destination string,\n  origin string,\n  totalCount Int\n)\nrow format delimited \nfields terminated by \",\"\nlines terminated by \"\\n\"\n\"\"\")\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/python",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "9780082bde9f404d8e492"
+    },
+    {
+      "text": "###//diff RDBMS VS HIVE\n\nRDBMS Tables are Schema on Write. For each and every write operation there will be validations such as Data Types. Scale, Precision, Check Constraints, Null Constraints. Unique Constraints performed.\nRDBMS Tables are fine tuned for best of the for transactions (POS. Bank Transfers\netc) whereas Hive is meant for heavy weight batch data processing.\nwhere we can create indexes which are populated live in RDBMS. In Hive, indexes are typically static and when we ever add the data. indexes have to be rebuilt.\nEven though one can specify constraints in Hive tables. They are only informational. The constraints might not be enforced.\nWe don’t perform ACID Transactions in Hive Tables.\nThere are no Transaction based statements such as COMMIT. ROLLBACK etc. in Hive.\nMetastore and Data are decoupled in Hive. Metastore is available in RDBMS and actual business data is typically stored in HDFS.",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "48a07bd5c22f49a7808c3"
+    },
+    {
+      "text": "%sql\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "0ed4b372d6e24e4aa826f"
+    },
+    {
+      "text": "%spark\n//or else you can directily copy the emp_copy.csv file to external table location\n//dbutils.fs.cp(\"/FileStore/tables/suankiData/raw/emp.csv\",\"/FileStore/tables/suankiData/stage/suanki_employee_stg\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "f0d600817d42407a8d28c"
+    },
+    {
+      "text": "%sql\n--system and env variable \nenv:user.home;\nsystem:java.version;\nsystem:user.timezone;\nsystem:user.home;",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "e003f86958314c6f9e4a0"
+    },
+    {
+      "text": "%sql\n--hiveconf default name space\nset table=suanki_employee_partitioned;\n\nselect count(*) from transform_db.${hiveconf:table};\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "c0bab174144b4cfda4d1a"
+    },
+    {
+      "text": "%sql\ndescribe database stg_db",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "ca7e2f9c5435470682e59"
+    },
+    {
+      "text": "%sql\n\ncreate or replace temp view bucketingTestingdata\nas\nselect EMPLOYEE_ID,concat(first_name,last_name) as full_name,department_id,manager_id from stg_db.suanki_employee_stg ;",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "e933326c8aa44877badbe"
+    },
+    {
+      "text": "%spark\n// //how to create database using program\n// /**\n// <dependency>\n//     <groupId>org.apache.hive</groupId>\n//     <artifactId>hive-jdbc</artifactId>\n//     <version>3.1.2</version>\n// </dependency>\n\n// **/\n\n// val conStr = \"jdbc:hive2://192.168.1.148:10000/default\";\n// Class.forName(\"org.apache.hive.jdbc.HiveDriver\");\n\n// con = DriverManager.getConnection(conStr, \"\", \"\");\n// val stmt = con.createStatement();\n// stmt.executeQuery(\"CREATE DATABASE emp\");",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "7ae82bd86a3d46de85799"
+    },
+    {
+      "text": "//now putting multiple file ata hdfs location\n hdfs dfs -copyFromLocal /tmp/deva/emp.csv /apps/f1sfdld/warehouse/demo/emp.csv\n hdfs dfs -copyFromLocal /tmp/deva/emp.csv /apps/f1sfdld/warehouse/demo/emp_duplicate.csv\n\n\n/**\n: Table f1sfdld.employee_demo stats: [numFiles=2, numRows=0, totalSize=7556, rawDataSize=0, numFilesErasureCoded=0]\nINFO  : Table f1sfdld.employee_demo stats: [numFiles=2, numRows=0, totalSize=7556, rawDataSize=0, numFilesErasureCoded=0]\n\n**/",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "bff3bad4301e42f19c802"
+    },
+    {
+      "text": "%sql\nselect count(*) from stg_db.suanki_employee_stg",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "e58ef0b17e3444d998c53"
+    },
+    {
+      "text": "%sql\n\n--adding empty partitions\nalter table transform_db.suanki_employee_partitioned add partition(DEPARTMENT_ID=\"333\")  ;\nalter table transform_db.suanki_employee_partitioned add partition(DEPARTMENT_ID=\"777\") partition(DEPARTMENT_ID=\"888\");\n\n--now we can simple copy the files\n--load data local inpath \"path.csv\" into table transform_db.suanki_employee_partitioned add partition(TestColfive=\"product\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "11bd0bf1cd684ea2a3aa9"
+    },
+    {
+      "text": "%sql\ndrop table if exists stg_db.suanki_employee_stg;\ncreate external table  stg_db.suanki_employee_stg(\n  EMPLOYEE_ID int comment 'employee id',\n  FIRST_NAME string,\n  LAST_NAME string,\n  EMAIL string,\n  PHONE_NUMBER string,\n  HIRE_DATE string,\n  JOB_ID string,\n  SALARY string,\n  COMMISSION_PCT string,\n  MANAGER_ID string,\n  DEPARTMENT_ID string\n)\ncomment \"test table created by sujeet\"\nrow format delimited\nfields terminated by ','\nlines terminated by '\\n'\nstored as textfile\nlocation 's3://suanki-databricks-space/suankiData/stage/suanki_employee_stg'\ntblproperties(\"skip.header.line.count\"=\"1\");",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "3d2675ad049244e2ba618"
+    },
+    {
+      "text": "%sql\nshow tables in default",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "a3d66852269d478f80fe2"
+    },
+    {
+      "text": "\n###Loading of Data into hive\n1. load data \n2. insert into table \n3. create external table with location clause and copy the file in the same location\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "d7edd281380944d7ba727"
+    },
+    {
+      "text": "%spark\n//ORC fileformate is compatible with ACID properties\n\n\nset hive.support.concurrency=true\nset hive.enfore.bucketing=true\nhive.exec.dynamic.partition.mode=nonstrict\nhive.txn.manager=\n\n\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "a98d26fcb476488b89a7e"
+    },
+    {
+      "text": "%sql\nshow databases",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "af0beb40eb07421aac05b"
+    },
+    {
+      "text": "\n%sql\n--connect to hive and run below\nLOAD DATA INPATH '/FileStore/tables/suankiData/raw/emp_copy.csv' INTO TABLE stg_db.suanki_employee_stg;\n\n-- /**\n-- INFO  : Starting task [Stage-0:MOVE] in serial mode\n-- INFO  : Loading data to table f1sfdld.employee_demo from hdfs://chcdpd2/apps/f1sfdld/warehouse/demo/emp.csv\n-- INFO  : Starting task [Stage-1:STATS] in serial mode\n-- INFO  : Executing stats task\n-- INFO  : Table f1sfdld.employee_demo stats: [numFiles=1, numRows=0, totalSize=3778, rawDataSize=0, numFilesErasureCoded=0]\n-- INFO  : Table f1sfdld.employee_demo stats: [numFiles=1, numRows=0, totalSize=3778, rawDataSize=0, numFilesErasureCoded=0]\n-- INFO  : Completed executing command(queryId=chd1hive_20240416074136_777e597a-c2e3-42c8-a0fe-bbe0dfde4870); Time taken: 0.72 seconds\n-- INFO  : OK\n\n\n-- --> file will be removed from warehouse location and copied to employee_demo location\n-- **/",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "7b11ce03cb66453cab191"
+    },
+    {
+      "text": "%sql\n\nINSERT OVERWRITE DIRECTORY '/FileStore/tables/suankiData/transformed/hiveExport/emp' \nROW FORMAT DELIMITED FIELDS TERMINATED BY ',' \nSELECT * FROM transform_db.suanki_employee_partitioned;\n\n-- INSERT OVERWRITE local DIRECTORY '/user/data/output/export' \n-- ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' \n-- SELECT * FROM employee;",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "19f23e28a96643f09b944"
+    },
+    {
+      "text": "%sql\nselect current_date(), initcap(\"hello\"), lower(\"HeLLo\"), length(\"test\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "f9b4e23f03aa4d7da86b7"
+    },
+    {
+      "text": "%sql\n\n--internal table\ncreate table demo (\n  name string,\n  id int\n)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "24675ead29b94f29a3470"
+    },
+    {
+      "text": "%spark\nspark\n.read\n.option(\"sep\",\",\")\n.option(\"header\",true)\n.format(\"csv\")\n.load(\"FileStore/tables/suankiData/raw/*.csv\")\n.write\n.partitionBy(\"department_id\")\n.format(\"orc\")\n.save(\"FileStore/tables/suankiData/transformed/emp_spark/\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "5ca6a9a368064d1186cdd"
+    },
+    {
+      "text": "%spark\n/**\nlower\nupper\ninitcap\n**/",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "8ceaea83166a478b88e45"
+    },
+    {
+      "text": "%sql\n--append the record into parition, rest column would be null\nINSERT INTO transform_db.suanki_employee_partitioned PARTITION (DEPARTMENT_ID='10') \n select 1008,'diboo dabaa','dibbo@dabba.com', '+913479338883',to_date('2023-04-28'),1010,46456.64,1011;",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "20d2519fef514eaab62a8"
+    },
+    {
+      "text": "%sql\ndescribe function substr",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "5411db9689ce4aa7b349c"
+    },
+    {
+      "text": "\n###HS2\n\nHiveServer2 (HS2) is a service that enables clients to execute queries against Hive. HiveServer2 is the successor to HiveServer1 which has been deprecated. HS2 supports multi-client concurrency and authentication. It is designed to provide better support for open API clients like JDBC and ODBC.\n\nHS2 is a single process running as a composite service, which includes the Thrift-based Hive service (TCP or HTTP) and a Jetty web server for web UI. ",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "cec0f93fa004441494526"
+    },
+    {
+      "text": "%sql\nrefresh table transform_db.suanki_employee_partitioned;\ndescribe formatted transform_db.suanki_employee_partitioned;;\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "c1ec388c54d243b69ec53"
+    },
+    {
+      "text": "%sql\nselect current_date()",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "33890ca98c6a40759684e"
+    },
+    {
+      "text": "%spark\nspark.sql(\"select * from order_item_stg limit 5\").show()",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "db448362113e405d99da8"
+    },
+    {
+      "text": "",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "3c45578c528849339d94e"
+    },
+    {
+      "text": "%sql\ndrop table stg_db.custom_path_table;\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "98679f09332e42b188dc2"
+    },
+    {
+      "text": "%sql\n-- 1. Create a table with a strict, readable S3 path\ndrop table if exists stg_db.external_table_path;\nCREATE TABLE stg_db.external_table_path (\n    id INT,\n    message STRING\n)\nusing PARQUET\nLOCATION 's3://suanki-databricks-space/suankiData/stage/external_table_path';\n\n-- 2. Insert data\nINSERT INTO stg_db.external_table_path VALUES (1, 'Clean path!');\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "1310105388c546999cd94"
+    },
+    {
+      "text": "%sql\n--setting a particular partitions to partiticular dir\nset loc=/FileStore/tables/suankiData/transformed/emp_spark/department_id=30;\nalter table  transform_db.suanki_employee_partitioned add PARTITION(DEPARTMENT_ID='999') ;\nALTER TABLE transform_db.suanki_employee_partitioned PARTITION(DEPARTMENT_ID='999') \nSET LOCATION '${hiveconf:loc}';\n--make sure files are parquet, since out partitoin table is parquet\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "88c17d6468e649c48c4af"
+    },
+    {
+      "text": "%sql\nrefresh table stg_db.suanki_employee_stg; \nselect * from stg_db.suanki_employee_stg limit 5;",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "dc02659b267d49fb92555"
+    },
+    {
+      "text": "###Exercise",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "0756f09398ba4ad999ae9"
+    },
+    {
+      "text": "%sql\nselect * from retail_db.orders\nwhere not exists(\n  select 1 from retail_db.order_item\n  where order_item.order_item_order_id = orders.order_id\n)\nlimit 5\n\n--co-related subqueries",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "b9fce225626948c99d804"
+    },
+    {
+      "text": "%spark\nLets take a scenario Where table size is: 2300 MB, HDFS Block Size: 128 MB\n\nNow, Divide 2300/128=17.96\n\nNow, remember number of bucket will always be in the power of 2.\n\nSo we need to find n such that 2^n > 17.96\n\nn=5\n\nSo, I am going to use number of buckets as 2^5=32\n\n2*2 =4\n4*2 = 8\n8 * 2 = 16  closese to 17  so  2^5",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "c82d0162455e409e90573"
+    },
+    {
+      "text": "%sql\n-- set hive.metastore.warehouse.dir\nset hive.metastore.warehouse.dir='/FileStore/tables/suankiData/stage'",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "39b13c2769c64e66b1dd0"
+    },
+    {
+      "text": "%sql\ndesc  database\n transform_db",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "0af0830c3f7449c787a8f"
+    },
+    {
+      "text": "%sql\ndescribe formatted transform_db.suanki_employee_partitioned",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "8c6c4c928cdd4309b529e"
+    },
+    {
+      "text": "%sql\n--o.order_id, o.order_Date,o.order_status,\n   --oi.order_item_product_id, oi.order_item_sub_totabl\nselect count(*)\nFROM retail_db.orders o right  join retail_db.order_item oi \n    ON o.order_id = oi.order_item_order_id limit 10\n\n    --null in order_item b/c order_id 3 is not present in order_item",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "6f958375448540cf85b0f"
+    },
+    {
+      "text": "%python\ndbutils.fs.ls(\"/\")\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/python",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "0af2d8e6792d490e9668b"
+    },
+    {
+      "text": "%spark\ndbutils.fs.mkdirs(\"/FileStore/tables/suankiData/stage\")\ndbutils.fs.mkdirs(\"/FileStore/tables/suankiData/transformed\")\ndbutils.fs.mkdirs(\"/FileStore/tables/suankiData/processed\")\ndbutils.fs.mkdirs(\"FileStore/tables/suankiData/raw\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "9c7bcefbac29414db8c4c"
+    },
+    {
+      "text": "%sql\n--internal table\ndrop table if exists stg_db.demo;\ncreate table stg_db.demo (\n  name string,\n  id int\n);\ninsert into stg_db.demo values('first_name',1),('ramesh',2),('rajoo rastogi',3);",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "e7150c2d57df4148a404d"
+    },
+    {
+      "text": "%sql\nselect * from transform_db.suanki_employee_partitioned",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "cae2cfe9c2cb43e8a3455"
+    },
+    {
+      "text": "%spark\nspark.sql(\"describe formatted orderAsPartitionedTable\").show(40,false)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "5af18d217a8343fab251f"
+    },
+    {
+      "text": "%sql\nshow databases;",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "828b50dd372f467983f1d"
+    },
+    {
+      "text": "%spark\ndbutils.fs.ls(\"/FileStore/tables/suankiData/transformed/\") foreach println",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "2f6e3b4bea4249a1b5627"
+    },
+    {
+      "text": "%fs\n\nls  dbfs:/FileStore/tables/suankiData/transformed/suanki_employee_partitioned",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/plain_text",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "plain_text",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "f1ce4974ebe1489d85a9f"
+    },
+    {
+      "text": "%sql\nCREATE DATABASE IF NOT EXISTS stg_db \nMANAGED LOCATION 's3://suanki-databricks-space/suankiData/stage';\n\nCREATE DATABASE IF NOT EXISTS transform_db \nMANAGED LOCATION 's3://suanki-databricks-space/suankiData/transformed';\n\nCREATE DATABASE IF NOT EXISTS processed_db \nMANAGED LOCATION 's3://suanki-databricks-space/suankiData/processed';\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "a5026a44ccc24f6ea5454"
+    },
+    {
+      "text": "%python\n\nspark.read.parquet(\"s3://suanki-databricks-space/suankiData/stage/external_table_path\").show(10,False)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/python",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "0de3e3926e944691ab2d7"
+    },
+    {
+      "text": "\n```\nApache Hive is a distributed, fault-tolerant data warehouse system that enables analytics at a massive scale. \nHive Metastore(HMS) provides a central repository of metadata that can easily be analyzed to make informed, \ndata driven decisions, and therefore it is a critical component of many data lake architectures. \nHive is built on top of Apache Hadoop and supports storage on S3, adls, gs etc though hdfs. Hive allows users to read, write, \nand manage petabytes of data using SQL.\n```",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "5795889a243d4031bff3f"
+    },
+    {
+      "text": "%sql\ncreate table transform_db.suanki_bucketed(\n  full_name String,\n  manager_id string,\n  employee_id int,\n  department_id string\n)\nclustered by (employee_id) into 3 buckets\nstored as parquet",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "fd99f0f3c27b478e99e6d"
+    },
+    {
+      "text": "%fs\nls FileStore/tables/suankiData/transformed/suanki_employee_partitioned/DEPARTMENT_ID=999",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/plain_text",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "plain_text",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "5b59e43da19b4b9291254"
+    },
+    {
+      "text": "%spark\nspark.sql(\"\"\"show databases\"\"\").show()",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "e086441fb70d422a9c266"
+    },
+    {
+      "text": "%fs\nrm -r /FileStore/tables/suankiData/stage/suanki_employee_stg/",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/plain_text",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "plain_text",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "8c42ffa9599d4a039e924"
+    },
+    {
+      "text": "%sql\ninsert into table stock_eod_sortby\nselect * from stocks_eod\ndistribute by tradedate sort by tradedate,volume desc\n--date will be distributed by tradedate and withing each mapper ..will sort by tradedate and volumn ,, so mapper and reducer may increase\n--cluster by tradedate",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "b4532756f81a47118079c"
+    },
+    {
+      "text": "%sql\nINSERT INTO transform_db.suanki_employee_partitioned PARTITION(DEPARTMENT_ID) \nselect  \ncast(EMPLOYEE_ID as int) as id,\nconcat(FIRST_NAME,Last_name) as full_name,\nEMAIL,\nPHONE_NUMBER,\nto_date(hire_date,'yyyy-MM-dd') as hire_date,\ncast(JOB_ID as int) as job_id,\ncast(SALARY as DOUBLE) as salary,\ncast(MANAGER_ID as int) as manager_id,\nDEPARTMENT_ID\n FROM stg_db.suanki_employee_stg where EMPLOYEE_ID is not NULL\n\n -->wrong data ",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "84a1e3b74da445b7a9143"
+    },
+    {
+      "text": "%sql\n\ninsert overwrite table transform_db.suanki_bucketed select  full_name, manager_id, employee_id,department_id from bucketingTestingdata;\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "b4ab145bc7704cb1aafc0"
+    },
+    {
+      "text": "%sql\n--orderBy and distributed by\n\nselect order_item_order_id,\nsum(order_item_sub_totabl) as order_revenue\nfrom retail_db.order_item\ngroup by order_item_order_id\nlimit 10",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "cbcf75a02f594fc481de0"
+    },
+    {
+      "text": "%spark\n/**\n\nCREATE [TEMPORARY] [EXTERNAL] TABLE [IF NOT EXISTS] [db_name.] table_name\n[(col_name data_type [column_constraint] [COMMENT col_comment], ...)]\n[PARTITIONED BY (col_name data_type [COMMENT 'col_comment'], ...)]\n[CLUSTERED BY (col_name, col_name,.......]\n[COMMENT table_comment]\n[ROW FORMAT row_format]\n[FIELDS TERMINATED BY char]\n[LINES TERMINATED BY char]\n[LOCATION 'hdfs_path']\n[STORED AS file_form\n\n/**/",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "b2110652c5924e86b0d40"
+    },
+    {
+      "text": "Hive provides full ACID support for ORC tables and insert only support to all other formats.",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "e769b7b8df4e4dd991486"
+    },
+    {
+      "text": "%sql\nset hive.metastore.warehouse.dir",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "4dc5012c9ac24e5db15fe"
+    },
+    {
+      "text": "%spark\nspark.sql(\"\"\"\ninsert into order_item select * from order_item_stg\n\"\"\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "0dd065fabc0c43c89905f"
+    },
+    {
+      "text": "%sql\nselect * from transform_db.suanki_employee_partitioned where HIRE_DATE is not null;",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "672db16894944d5c89ee2"
+    },
+    {
+      "text": "%sql\n--see above how it got added to 999 \nselect count(*) from transform_db.suanki_employee_partitioned as p where p.DEPARTMENT_ID='999'",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "775092c427d7480280cda"
+    },
+    {
+      "text": "%sql\nselect count(*) from stg_db.suanki_employee_stg",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "fca7226da35044cab97b0"
+    },
+    {
+      "text": "%sql\ncreate view if not exists stg_db.emp_temp  as select * from  stg_db.suanki_employee_stg;\ncreate temp view emp_temp_view  as select * from  stg_db.suanki_employee_stg; -- does not require db name ",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "03afbb41ac3a4961a3183"
+    },
+    {
+      "text": "%sql\nselect current_schema()",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "bb9c59393f984a77b00b2"
+    },
+    {
+      "text": "###How to create temporary table \n\n####NOTE: \n  1.  temprorary table in hive only available for current session \n  2. data in temp table gets stored under /tmp/hive/<user> on hdfs\n  3. if you create temp table with same name as final table , you can't access final unless you drop the temp table\n  4. does not support partitions",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "d645e7d86f32483c8e044"
+    },
+    {
+      "text": "%sh\nwhich spark",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sh",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sh",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "c362156ccbe7439b9a66e"
+    },
+    {
+      "text": "%fs\n\nls /FileStore/tables/suankiData/transformed/suanki_bucketed",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/plain_text",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "plain_text",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "ed400b7d5f0e48da9913b"
+    },
+    {
+      "text": "%spark\ndbutils.fs.ls(\"dbfs:/FileStore/tables/suankiData\") foreach println",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "eb2f5984af9645a8a7639"
+    },
+    {
+      "text": "%spark\ndisplay(spark.sql(\"select * from ordersAsExternalTable limit 10\"))",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "6f62a3ee98434f2ea9b1b"
+    },
+    {
+      "text": "%sql\n\nshow tables in stg_db;",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "054498edb1de4c9aaefa7"
+    },
+    {
+      "text": "%sql\nINSERT INTO transform_db.suanki_employee_partitioned PARTITION (DEPARTMENT_ID) \n select 1008,'diboo dabaa','dibbo@dabba.com', '+913479338883',to_date('2023-04-28'),1010,46456.64,1011,222;",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "d247facc33604cf7b9ea5"
+    },
+    {
+      "text": "%spark\nspark.sql(\"\"\"\nselect  * from order_item limit 5\n\"\"\").show()",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "ca137ebdbe79440bb826c"
+    },
+    {
+      "text": "purpose of external tables ?\n\n--> multiple framework is using the data ",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "8b671529d5bf48f8bfd16"
+    },
+    {
+      "text": "%sql\nselect  * from transform_db.suanki_employee_partitioned  where JOB_ID is not null limit 5;",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "d934fc7580a84382aac00"
+    },
+    {
+      "text": "%sql\nset hive.warehouse.data.skipTrash=true;  --skip the trash  only for internal table, for exteranl file would be ther\n--ALTER TABLE zipcodes DROP IF EXISTS PARTITION (state='AL');\n--ALTER TABLE zipcodes DROP IF EXISTS PARTITION (state='AL') PURGE;\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "e37e130544ad4ea4907e9"
+    },
+    {
+      "text": "%sql\n--orderBy and distributed by\n\nselect order_item_order_id,\nsum(order_item_sub_totabl) as order_revenue\nfrom retail_db.order_item\ngroup by order_item_order_id\nhaving order_revenue>500\nlimit 10",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "cd01154665a2448a9ee7b"
+    },
+    {
+      "text": "%spark\nspark.sql(\"\"\"\ncreate table if not exists order_item(\n  order_item_id  INT,\n  order_item_order_id INT,\n  order_item_product_id INT,\n  order_item_quantity INT,\n  order_item_sub_totabl FLOAT,\n  order_item_product_price FLOAT\n)\nSTORED AS ORC\n\"\"\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "0a3e78becb524c4a9e7b6"
+    },
+    {
+      "text": "%sql\nshow partitions transform_db.suanki_employee_partitioned",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "8614eeb44ffd4a73a2210"
+    },
+    {
+      "text": "%fs\n\nls dbfs:/user/hive/warehouse/retail_db.db/orderaspartitionedtable",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/plain_text",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "plain_text",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "ebe3a6abb4f945d7a56ac"
+    },
+    {
+      "text": "###Hive Metastore Server (HMS)\nThe Hive Metastore (HMS) is a central repository of metadata for Hive tables and partitions in a relational database, and provides clients (including Hive, Impala and Spark) access to this information using the metastore service API. It has become a building block for data lakes that utilize the diverse world of open-source software, such as Apache Spark and Presto. In fact, a whole ecosystem of tools, open-source and otherwise, are built around the Hive Metastore, some of which this diagram illustrates.",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "1f98057f4eaa4eb588450"
+    },
+    {
+      "text": "%sql\nINSERT INTO stg_db.suanki_employee_stg values(141,'Joshua','Patel','JPATEL','650.121.1834','06-APR-06','ST_CLERK','2500', '-' ,'123','50');\n\n\nINSERT INTO stg_db.suanki_employee_stg values\n(142,'demo','Patel','JPATEL','650.121.1834','06-APR-06','ST_CLERK','2500', '-' ,'123','50'),\n(143,'demo_one','Patel','JPATEL','650.121.1834','06-APR-06','ST_CLERK','2500', '-' ,'123','50');\n\n-- /**\n-- INFO  : Query Execution Summary\n-- INFO  : ----------------------------------------------------------------------------------------------\n-- INFO  : OPERATION                            DURATION\n-- INFO  : ----------------------------------------------------------------------------------------------\n-- INFO  : Compile Query                           0.29s\n-- INFO  : Prepare Plan                            0.09s\n-- INFO  : Get Query Coordinator (AM)              0.00s\n-- INFO  : Submit Plan                             0.07s\n-- INFO  : Start DAG                               0.02s\n-- INFO  : Run DAG                                 4.03s\n-- INFO  : ----------------------------------------------------------------------------------------------\n-- INFO  : \n-- INFO  : Task Execution Summary\n\n-- **/",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "301462d35be14a8fbca55"
+    },
+    {
+      "text": "%sql\n--test\nselect HIRE_DATE, to_date(HIRE_DATE, 'yy-MMM-dd') as new_date,JOB_ID  from stg_db.suanki_employee_stg",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "369eea9513ab49769c606"
+    },
+    {
+      "text": "%spark\nspark.sql(\"\"\"\ncreate external table if not exists order_item_stg(\n  order_item_id  INT,\n  order_item_order_id INT,\n  order_item_product_id INT,\n  order_item_quantity INT,\n  order_item_sub_totabl FLOAT,\n  order_item_product_price FLOAT\n)\nROW FORMAT DELIMITED FIELDS TERMINATED BY \",\"\nLINES TERMINATED BY \"\\n\"\nSTORED AS TEXTFILE\nLOCATION \"dbfs:/FileStore/tables/suankiData/order_items/\"\n\"\"\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "630cd03b68524e00827a9"
+    },
+    {
+      "text": "###Join\nnotw: there is no outer join in hive outer join is left join\n\nlinks: https://data-flair.training/blogs/hive-join/\n\n--left join\n\n--right join\n\n--inner join\n\n--left outer join\n\n--right outer join\n\n--mapside join\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "b54e0a0f76ae4181af5d4"
+    },
+    {
+      "text": "%spark\nspark.sql(\"\"\"\nload data inpath 'dbfs:/FileStore/tables/suankiData/orders/part_00000' into table retail_db.orders\n\"\"\")\n\n/**\nNote:\n1.  load data inpath  --> will move the file from hdfs to table location \n2. load data local inpath --> will copy the file from local to table location\n\n3. overwrite the existing data with new data\n\n        load data inpath 'dbfs:/FileStore/tables/suankiData/orders/part_00000' overwrite into table orders\n**/\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "8ee0cced8a8245d6b11de"
+    },
+    {
+      "text": "%spark\nspark.sql(\"\"\"\ncreate table if not exists orders( \n  order_id int,\n  order_date string,\n  order_customer_id int,\n  order_status string\n)\nROW FORMAT DELIMITED FIELDS TERMINATED BY ','\nLINES TERMINATED BY '\\n'\nSTORED AS TEXTFILE\n\"\"\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "1f2ace49a9204fb7a37eb"
+    },
+    {
+      "text": "%sql\nshow functions",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "4f6236ffa0094b2e84f23"
+    },
+    {
+      "text": "%sql\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "a688c5e271524a1cbb58f"
+    },
+    {
+      "text": "%sql\ndesc order_item",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "3855da7f805a478b9ad5d"
+    },
+    {
+      "text": "%spark\n//putting data into final table\n/*\nby default it's List partitioning\nbut buccketing --> it's hash paritioning\n\nwhen it comes to other format than textfile, it should know the delimiter, we are not able to 'load data inpath'\n\n--> insert overwirt into table select * from sometable will only work\n\n\nso,\n\n create stg  --> load datain in stg ---> insert into swcstg_final\n**/\n\ninsert into table swcstg_final select * from swcstg\ninsert overwrite table swcstg_final select * from swcstg\n\n\n\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "0b2246c46910413890429"
+    },
+    {
+      "text": "%sql\n--check if partitions already exists\nINSERT OVERWRITE TABLE zipcodes PARTITION(state='NJ') \nIF NOT EXISTS VALUES (921,'US','New Jersey',7097);\n\nINSERT OVERWRITE TABLE zipcodes PARTITION(state='NJ') \nIF NOT EXISTS select id,city,zipcode from other_table;",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "933c2462cb07425a81080"
+    },
+    {
+      "text": "%fs\nrm -r dbfs:/user/hive/warehouse/retail_db.db/",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/plain_text",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "plain_text",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "198d5a98bc224578a1017"
+    },
+    {
+      "text": "%spark\nspark.sql(\"describe formatted orders\").show(40,truncate=false)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "11654a9eaa824e4fa65dd"
+    },
+    {
+      "text": "%sql\nset hive.exec.dynamic.partition.mode=nonstrict;\nset hive.exec.max.dynamic.partitions.pernode=200;\nset hive.exec.max.dynamic.partitions=200\nset hive.exec.max.created.files=200\n\nINSERT overwrite transform_db.suanki_employee_partitioned PARTITION(DEPARTMENT_ID) \nselect  \ncast(EMPLOYEE_ID as int) as id,\nconcat(FIRST_NAME,Last_name) as full_name,\nEMAIL,\nPHONE_NUMBER,\nto_date(hire_date,'yy-MMM-dd') as hire_date,\njob_id,\ncast(SALARY as DOUBLE) as salary,\ncast(MANAGER_ID as int) as manager_id,\nDEPARTMENT_ID\n FROM stg_db.suanki_employee_stg where EMPLOYEE_ID is not NULL\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "5142880eba034d4d83b1d"
+    },
+    {
+      "text": "%sql\n--disableing sustites all variable by below\n-- set hive.variable.substitute=false;",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "7a6e5fb164e04c06adf5b"
+    },
+    {
+      "text": "%sql\n--joining multiple tables\n--all the order_detail from order_items for order_id in order\n\nselect o.order_id, o.order_Date,o.order_status,\n   oi.order_item_product_id, oi.order_item_sub_totabl\nFROM retail_db.orders o inner join retail_db.order_item oi \n    ON o.order_id = oi.order_item_order_id limit 10",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "604c06ced8654a658665b"
+    },
+    {
+      "text": "%sql\ndescribe database default;",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "cc8863106fc9469d859a2"
+    },
+    {
+      "text": "%fs \nls /FileStore/tables/suankiData/transformed/suanki_employee_partitioned/DEPARTMENT_ID=333",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/plain_text",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "plain_text",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "1531d72f816640fda84fb"
+    },
+    {
+      "text": "%sql\nselect * from retail_db.orders order by order_customer_id    limit 10",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "c2af8861e28844f0b2505"
+    },
+    {
+      "text": "%sql\nalter table stg_db.suanki_employee_stg set tblproperties ('skip.header.line.count'='1','serialization.null.format'='')",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "12045989767f4eab80668"
+    },
+    {
+      "text": "%sql\n\nalter table transform_db.suanki_employee_partitioned drop if exists partition (DEPARTMENT_ID='999') purge;  -- purge only work for internal table table and data both got dropped\n--skipt the .TRASH data will permanenty deleted \n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "e4608c03d18e44fc8957e"
+    },
+    {
+      "text": "####xporting hive table using insert overwrite\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "a15afdb417ca4a2d9b26d"
+    },
+    {
+      "text": "\n%sql\ndescribe formatted transform_db.suanki_employee_partitioned",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "7cfe5bc7854f48aaacb7d"
+    },
+    {
+      "text": "%spark\nspark.sql(\"use retail_db\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "8afde38b3dae478eaf05a"
+    },
+    {
+      "text": "%sql\n--list all env,system hiveconf, hivevar\nset -v",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "85f011faee404d329719f"
+    },
+    {
+      "text": "%sql\ncreate database if not exists stg_db location 's3://suanki-databricks-space/suankiData/stage' ;\ncreate database if not exists transform_db location 's3://suanki-databricks-space/suankiData/transformed' ;\ncreate database if not exists processed_db location 's3://suanki-databricks-space/suankiData/processed' ;\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "94753eb3bb534d36ae2e6"
+    },
+    {
+      "text": "## Hive ?\n**Apache Hive is a distributed, fault-tolerant data warehouse system that enables analytics at a massive scale. A data warehouse provides a central store of information that can easily be analyzed to make informed, data driven decisions. Hive allows users to read, write, and manage petabytes of data using SQL.\n\nHive is built on top of Apache Hadoop, which is an open-source framework used to efficiently store and process large datasets. As a result, Hive is closely integrated with Hadoop, and is designed to work quickly on petabytes of data. What makes Hive unique is the ability to query large datasets, leveraging Apache Tez or MapReduce, with a SQL-like interface.**\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "e704322fb92e402a83b1e"
+    },
+    {
+      "text": "%sql\nselect trunc(current_date(),'MM' ) as firstDateOfMonth, trunc(current_date(),'YY' ) as firstDateOfYear,\ndate_format(current_date(), 'yy') as yearOnly , date_format(current_date(), 'yyMMdd')",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "44ef3a5667da4d89babe4"
+    },
+    {
+      "text": "%sql\n--/bucketing\n\nset hive.enfore.bucketing=true;\n\ncreate table transform_db.suanki_partition_bucketed(\n  full_name String,\n  manager_id string,\n  employee_id int\n)\npartitioned by (department_id string)\nclustered by (employee_id) into 3 buckets\nstored as parquet",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "be4d06285d304de39b883"
+    }
+  ],
+  "info": {},
+  "noteForms": {},
+  "noteParams": {},
+  "angularObjects": {}
+}

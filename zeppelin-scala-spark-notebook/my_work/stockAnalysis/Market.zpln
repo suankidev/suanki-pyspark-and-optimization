@@ -1,0 +1,54 @@
+{
+  "id": "CO1BBKB5R",
+  "name": "Market",
+  "paragraphs": [
+    {
+      "text": "%spark\n\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "3d269b156df545458dd04"
+    },
+    {
+      "text": "# 2025-03-22\n\nStay away from stocks where narratives are being pushed. ?\n\n- There is a high probability that, in the coming weeks, one will hear many stories about a sector doing well and orders being bagged. Fact-check the narratives.\n\n\n recovery phase kicks in ?\n\n - First, check the company’s Q3 numbers. And, as the Q4 season kicks off, compare the performance in the two quarters. And second, check whether anything has changed in the operating matrix of the industry.\n\n\n -",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "1a74623e5da6452ea8db6"
+    }
+  ],
+  "info": {},
+  "noteForms": {},
+  "noteParams": {},
+  "angularObjects": {}
+}

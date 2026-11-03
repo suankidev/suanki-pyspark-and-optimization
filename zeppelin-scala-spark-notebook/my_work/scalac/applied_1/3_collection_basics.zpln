@@ -1,0 +1,670 @@
+{
+  "id": "GQTW9A96X",
+  "name": "3_collection_basics",
+  "paragraphs": [
+    {
+      "text": "####mutability",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "bf0af55e6e944453b02ee"
+    },
+    {
+      "text": "%spark\nm3 += 'g' -> 8.   //not work ",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "3c2fb55dad4f44f0ad85a"
+    },
+    {
+      "text": "%spark\nt -= 3",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "1b6e5f9800fb49e88a2a2"
+    },
+    {
+      "text": "%spark\ntrait AppliedTrait {\n  \n  implicit class prnt(x: Any) {\n    def show: Unit = x match {\n      case it: String      => println(x)\n      case it:List[_] => println(x)\n      case it: Iterable[_] => println(it.mkString(\", \"))\n      case it: Iterator[_] => println(it.mkString(\", \"))\n      case _               => println(x)\n    }\n\n}\n\n}",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "ab8e5480bb9b44448300a"
+    },
+    {
+      "text": "%spark\n// type parameters are not optional, this will not compile:\n// def badSquareRootsOf(xs: List): List = {\n//   for (x <- xs) yield math.sqrt(x)\n// }\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "a926de686117404f8c919"
+    },
+    {
+      "text": "%spark\nsquareRootOfAll(set1) // does not compile",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "6d4eef57a430486ab20c5"
+    },
+    {
+      "text": "%spark\n// Arrays are Mutable:\n\nval arr = Array(\"scooby\", \"dooby\", \"doo\")\n\narr(0) = \"scrappy\"\narr(1) = \"dappy\"\n\narr.mkString(\" \")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "fa7457a0c6064372bc763"
+    },
+    {
+      "text": "%spark\nval t = scala.collection.mutable.Map((1,\"One\"),(2,\"Two\"),(3,\"Three\"))\nval t1 = Map(11 -> \"Apple\",12 -> \"Banana\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "1c8f16c46ed74ea6ad8b4"
+    },
+    {
+      "text": "%spark\ndef show(a:Any):Unit=println(a)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "0f4da22b129f4339b7679"
+    },
+    {
+      "text": "%spark\nfor ((step, instruction) <- mapToRiches) {\n  println(s\"Step $step - $instruction\")\n}",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "cdfbd697dbf642738895e"
+    },
+    {
+      "text": "%spark\n2.->(\"two\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "2f64e997abbe4b1f814a1"
+    },
+    {
+      "text": "%spark\n// Lists and Vectors are not mutable\n\nval xs1 = List(1,2,3)\nval xs2 = 0 :: xs1\n\nvar xs3 = List(4,5,6)\nxs3 = xs2 ::: xs3  // because it's a var",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "0e6618897ba34c2aa3b25"
+    },
+    {
+      "text": "%spark\n1 -> \"one\"\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "5ae3b2a20b0b49179773f"
+    },
+    {
+      "text": "%spark\nfor (i <- mapToRiches){\n  println(s\"step: $i ${i._2}\")\n}\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "2c23741fde7c4a589f208"
+    },
+    {
+      "text": "%spark\nval array1: Array[Int] = Array(1,2,3)\nval list1: List[String] = List(\"scooby\", \"dooby\", \"doo\")\n\nval array2 = Array(1,2,3)\nval list2 = List(\"scooby\", \"dooby\", \"doo\")\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "431a755add544a3a97f7d"
+    },
+    {
+      "text": "%spark\n// Maps also may be either\n\nval m1 = mutable.Map('a' -> 1, 'b' -> 2, 'c' -> 3)\n\nvar m2 = immutable.Map('d' -> 4, 'e' -> 5, 'f' -> 6)\nval m3 = immutable.Map('d' -> 4, 'e' -> 5, 'f' -> 6)\n\nshow(m1.hashCode(),\nm2.hashCode()\n)\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "3d10a69f3e6149189c6a9"
+    },
+    {
+      "text": "%spark\nt",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "0b50a9ca461947769fcce"
+    },
+    {
+      "text": "%spark\n// Sets may be either:\n\nimport scala.collection._\n\nval s1 = mutable.Set(1,2,3)\nvar s2 = immutable.Set(1,2,3)\n\n// += on both types:\n\ns1 += 4  // calls += on mutable.Set\ns1\n\ns2 += 4  // turns into s2 = s2 + 4\ns2",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "98dd5701a8084f93b4143"
+    },
+    {
+      "text": "%spark\ndef squareRootsOf(xs: List[Int]): List[Double] = {\n  for (x <- xs) yield math.sqrt(x)\n}\n\nsquareRootsOf(List(1,2,3,4,5,6))",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "9dd269ba50d24ecca65cf"
+    },
+    {
+      "text": "%spark\nArrowAssoc(3).->(\"three\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "2ade692d22b04d89ac5aa"
+    },
+    {
+      "text": "\n#### Arrow ",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "87fa0e203d65445d8ba64"
+    },
+    {
+      "text": "%spark\n// List initializers\n\nval lista = List(1,2,3)\n\nval listb = 4 :: 5 :: 6 :: Nil\n\nval listc = lista ::: listb\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "9b24b99f1fd14f42b085a"
+    },
+    {
+      "text": "%spark\nt += (4 -> \"four\")\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "c94cabec1fa0476ca76c3"
+    },
+    {
+      "text": "%spark\ndef squareRootOfAll(xs: Seq[Int]): Seq[Double] =\n  xs.map(x => math.sqrt(x))\n\nsquareRootOfAll(v)\nsquareRootOfAll(listc)\nsquareRootOfAll(array2)\n\n\nval set1 = Set(1,2,3,1,2,4,5)\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "cff56630f233437dbebcf"
+    },
+    {
+      "text": "%spark\n m1 ++= m2\nshow(m1)\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "d7bbd3ad9e914f6682061"
+    },
+    {
+      "text": "%spark\ndef traitIterable: Unit = {\n\n    \"Iterable trait example\".show\n\n    val xs: List[Int] = List(1, 2, 3, 4, 5)\n\n    xs.iterator.show\n\n    // Other Iterators:\n    xs.grouped(2).show\n    xs.sliding(2).show\n\n    println(\"subcollections of Iterable\")\n    xs.withFilter(_ % 2 == 0).map(_ * 2).show\n    xs.filter(_ % 2 == 0).map(_ * 2).show\n    xs.withFilter(_ % 2 == 0).show\n    xs.filterNot(_ % 2 == 0).map(_ * 2).show\n\n    xs.drop(2).show          // drop first 2 elements\n    xs.take(2).show          // take first 2 elements\n    xs.slice(1, 3).show      // take elements from index 1 to 2 (exclusive)\n    xs.dropWhile(_ < 3).show // drop elements while condition is true\n    xs.takeWhile(_ < 3).show // take elements while condition is true\n\n    \"subdivisions of Iterable\".show\n    xs.view.show            // lazy view of the collection\n    xs.view.map(_ * 2).show // lazy view with transformation\n    xs.view.filter(_ % 2 == 0).show // lazy view with filtering\n\n    xs.partition(_ % 2 == 0).show\n    xs.groupBy(_ % 2 == 0).show\n    xs.groupMap(_ % 2 == 0)(_ * 2).show\n    xs.groupMapReduce(_ % 2 == 0)(_ * 2)(_ + _).show\n\n    println(\"element Condition\")\n    // i want the sum even and odd numbers from the list\n    val t = xs\n      .groupBy(_ % 2 == 0)\n      .view\n      .mapValues(_.sum)\n\n    t.show\n\n    xs.map(x => (x, 1)).groupMapReduce(_._1 % 2 == 0)(_._1 * 1)(_ + _).show\n\n    xs.iterator.forall((x: Int) => x >= 1).show\n    xs.count((x: Int) => x % 2 == 0).show\n\n    // write ananymous literal\n    val x  = (a: Int) => a % 2 == 0\n    val x1 = (a: Int) => a % 2 == 20\n\n    xs.exists(x).show\n    xs.exists(x1).show\n\n    \"Folds\".show\n    xs.foldLeft(0)((x, y) => x + y).show\n    xs.foldRight(0)((x, y) => x + y).show\n    xs.reduce((x, y) => x + y)\n\n    \"specific Folds\".show\n\n    xs.show\n    xs.sum.show\n    xs.product.show\n\n    xs.min.show\n    xs.max.show\n\n    val s = new StringBuilder(\"jello\")\n    s.show\n    s.addString(new StringBuilder(\"Sham\")).show\n\n\n  val xy = List(23,45,67,89)\n\n  xs.zip(xy).show\n\n\n  xs.zipAll(xy,99,100).show\n\n  xy.zipWithIndex.show\n  xy.view\n\n  }\n\n  def code: () => Unit = { () =>\n    {\n      traitIterable\n\n    }\n  }\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "47dc79fb5294427e9b630"
+    },
+    {
+      "text": "%spark\n// common beginner mistake:\nval listd = lista :: listb\n\nval v = Vector(1,2,3,4)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "67fd1a39e1984ff1bc8eb"
+    },
+    {
+      "text": "%spark\n// easy map iteration\n\nval mapToRiches = Map(\n  1 -> \"steal underpants\",\n  2 -> \"???\",\n  3 -> \"profit\"\n)\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "d1884b520f5649d49ab50"
+    },
+    {
+      "text": "%spark\nt ++= t1. //since it's mutable doesn't matter if t is val\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "937d807df9a24977be2f5"
+    },
+    {
+      "text": "%spark\nm2 += 'g' -> 7\n\n\nshow(m2) //because of var\n\nm1.hashCode()\nm2.hashCode()",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "7751b6516eb248ba8d356"
+    }
+  ],
+  "info": {},
+  "noteForms": {},
+  "noteParams": {},
+  "angularObjects": {}
+}
