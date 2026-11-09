@@ -336,3 +336,16 @@ spark-defaults.conf
 *~
 .DS_Store
 Thumbs.db
+
+
+
+# Ignore PySpark warehouse managed directories
+**/spark-warehouse/
+
+# Ignore local Derby and Hive metastore database logs/locks
+**/metastore_db/
+**/derby.log
+
+# Ignore hidden Spark checkpoint and tracking metadata
+**/.sparkStaging/
+**/.spark-warehouse/
