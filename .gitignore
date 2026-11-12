@@ -231,6 +231,7 @@ derby.log
 
 # Spark warehouse and local event logs
 spark-warehouse/
+data/warehouse/
 event-logs/
 spark-events/
 
