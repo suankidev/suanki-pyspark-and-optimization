@@ -1,0 +1,186 @@
+{
+  "id": "HRLPJO4FC",
+  "name": "5_Joins",
+  "paragraphs": [
+    {
+      "text": "\n>you need to understand the two core resources at play:\nthe node-to-node communication strategy and per node computation strategy\n\n>Spark approaches cluster communication in two different ways during joins. \nIt either incurs a  shuffle join, which results in an **all-to-all communication or a broadcast join(node to node)**. \n\n\n1.  **Big table–to–big table**\n\nIn a shuffle join, every node talks to every other node and they share data according to which\nnode has a certain key or set of keys (on which you are joining). These joins are expensive\nbecause the network can become congested with traffic, especially if your data is not partitioned\nwell\n\n2. **Big table–to–small table**\nWhen the table is small enough to fit into the memory of a single worker node, with some\nbreathing room of course, we can optimize our join. Although we can use a big table–to–big\ntable communication strategy, it can often be more efficient to use a broadcast join\nwhat this does is\nprevent us from performing the all-to-all communication during the entire join process. Instead,\nwe perform it only once at the beginning and then let each individual worker node perform the\nwork without having to wait or communicate with any other worker node, ",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "b92a6a7c125b49f6bda9e"
+    },
+    {
+      "text": "Note:\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "39404dae36354778bea98"
+    },
+    {
+      "text": "\n[YouTube: sortMErgeJOin vs broadCastHashJoin](https://www.youtube.com/watch?v=OtgfOiagAxY)\n\n[YouTube: sortMErgeJOin vs broadCastHashJoin]([YouTube: sortMErgeJOin vs broadCastHashJoin](https://www.youtube.com/watch?v=OtgfOiagAxY)\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "1114162975f147dc90fef"
+    },
+    {
+      "text": "\n####How Spark Performs Joins",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "0b6fd399d7fe432a89bd2"
+    },
+    {
+      "text": "\nHow to optimize join and mistake\n  - mistake: https://stackoverflow.com/questions/55919699/spark-2-2-join-fails-with-huge-dataset\n\n  - https://www.oreilly.com/library/view/high-performance-spark/9781491943199/ch04.html\n  - https://www.slideshare.net/cloudera/top-5-mistakes-to-avoid-when-writing-apache-spark-applications",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "bc5e1681b79a4b27b943c"
+    },
+    {
+      "text": "```\ntransaction df\ntotal: 39790092\n+----------+----------+----------+---------------+----------+----+-----+---+-------------+------+-----------+\n|cust_id   |start_date|end_date  |txn_id         |date      |year|month|day|expense_type |amt   |city       |\n+----------+----------+----------+---------------+----------+----+-----+---+-------------+------+-----------+\n|C0YDPQWPBJ|2010-07-01|2018-12-01|TZ5SMKZY9S03OQJ|2018-10-07|2018|10   |7  |Entertainment|10.42 |boston     |\n|C0YDPQWPBJ|2010-07-01|2018-12-01|TYIAPPNU066CJ5R|2016-03-27|2016|3    |27 |Motor/Travel |44.34 |portland   |\n|C0YDPQWPBJ|2010-07-01|2018-12-01|TETSXIK4BLXHJ6W|2011-04-11|2011|4    |11 |Entertainment|3.18  |chicago    |\n|C0YDPQWPBJ|2010-07-01|2018-12-01|TQKL1QFJY3EM8LO|2018-02-22|2018|2    |22 |Groceries    |268.97|los_angeles|\n|C0YDPQWPBJ|2010-07-01|2018-12-01|TYL6DFP09PPXMVB|2010-10-16|2010|10   |16 |Entertainment|2.66  |chicago    |\n+----------+----------+----------+---------------+----------+----+-----+---+-------------+------+-----------+\n\n\ncustomer df\ntotal: 5000\n+----------+-------------+---+------+----------+-----+-----------+\n|cust_id   |name         |age|gender|birthday  |zip  |city       |\n+----------+-------------+---+------+----------+-----+-----------+\n|C007YEYTX9|Aaron Abbott |34 |Female|7/13/1991 |97823|boston     |\n|C00B971T1J|Aaron Austin |37 |Female|12/16/2004|30332|chicago    |\n|C00WRSJF1Q|Aaron Barnes |29 |Female|3/11/1977 |23451|denver     |\n|C01AZWQMF3|Aaron Barrett|31 |Male  |7/9/1998  |46613|los_angeles|\n|C01BKUFRHA|Aaron Becker |54 |Male  |11/24/1979|40284|san_diego  |\n+----------+-------------+---+------+----------+-----+-----------+\n\n```\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "fc296ec89127482283f8b"
+    },
+    {
+      "text": "%run /my_work/CommonUtils/SetupData",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "a1ff483a6c454367903b2"
+    },
+    {
+      "text": "%spark\ntransactionDF.join(customerDF, transactionDF.col(\"cust_id\") ===  customerDF.col(\"cust_id\")).explain",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "2de40a91da564c6eaac1a"
+    }
+  ],
+  "info": {},
+  "noteForms": {},
+  "noteParams": {},
+  "angularObjects": {}
+}

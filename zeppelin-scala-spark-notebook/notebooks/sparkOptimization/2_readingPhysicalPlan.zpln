@@ -1,0 +1,1066 @@
+{
+  "id": "VKUWBGXP3",
+  "name": "2_readingPhysicalPlan",
+  "paragraphs": [
+    {
+      "text": "%spark\ntransactionDF.explain()",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "42e61b13c16141febe24c"
+    },
+    {
+      "text": "%spark\nspark.conf.set(\"spark.sql.autoBroadcastJoinThreshold\",\"10M\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "13c534e514984559a08ad"
+    },
+    {
+      "text": "%spark\nval df_narrow_transformation = customerDF\n.filter(col(\"city\") === \"boston\")\n.withColumn(\"first_name\", split(col(\"name\"),\" \")(0))\n.withColumn(\"last_name\", split(col(\"name\"),\" \")(1))\n.withColumn(\"age\", col(\"age\") + lit(5))\n.selectExpr(\n  \"cust_id\",\n  \"first_name\",\n  \"last_name\",\n  \"age\",\n  \"gender\",\n  \"birthday\"\n)\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "cbe16aa3437a45ddb2bd3"
+    },
+    {
+      "text": "%spark\nval joinDF = transactionDF.join(\n  f.broadcast(customerDF),\n  transactionDF.col(\"cust_id\") === customerDF.col(\"cust_id\"),\n  \"inner\"\n)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "fb31be3da30346b881782"
+    },
+    {
+      "text": "%spark\n spark.conf.set(\"spark.sql.adaptive.enabled\",false)\nspark.conf.set(\"spark.sql.adaptive.coalescePartitions.enabled\",false)\nspark.conf.set(\"spark.sql.autoBroadcastJoinThreshold\",-1)\n\ntransactionDF\n.groupBy(\"city\")\n.count.explain()",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "57c2e358ee1642e289c1f"
+    },
+    {
+      "text": "%spark\ncustomerDF.count",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "234561fbd578481a907b1"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "e29afe0ed4f44fbfb7c71"
+    },
+    {
+      "text": "%spark\nspark.conf.set(\"spark.sql.adaptive.enabled\",false)\nspark.conf.set(\"spark.sql.adaptive.coalescePartitions.enabled\",false)\nspark.conf.set(\"spark.sql.autoBroadcastJoinThreshold\",-1)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "3594473e85d14ebab5f0e"
+    },
+    {
+      "text": "%spark\njoin_df.write.format(\"noop\").mode(\"overwrite\").save(\"/FileStore/tables/suankiData/processed/transaction\")\n\n// one job\n//three stages  -- 1 stage: exchange the key from customre: exchange has partions and sortby key\n                // 2 stage: exchange the key from transacton exchange has partition and sort by key\n                // 3 sort merge join and write to df",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "77945406e71c41dca8732"
+    },
+    {
+      "text": "\n###Join",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "261938266e9243648eebc"
+    },
+    {
+      "text": "%spark\n\n\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "2396a3733197426cb602a"
+    },
+    {
+      "text": "### coalesce\n\n- where does parittions schem go i.g range partition go(i mean  a logical chunk of data that is stored on a single node in a cluster.)\n- coalese merge the file within same executor and it does not do any shuffle\n- since there is no shuffle spark does not run partitions scheme remain same",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "071886220983451bb5c5a"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "18dbe2a5f4344402ae6a4"
+    },
+    {
+      "text": "%spark\nprintln(\n  transactionDF.rdd.getNumPartitions,  //9 task, meaning 9 task would be under stage2\n  customerDF.rdd.getNumPartitions  // 1 task, and 1 task for stage 1\n)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "e81d6f5463144861a456f"
+    },
+    {
+      "text": "%spark\nprintln(\ntransactionDF.rdd.getNumPartitions\n,spark.sparkContext.defaultMinPartitions\n,spark.sparkContext.defaultParallelism\n)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "c5c08d21d4794fa6b7d88"
+    },
+    {
+      "text": "%spark\ntransactionDF\n.groupBy(\"city\")\n.agg(sum(\"amt\").alias(\"transaction_ammount\"))\n.explain",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "acecd4b2c5104793a222f"
+    },
+    {
+      "text": "%spark\nadaptiveJoin.explain",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "09fae651d5734b23a2f19"
+    },
+    {
+      "text": "%spark\nimport org.apache.spark.sql.functions._\n\nval custDF=spark.read.parquet(\"/FileStore/tables/suankiData/raw/customer\")\n\nval finalDf=custDF.filter(col(\"city\") === \"boston\")\n.withColumn(\"first_name\", split(col(\"name\"),\" \")(0))\n.withColumn(\"last_name\", split(col(\"name\"),\" \")(1))\n.withColumn(\"age\", col(\"age\") + lit(5))\n.selectExpr(\n  \"cust_id\",\n  \"first_name\",\n  \"last_name\",\n  \"age\",\n  \"gender\",\n  \"birthday\"\n)\n\nfinalDf.write.format(\"noop\")\n.mode(\"overwrite\")\n.save(\"/FileStore/tables/suankiData/processed/customer\")\n\n//will trigger only two jobs, since this has only two action\n//job-1  reading the data\n//job-2 writing the data ..since there is no exchange only one stage would be created\n\n// overall 2 jobs and 2 stage\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "e0850132d1364a2db1b84"
+    },
+    {
+      "text": "%spark\ntransactionDF\n.groupBy(\"cust_id\")\n.agg(countDistinct(\"city\").alias(\"customer_distinct_purchase_city\"))\n.explain",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "0fb64514980345f6a227a"
+    },
+    {
+      "text": "%spark\ntransactionDF.repartition(18).explain(true)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "441a3ca3e0174275bc6d8"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "a5f6213990fe4316b3b49"
+    },
+    {
+      "text": "%spark\njoin_df.explain",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "2f4c08aa6444454a879fe"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "3c3eeb7c542c4d738bb23"
+    },
+    {
+      "text": "\n#### Wide Transformation\n\n  - repartition\n  - coalesce\n  - join\n  - groupBy\n    - count\n    - countDistinct\n    - sum\n    ",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "f1f0a2cf5e0642b4bdc16"
+    },
+    {
+      "text": "%spark\ntransactionDF.explain(true)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "c09bcce522bd41aea468d"
+    },
+    {
+      "text": "%spark\njoin_df.show(5)   ",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "ff3013fe9bd7453f8ba51"
+    },
+    {
+      "text": "### groupBy",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "b523981c755947c0a3017"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "159cb4f085034028941eb"
+    },
+    {
+      "text": "%spark\nspark.conf.set(\"spark.sql.adaptive.enabled\",true)\nspark.conf.set(\"spark.sql.adaptive.coalescePartitions.enabled\",true)\nspark.conf.set(\"spark.sql.autoBroadcastJoinThreshold\",\"10m\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "b7f617473e174d3caac54"
+    },
+    {
+      "text": "%spark\ntransactionDF.coalesce(1).explain()",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "2f85635b5393469fa62e0"
+    },
+    {
+      "text": "%spark\ncustomerDF.show(3,false)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "4152510012b9438f99ad9"
+    },
+    {
+      "text": "%spark\nspark.conf.set(\"spark.sql.adaptive.enabled\",false)\nspark.conf.set(\"spark.sql.adaptive.coalescePartitions.enabled\",false)\nspark.conf.set(\"spark.sql.autoBroadcastJoinThreshold\",-1)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "5ae6290de99c442497bb8"
+    },
+    {
+      "text": "%spark\ndf_narrow_transformation.show()",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "24553d5811984ba7868b6"
+    },
+    {
+      "text": "%spark\n val join_df=transactionDF.join(\n  customerDF,\n  transactionDF.col(\"cust_id\") === customerDF.col(\"cust_id\"),\n  \"inner\"\n)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "38effc1b51df4c5385af0"
+    },
+    {
+      "text": "%spark\njoinDF.write.format(\"noop\").mode(\"overwrite\").save(\"/FileStore/tables/suankiData/processed/transaction\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "1bacbd7d0ec14eed91372"
+    },
+    {
+      "text": "%spark\nspark.conf.set(\"spark.sql.adaptive.enabled\",true)\nspark.conf.set(\"spark.sql.adaptive.coalescePartitions.enabled\",true)\nspark.conf.set(\"spark.sql.autoBroadcastJoinThreshold\",100000)\n\ntransactionDF\n.groupBy(\"city\")\n.count.explain()",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "9633f5e1c28747d09829a"
+    },
+    {
+      "text": "\n#### Repartition",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "ffdf16e337874b288c6ab"
+    },
+    {
+      "text": "\n-  hashpartitoining  \n   hash(key)%shufflepartion\n- once the data in shuffle partition,sort the key\n- key matched will join the data frame",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "05acabe9ce2449bb82fdb"
+    },
+    {
+      "text": "\n**What do you think for above how many jobs and stage would be created ?**\n\nSimple Answer: no action no job, but below we calling show then fallowing thing will  happen\n`\nsingle job, but three stage\n1st stage to read customer data-->filter--> sort -->exchange the shuffle  200  --> sort\n2nd stage to read transaction data -> filter --> sort within partition -> exchange 200 --> sort\n3rd stage toshuffle reade from 1st and 2nd ---> sort merge join\n`",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "1cb81533b437438fa44f9"
+    },
+    {
+      "text": "%spark\nretailDF.filter(col(\"description\").isNotNull && col(\"description\").isin(\"DOS\")).explain  //File scan without pushed down filter --> inMemoryRelation --> inmemorytablescan  --> filter",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "89111151dfa2453b97963"
+    },
+    {
+      "text": "%spark\nadaptiveJoin.write.format(\"noop\").mode(\"overwrite\").save(\"/FileStore/tables/suankiData/processed/transaction\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "ed1f6a2c658b4f21896e7"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "98957f1c026b49009b26a"
+    },
+    {
+      "text": "%spark\nval adaptiveJoin = transactionDF.join(\n  customerDF,\n  transactionDF.col(\"cust_id\") === customerDF.col(\"cust_id\"),\n  \"inner\"\n)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "9100c42389e34b12a76ed"
+    },
+    {
+      "text": "%spark\ncustomerDF.show(2, false)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "ed353d6479894f6d88dc8"
+    },
+    {
+      "text": "%spark\njoinDF.explain",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "0bc675f1bfcd4dd58b145"
+    },
+    {
+      "text": "%spark\ntransactionDF.coalesce(18).explain(true)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "b3790c292d3847c3822ff"
+    },
+    {
+      "text": "%run /my_work/CommonUtils/SetupData",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "056332eb7324421cb812c"
+    },
+    {
+      "text": "%spark\ndf_narrow_transformation.explain(true)  // scan with pushed down filter b/c of patquet  --> column to row  --> filter   -> project",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "2247d0b4e43b40e797245"
+    }
+  ],
+  "info": {},
+  "noteForms": {},
+  "noteParams": {},
+  "angularObjects": {}
+}

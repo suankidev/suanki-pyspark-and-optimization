@@ -1,0 +1,54 @@
+{
+  "id": "JQJ3DCP32",
+  "name": "commonRdd",
+  "paragraphs": [
+    {
+      "text": "%spark\ncase class Flight(DEST_COUNTRY_NAME: String,\nORIGIN_COUNTRY_NAME: String, count: BigInt)\n\n//dataset\nval flights = spark.read\n.format(\"csv\")\n.option(\"header\",true).option(\"inferSchema\",true).load(\"dbfs:/FileStore/tables/suankiData/raw/flightData\")\n.as[Flight]\n\n//rdd\nval flightRdd = spark.sparkContext.textFile(\"dbfs:/FileStore/tables/suankiData/raw/flightData/2011_summary.csv\")\nval firstRow = flightRdd.first\nval finalflightRdd = flightRdd.filter(row => row !=firstRow && !row.trim.contains(\"Eustatius\")).map(row => row.split(\",\"))\n\n\n//Interoperating Between DataFrames, Datasets, and RDDs\n// in Scala: converts a Dataset[Long] to RDD[Long]\n//Because Python doesn’t have Datasets—it has only DataFrames—you will get an RDD of type Row:\nval rangeOfNumbers = spark.range(500).rdd\n\n\nval myCollection = \"Spark The Definitive Guide : Big Data Processing Made Simple Using Spark Diffrent Library for Big Data Technology\"\n.split(\" \")\n\nval words = spark.sparkContext.parallelize(myCollection,2)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "51c3f1f3907d459a80a0e"
+    },
+    {
+      "text": "%spark\nprintln(s\"collectoin of rdd of words: $words\")\nprintln(s\"data sets of flight as Rdd: $finalflightRdd\")\nprintln(s\"data sets of flight as CaseClass:Dataset: $flights\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "064405d122454f82a4595"
+    }
+  ],
+  "info": {},
+  "noteForms": {},
+  "noteParams": {},
+  "angularObjects": {}
+}

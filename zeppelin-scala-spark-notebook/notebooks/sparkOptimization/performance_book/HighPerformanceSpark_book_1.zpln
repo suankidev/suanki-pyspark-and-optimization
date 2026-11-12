@@ -1,0 +1,1682 @@
+{
+  "id": "UW6031N65",
+  "name": "HighPerformanceSpark_book_1",
+  "paragraphs": [
+    {
+      "text": "%spark\nflightTypeRdd.map(row => row.orgin).take(5)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "9612af1e39e64857bce73"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "80096235708f4bd786f20"
+    },
+    {
+      "text": "%sql \nselect * from perm_pandas limit 4;",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "sql",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "0c773827959b48a3a3440"
+    },
+    {
+      "text": "\n###JSON\n- Spark SQL is able to infer a schema for us by sampling the records. Loading\nJSON data is more expensive than loading many data sources,\n- you can increase the percentage of records read to determine the\nschema by setting samplingRatio to a higher value\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "543cc260ab324acf8fbcf"
+    },
+    {
+      "text": "%spark\nval df1 = spark.createDataFrame(Seq(personOne))\ndf.printSchema",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "f5f7dac8a50444b195f4c"
+    },
+    {
+      "text": "%spark\nval flightDf = spark.read.format(\"csv\").option(\"header\",true).option(\"inferSchema\",true).load(\"/FileStore/tables/suankiData/raw/flightData/*.csv\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "593b73aff9804c1b964c9"
+    },
+    {
+      "text": "%spark\ndef withStopWordsFiltered(rdd : RDD[String], illegalTokens : Array[Char],\n      stopWords : Set[String]): RDD[(String, Int)] = {\n      val separators = illegalTokens ++ Array[Char](' ')\n      val tokens: RDD[String] = rdd.flatMap(_.split(separators).\n      map(_.trim.toLowerCase))\n      val words = tokens.filter(token =>\n      !stopWords.contains(token) && (token.length > 0) )\n      val wordPairs = words.map((_, 1))\n      val wordCounts = wordPairs.reduceByKey(_ + _)\n      wordCounts\n}",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "1efbb0e3564a48b48e1be"
+    },
+    {
+      "text": "%spark\n\nimport org.apache.spark.rdd.RDD\n\ndef wordCount(rowRdd:RDD[String]):RDD[(String, Int)]={\n\n retailRdd.flatMap(row => row.split(\",\"))\n .map(row => (row, 1)).reduceByKey((x,y) => (x+y))\n\n}",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "d5324bc7efe04e2483e0a"
+    },
+    {
+      "text": "%spark\nwordRdd.toDebugString,\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "a8d329c2e2c64c9292c76"
+    },
+    {
+      "text": "%spark\nval df =flightDf.limit(5)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "1ca821d6c62f40de95e51"
+    },
+    {
+      "text": "%spark\n\ndf.explode(df(\"address\")){\n  case Row(p:Seq[Row]) => p.map{\n    case Row(addressType:String, state:String,city:String, mobile:Seq[String]) => Address(addressType, state, city, mobile.toArray)\n  }\n}.select(\"mobile\")\n.show(false)\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "2b4b4384c65d455cbdf8d"
+    },
+    {
+      "text": "To enable Hive support in SparkSession or use the HiveContext you will need to add both Spark’s\nSQL and Hive components to your dependencies.\n```\nTo enable Hive support in SparkSession or use the HiveContext you will need to add both Spark’s\nSQL and Hive components to your dependencies.\n```",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "d8434bc6fa5c469a8dd19"
+    },
+    {
+      "text": "%spark\ndf.show(false)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "bf25e2a5392f4f5f8eae4"
+    },
+    {
+      "text": "%spark\ndf.withColumn(\"whenThen\", when(df(\"count\") === 264, \"two sixty four\")\n.when(df(\"count\") === 1, \"one\")\n.when(df(\"count\") === 24, \"twenty frour\")\n.otherwise(\"no match\")\n).show",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "aca5922da138497faeaeb"
+    },
+    {
+      "text": "###In-Memory Persistence and Memory Management\n\n-  Spark’s performance advantage over MapReduce is greatest in use cases involving repeated\ncomputations. Much of this performance increase is due to Spark’s use of in-memory persistence.\nRather than writing to disk between each pass through the data, **Spark has the option of keeping the\ndata on the executors loaded into memory.** That way, the data on each partition is available inmemory\neach time it needs to be accessed\n\n  1. In memory as deserialized Java objects\n    - store objects in RDDs is as the original deserialized Java objects that\nare defined by the driver program. This form of in-memory storage is the fastest, since it reduces\nserialization time; however, it may not be the most memory efficient, since it requires the data to\nbe stored as objects.\n\n  2. As serialized data\n     - Using the standard Java serialization library, Spark objects are converted into streams of\nbytes as they are moved around the network. This approach may be slower, since serialized\ndata is more CPU-intensive to read than deserialized data; however, it is often more\nmemory efficient, since it allows the user to choose a more efficient representation. While\nJava serialization is more efficient than full objects, Kryo serialization\n\n  3. on disk\n    - RDDs, whose partitions are too large to be stored in RAM on each of the executors, can be\nwritten to disk. This strategy is obviously slower for repeated computations\n\n`**NOTE**`\n```\nThe persist() function in the RDD class lets the user control how the RDD is stored. By default,\npersist() stores an RDD as deserialized objects in memory```",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "0a35bf4490ea409383bfe"
+    },
+    {
+      "text": "####Types of RDDs\n- The implementation of the Spark Scala API contains an abstract class, RDD, which contains not only\nthe five core functions of RDDs, but also those transformations and actions that are available to all\nRDDs,\n\n`*NOTE*`\n```\nFind out what type an RDD is by using the toDebugString function, which is defined on all RDDs. This will tell you what\nkind of RDD you have and provide a list of its parent RDDs.\n```",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "06370c8aaaed4e9982cca"
+    },
+    {
+      "text": "%fs\nmkdir -p  /FileStore/tables/suankiData/raw/flightData/json",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/plain_text",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "plain_text",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "77d0a76d1d814ed2aef7a"
+    },
+    {
+      "text": "\n### DAG\nSpark’s high-level scheduling layer uses RDD dependencies to build a Directed Acyclic Graph (a\nDAG) of stages for each Spark job. In the Spark API, this is called the DAG Scheduler. \n\n- execution of a Spark job is handled by the DAG. The DAG builds a graph of stages for each job,\ndetermines the locations to run each task, and passes that information on to the TaskScheduler,\nwhich is responsible for running tasks on the cluster. The TaskScheduler creates a graph with\ndependencies between partitions",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "871e63300e77499bba51f"
+    },
+    {
+      "text": "%spark\n\n\ncase class Address(addressType:String, state:String, city:String, mobile:Array[String] )\ncase class Person(name:String, address: Array[Address])\n\nval rameshAdd = Array(\n  Address(\"Peramanent\", \"U.P.\", \"Gramin\",Array(\"91 27287\",\"+551 2222\")),\n  Address(\"Correspondance\", \"M.P.\", \"Pune\",Array(\"91 787878\",\"+120 87773\"))\n     )\n\n\nval skumaAdd = Array(\n  Address(\"Peramanent\", \"G.P.\", \"gkp\",Array(\"91 a11111a\",\"+551 333333\")),\n  Address(\"Correspondance\", \"J and K\", \"Tiahri\",Array(\"91 8398487398\",\"+120 434343\"))\n     )\n\nval personOne:Person = Person(\"Ramesh\",rameshAdd)\nval personTwo:Person = Person(\"Skuma\",skumaAdd)\n\nval data:Seq[Person] = Seq(personOne,personTwo)\nval df = data.toDF()\n\ndf.printSchema\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "4ca9fab857914c3f89258"
+    },
+    {
+      "text": "%spark\nflightJson.schema",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "266e6fe1bfbe47558f0de"
+    },
+    {
+      "text": "###Functions on RDDs: Transformations Versus Actions\n\nThere are two types of functions defined on RDDs: actions and transformations. Actions are\nfunctions that return something that is not an RDD, including a side effect, and transformations are\nfunctions that return another RDD.",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "0e1e6b6fe1fe456782839"
+    },
+    {
+      "text": "%spark\ndf.collect",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "cc012b699a3340b69f8c9"
+    },
+    {
+      "text": "###The when and otherwise functions can be chained together to create the same effect as of if/else",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "a75163d47c034e86ab75e"
+    },
+    {
+      "text": "%spark\n(joinRdd.partitioner,\nrdd1.partitioner   //non for none pared rdd\n)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "7be7c7565f4741699d217"
+    },
+    {
+      "text": "%spark\ndf.select(explode(df(\"address\"))).show(false)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "fc47e101879b4a35b706c"
+    },
+    {
+      "text": "###Basics of Schemas",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "b84b165736ab447e9cb3e"
+    },
+    {
+      "text": "%spark\nval ds=flightTypeRdd.toDS\nval df=flightTypeRdd.toDF",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "e36ef56e6b8b4f9b8ccd1"
+    },
+    {
+      "text": "%spark\nimport org.apache.spark.sql.DataFrame\ndef encodePandaType(pandaInfo: DataFrame): DataFrame = {\npandaInfo.select(pandaInfo(\"id\"),\n(when(pandaInfo(\"pt\") === \"giant\", 0).\nwhen(pandaInfo(\"pt\") === \"red\", 1).\notherwise(2)).as(\"encodedType\")\n)\n}",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "e4dfadd18bd243f3b061a"
+    },
+    {
+      "text": "%spark\nval flightJson = spark.read.format(\"json\").option(\"samplingRatio\",\"0.2\").load(\"/FileStore/tables/suankiData/raw/flightData/json/2010_summary.json\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "d5d275f9bdf6424a84560"
+    },
+    {
+      "text": "%spark\nwordCount(retailRdd).take(10)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "dc4943a42e7b49a5a5c7b"
+    },
+    {
+      "text": "###Data Representation in DataFrames and Datasets\nDataFrames are more than RDDs of Row objects; DataFrames and Datasets have a specialized\nrepresentation and columnar cache format. The specialized representation is not only more space\nefficient, but also can be much faster to encode than even Kryo serialization. To be clear, like RDDs,\nDataFrames and Datasets are generally lazily evaluated and build up a lineage of their\ndependencies (except in DataFrames this is called a logical plan and contains more information)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "820dc4dbc57d4f6fa3b2e"
+    },
+    {
+      "text": "%spark\nspark.createDataFrame(Seq(Flight(\"a\",\"b\",23L), Flight(\"a\",\"b\",26L))).show",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "abba255bb57a402b905d6"
+    },
+    {
+      "text": "%spark\nval dfWith = df.withColumn(\"arr\", lit(Array(0,1,2,3)))\n.show(false)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "bf6f95f88e164175baf07"
+    },
+    {
+      "text": "%spark\ndf",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "3b0b14ec94c3409fb125e"
+    },
+    {
+      "text": "%spark\ndf.show",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "af66d2d9f7e74498a16fd"
+    },
+    {
+      "text": "###The Spark Application\n\nA Spark application corresponds to a set of Spark jobs defined by one SparkContext in the driver\nprogram. A Spark application begins when a SparkContext is started. When the SparkContext is\nstarted, a driver and a series of executors are started on the worker nodes of the cluster. Each\nexecutor is its own Java Virtual Machine (JVM), and an executor cannot span multiple nodes although\none node may contain several executors.",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "a929ef8b5094452c96c7a"
+    },
+    {
+      "text": "%spark\ncase class Flight(dest:String, orgin:String, count:Long)\nimport org.apache.spark.rdd.RDD\n\nval flightTypeRdd:RDD[Flight] = flightRdd.map(row => Flight(row.getAs[String](0), row.getAs[String](1), row.getAs[Long](2)))",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "5d413cbf48054dfca6ec3"
+    },
+    {
+      "text": "%spark\n(\n  wordRdd.partitions,\n  wordRdd.partitions.size,\n  wordRdd.dependencies\n)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "3deaedda09254a66bb373"
+    },
+    {
+      "text": "%spark\nflightDf\n.groupBy(flightDf(\"dest_country_name\"))\n.max(\"count\")\n.show(5,false)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "7bfdde52653b4b5987387"
+    },
+    {
+      "text": "%spark\nimport org.apache.spark.sql.functions._\n\nds.select(col(\"dest\"),col(\"count\").as[Double]  ).take(4)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "049d0a0ddc1f4616960f3"
+    },
+    {
+      "text": "%spark\nval rdd1 = sc.makeRDD(Array((\"A\",\"1\"),(\"B\",\"2\"),(\"C\",\"3\")),2)\nval rdd2 = sc.makeRDD(Array((\"A\",\"a\"),(\"C\",\"c\"),(\"D\",\"d\")),2)\nval joinRdd = rdd1.join(rdd2)\n\njoinRdd.collect\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "56ee75dac93940c987dee"
+    },
+    {
+      "text": "###Resource Allocation Across Applications\n- Spark offers two ways of allocating resources across applications: **static allocation and dynamic\nallocation.** With static allocation, each application is allotted a finite maximum of resources on the\ncluster and reserves them for the duration of the application (as long as the SparkContext is still\nrunning). ",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "1d57ca5d99d34760aa854"
+    },
+    {
+      "text": "%spark\nflightDf\n.withColumn(\"avg\", avg(\"count\").over(windowSpec))\n.withColumn(\"avg_deviation\", col(\"avg\") - col(\"count\"))\n.withColumn(\"actual deviation\", col(\"avg_deviation\") + 1)\n.show(false)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "24684f867c664d8693c25"
+    },
+    {
+      "text": "### Tungsten\n\n- Tungsten is a new Spark SQL component that provides more efficient Spark operations by working\ndirectly at the byte level\n\n- https://www.linkedin.com/pulse/catalyst-tungsten-apache-sparks-speeding-engine-deepak-rajak/",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "9cf39aae07b742d0943b5"
+    },
+    {
+      "text": "%spark\nspark.conf.get(\"spark.sql.tungsten.enabled\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "5123334b1445424aad303"
+    },
+    {
+      "text": "###Spark Job Scheduling\n-  A Spark application consists of a driver process, which is where the high-level Spark logic is\nwritten, and a series of executor processes that can be scattered across the nodes of a cluster. The\nSpark program itself runs in the driver node and sends some instructions to the executors. One Spark\ncluster can run several Spark applications concurrentlyThe applications are scheduled by the cluster manager and correspond to one SparkContext",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "bbab9f678678415b9815a"
+    },
+    {
+      "text": "%spark\ndef simpleSparkProgram(rdd : RDD[Double]): Long ={\n//stage1\nrdd.filter(_< 1000.0)\n.map(x => (x, x) )\n//stage2\n.groupByKey()\n.map{ case(value, groups) => (groups.sum, value)}\n//stage 3\n.sortByKey()\n.count()\n}",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "a1ab233a84064658b5bd1"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "2ad8f59f14a14f12ba5cc"
+    },
+    {
+      "text": "###JOB\n\nEach Spark job corresponds to one\naction, and each action is called by the driver program of a Spark application. \n\n - The edges of the Spark execution graph are based on dependencies between the partitions in RDD\ntransformations ",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "db25137434784b2faeef7"
+    },
+    {
+      "text": "%spark\nval demoforDependencies = wordRdd.map(row => (row,1 ))\ndemoforDependencies.dependencies",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "4807e1c2cb864bd5a7cb0"
+    },
+    {
+      "text": "####Parquet data source\n\n- https://www.youtube.com/watch?v=5NA57Pfpdr4",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "a9ab383bf58d434ea83a4"
+    },
+    {
+      "text": "%spark\nimport org.apache.spark.sql.expressions.Window\nimport org.apache.spark.sql.functions._\n\nval windowSpec = \nWindow\n.orderBy(flightDf(\"count\"))\n.partitionBy(flightDf(\"dest_country_name\"))\n.rowsBetween(-10,10) //can use range between for range instead\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "4cf4b23961a04969946b4"
+    },
+    {
+      "text": "%spark\nimport org.apache.spark\nimport spark.sql\nimport sql.types.{StructField,StructType,ArrayType,StringType}\nimport sql.functions._\n\n\nval dataSchema = StructType(\n Seq( StructField(\"name\",StringType,false),\n\n  StructField(\"address\", ArrayType(\n                           StructType(\n                            Seq(\n                            StructField(\"addressType\",StringType,false),\n                            StructField(\"state\",StringType,false),\n                            StructField(\"city\",StringType,false),\n                            StructField(\"mobile\",ArrayType(StringType,true),true)\n                           ))),true\n                           )\n)\n)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "9c50a9229ec741e18eff5"
+    },
+    {
+      "text": "%spark\nval flightRdd = flightJson.rdd",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "f39b951a7494439098002"
+    },
+    {
+      "text": "####Immutability and the RDD Interface\n\n- Spark defines an RDD interface with the properties that each type of RDD must implement. These\nproperties include the RDD’s dependencies and information about data locality that are needed for\nthe execution engine to compute that RDD. Since RDDs are statically typed and immutable, calling a\ntransformation on one RDD will not modify the original RDD but rather return a new RDD object\nwith a new definition of the RDD’s properties\n\nRDDs can be created in three ways: \n  1. by transforming an existing RDD; \n  2. from a SparkContext,\nwhich is the API’s gateway to Spark for your application; and \n  3. converting a DataFrame orDataset (created from the SparkSession7). ",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "1e8f86fcd73e42169119c"
+    },
+    {
+      "text": "`WARNING!`\n```\nSpark SQL transformations are only partially lazy; the schema is eagerly evaluated.\n```",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "b094d859288948c591227"
+    },
+    {
+      "text": "%spark\ndef registerTable(df: org.apache.spark.sql.DataFrame): Unit = {\n    df.createOrReplaceTempView(\"pandas\")\n    df.write.mode(\"overwrite\").saveAsTable(\"perm_pandas\")\n}\n\nregisterTable(df)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "01b0ddc1c51b4df494809"
+    },
+    {
+      "text": "\n**Internally, Spark uses five main properties to represent an RDD**\n\n 1. *partitions:* list of partition objects that make up the RDD\n 2. *iterator(p, parentIters):* a function for computing an iterator of each partition\n 3. *dependencies():* a list of dependencies on other RDDs\n    - NarrowDependency objects\n    - shuffleDependency or wide dependency\n 4. *partitioner:* RDDs also include a partitioner (for RDDs of\nrows of key/value pairs represented as Scala tuples)\n 5. *preferredLocations(p):* a list of preferred locations (for the HDFS\nfile). As an end user,",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "3c6465d8ae3c4f31b5e95"
+    },
+    {
+      "text": "%spark\njoinRdd.dependencies",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "6d10f22c96eb40a8b1d0d"
+    },
+    {
+      "text": "%spark\ndf.select(\"name\", \"address.addressType\").show(false)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "dc126cc40eb4460487f75"
+    },
+    {
+      "text": "%spark\ncase class T22(a:Int, b:Int, c:Int, d:Int, e:Int, f:Int, g:Int, h:Int, i:Int, j:Int, k:Int, l:Int, m:Int, n:Int, o:Int, p:Int, q:Int\n, r:Int, s:Int,t:Int, u:Int, v:Int, w:Int, x:Int, y:Int, z:Int, aa:Int, ab:Int, ac:Int,ad:Int)\n\nval aSeq  = (1 to 26).toSeq\nval df=spark.createDataFrame(\n  Seq(\n    T22(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30),\n    T22(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30)\n    )\n  )\n\n  import org.apache.spark.sql.SaveMode._\n  \n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "a8e0e797275345e2a8aa4"
+    },
+    {
+      "text": "%spark\nval words = s\"\"\"Returns an array of the partition objects that make up the parts of the distributed dataset.\n In the case of an RDD with a partitioner, the value of the index of each partition will correspond to the\nvalue of the getPartition function for each key in the data associated with that partition\"\"\"\n\nval wordList = words.split(\" \")\nval wordRdd = spark.sparkContext.parallelize(wordList,5)\nwordRdd\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "75d511c8633343819a2d8"
+    },
+    {
+      "text": "\n####JDBC\n- session.read.jdbc(\"jdbc:dialect:serverName;user=user;password=pass\",\n\"table\", new java.util.Properties)\n\n- session.read.format(\"jdbc\")\n.option(\"url\", \"jdbc:dialect:serverName\")\n.option(\"dbtable\", \"table\").load()",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "ff00afc183a74cd5b8ebb"
+    },
+    {
+      "text": "%spark\ndf.filter(df(\"name\") === \"Skuma\").show()",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "5862526c1f6345f2b840e"
+    },
+    {
+      "text": "%spark\njoinRdd.toDebugString",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "bfea6f3d79d048899ae66"
+    },
+    {
+      "text": "**`spark-submit/spark-shell`**\n```\n--jars does not include the JAR in the driver’s class path. If this is the case for your cluster\nyou must also specify the same JAR to --driver-class-path.\n```",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "b7b82b435b454a448830d"
+    },
+    {
+      "text": "\n```\nFind out what type an RDD is by using the toDebugString function, which is defined on all RDDs. This will tell you what\nkind of RDD you have and provide a list of its parent RDDs.```",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "9a332ac17d35419395e74"
+    },
+    {
+      "text": "###DataFrames, Datasets, and Spark SQL\n\n\n- Like RDDs, DataFrames and Datasets represent distributed collections, with additional schema\ninformation not found in RDDs. This additional schema information  is used to provide a more\n\n- efficient storage layer (Tungsten), and in the optimizer (Catalyst) to perform additional optimizations.\nBeyond schema information, the operations performed on Datasets and DataFrames are such that\nthe optimizer can inspect the logical meaning rather than arbitrary functions. DataFrames are\nDatasets of a special Row object, which doesn’t provide any compile-time type checking",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "7b45b08047fe47b685bbe"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "b0be1628722248069c8cc"
+    },
+    {
+      "text": "%spark\ndf.withColumn(\"arr\", lit(Array(0,1,2,3))).schema",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "a577ad95332a4048a9f3a"
+    },
+    {
+      "text": "###registering temp table in spark",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "3cb671a4d00f432dbe29f"
+    },
+    {
+      "text": "%spark\ndf.schema",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "c0640ba3d82e4fc2b1712"
+    },
+    {
+      "text": "%spark\nval retailRdd = spark.sparkContext.textFile(\"dbfs:/FileStore/tables/suankiData/raw/retailData/2010_12_03.csv\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "34c7f086a10a44f8af07a"
+    },
+    {
+      "text": "\n### Lazy Evaluation\n\n\n- Actions trigger the scheduler, which\nbuilds a directed acyclic graph (called the DAG), based on the dependencies between RDD\ntransformations. In other words, Spark evaluates an action by working backward to define the series\nof steps it has to take to produce each object in the final distributed dataset (each partition). Then,\nusing this series of steps, called the execution plan, the scheduler computes the missing partitions for\neach stage until it computes the result.\n\n- Lazy evaluation allows Spark to combine operations that don’t require communication with the driver\n(called transformations with one-to-one dependencies) to avoid doing multiple passes through the\ndata)\n\n- suppose a Spark program calls a map and a filter function on the same RDD.\nSpark can send the instructions for both the map and the filter to each executor. Then Spark can\nperform both the map and filter on each partition, which requires accessing the records only once,\nrather than sending two sets of instructions and accessing each partition twice. This theoretically\nreduces the computational complexity by half.\n\n- **Lazy evaluation and fault tolerance**: RDD itself contains all the dependency information needed to replicate\neach of its partitions. Thus, if a partition is lost, the RDD has enough information about its lineage to\nrecompute it, and that computation can be parallelized to make recovery faster.\n\n\n- **Lazy evaluation and debugging** :  Lazy evaluation has important consequences for debugging since it means that a Spark program will fail only at the point of action. \n\nFor example, suppose that you were using the word count example, and\nafterwards were collecting the results to the driver. If the value you passed in for the stop words was\nnull (maybe because it was the result of a Java program), the code would of course fail with a null\npointer exception in the contains check. However, this failure would not appear until the program\nevaluated the collect step\n\n\n`**NOTE**`\n```\nBecause of lazy evaluation, stack traces from failed Spark jobs (especially when embedded in larger systems) will often\nappear to fail consistently at the point of the action, even if the problem in the logic occurs in a transformation much earlier\nin the program.     ```\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "8efa768350524b3fb2b6b"
+    },
+    {
+      "text": "%spark\nflightJson.show",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "12ceed28010c4684abb9a"
+    },
+    {
+      "text": "%spark\nval ds = df.as[Person]",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "dc76c6ad039a4730a6a6d"
+    }
+  ],
+  "info": {},
+  "noteForms": {},
+  "noteParams": {},
+  "angularObjects": {}
+}

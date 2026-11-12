@@ -1,0 +1,494 @@
+{
+  "id": "2YGFSIJOV",
+  "name": "partitionPruning",
+  "paragraphs": [
+    {
+      "text": " %run /my_work/CommonUtils/SetupData",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "0815ee598b3543caa8c16"
+    },
+    {
+      "text": "%spark\nval customerPartitionedDf = spark.read.parquet(\"/FileStore/tables/suankiData/processed/parititionCustomerData\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "60134c823c3d4883a935f"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "8bddd4bdd67247d0a44dc"
+    },
+    {
+      "text": "%spark\nparititonedSpotifyListeningActivityDf.show(3,false)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "afc262d038234125ad0a5"
+    },
+    {
+      "text": "### Static partition Prunning \n1. customerPartitionedDf is stored on hdfs with partitionby city\n2. when we filter spark will scan only specific city partition, avoid reading all the partitions ",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "ab29829589724e28a3b9a"
+    },
+    {
+      "text": "%spark\n//lets partition it by listen date and release date to demonstrate dynaic partion pruning\nspotifyListeningActivityDf.selectExpr(\"activity_id\",\"song_id\",\"to_date(listen_date) as listen_date\", \"listen_duration\")\n.write.format(\"parquet\").mode(\"overwrite\").partitionBy(\"listen_date\").save(\"/FileStore/tables/suankiData/processed/spotify/parititonedSpotifyListeningActivityDf\")\n\nspotifySongDf.selectExpr(\"song_id\", \"title\", \"artist_id\",        \"to_date(release_date) as  release_date\")\n.write.format(\"parquet\").mode(\"overwrite\").partitionBy(\"release_date\").save(\"/FileStore/tables/suankiData/processed/spotify/partitionedSpotifySongDf\")\n\n\nval parititonedSpotifyListeningActivityDf = spark.read.parquet(\"/FileStore/tables/suankiData/processed/spotify/parititonedSpotifyListeningActivityDf\")\nval partitionedSpotifySongDf =  spark.read.parquet(\"/FileStore/tables/suankiData/processed/spotify/partitionedSpotifySongDf\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "26ef53250d5b483581328"
+    },
+    {
+      "text": "%spark\njoinDF.explain",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "a156ab36670e449a8a43f"
+    },
+    {
+      "text": "%spark\ncustomerDF.filter(f.col(\"city\") === \"new_york\").count",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "6cca1ab3ba6f4c03a54f2"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "a79cd6ab87094e99b92f0"
+    },
+    {
+      "text": "%fs ls FileStore/tables/suankiData/processed/parititionCustomerData",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/plain_text",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "plain_text",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "2c68f96055414eda838a2"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "b74f436bcd0148eb92543"
+    },
+    {
+      "text": "%spark\npartitionedSpotifySongDf.show(3, false)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "32e11d2df38d42fc8d962"
+    },
+    {
+      "text": "\nWe need only those song where listen_date is equal to release data\nso......\n\nWhen you join  it's going to scan both the data set completely to avoid that\n\npartition pruning concept is used\n\n**How**\n\n\n1. first filter our data from spotify listening list  for which we are looking\n2. pass the same filter to larger data sets and scan only selective data (listen_date) in parititonedSpotifyListeningActivityDf\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "06fa950df9af458088343"
+    },
+    {
+      "text": "%spark\ncustomerDF.write.format(\"parquet\").partitionBy(\"city\").mode(\"overwrite\").save(\"FileStore/tables/suankiData/processed/parititionCustomerData\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "4bd30d7cf2144e9ebc6b4"
+    },
+    {
+      "text": "%spark\ncustomerPartitionedDf.filter(f.col(\"city\") === \"new_york\").count",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "b78bbbb0dbde4cd08b4b7"
+    },
+    {
+      "text": "%spark\n\nval filterSongDf = spotifySongDf.selectExpr(\"song_id\", \"title\", \"artist_id\",\"to_date(release_date) as  release_date\").filter(col(\"release_date\") === \"2023-01-01\")\nval joinCond =  { parititonedSpotifyListeningActivityDf.col(\"listen_date\") === filterSongDf.col(\"release_date\")  &&\n                  parititonedSpotifyListeningActivityDf.col(\"song_id\")  === filterSongDf.col(\"song_id\") \n}\n\nval joinDF =parititonedSpotifyListeningActivityDf.join(filterSongDf, joinCond,\"inner\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "d387d6f00ac64230af5c0"
+    },
+    {
+      "text": "\n#problem statement\n 1. Analyse the listening activity of users:\n\n    - after 2019-12-31\n    - on the relase date of a song",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "95633d6b2f9b408ab7771"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "43ff3e38fa0d424bbfc87"
+    },
+    {
+      "text": "%spark\ncustomerDF.show(5,false)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "566dd6edc16141dcb4e1b"
+    },
+    {
+      "text": "\n#### What is dynamic parition prunning and how it works and usage and when it doen't work\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "a7031fa5e5e54a918fcca"
+    },
+    {
+      "text": "%fs\nls dbfs:/FileStore/tables/suankiData/raw/",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/plain_text",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "plain_text",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "98c0e683215e4e54acb0d"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "da9f84028bae42328979b"
+    }
+  ],
+  "info": {},
+  "noteForms": {},
+  "noteParams": {},
+  "angularObjects": {}
+}

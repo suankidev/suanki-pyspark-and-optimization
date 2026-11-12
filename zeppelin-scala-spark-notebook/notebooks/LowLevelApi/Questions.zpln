@@ -1,0 +1,560 @@
+{
+  "id": "OM2WE0XNM",
+  "name": "Questions",
+  "paragraphs": [
+    {
+      "text": "%spark\nval sampleTxt = spark.sparkContext.textFile(\"dbfs:/FileStore/tables/suankiData/sample_text.txt\")\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "fedaaf4af534452b8ed38"
+    },
+    {
+      "text": "%spark\nsampleTxt.flatMap(x => x.split(\" \")).collect()",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "2d08d56daded47a481a99"
+    },
+    {
+      "text": "%spark\nsampleTxt.map(row => row.split(\" \")).collect",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "b169f4a9021d4c42951a9"
+    },
+    {
+      "text": "%fs\n\nhead dbfs:/FileStore/tables/suankiData/sample_text.txt",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/plain_text",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "plain_text",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "b0da8bda4b23441b96d16"
+    },
+    {
+      "text": "%spark\n//how cogroup works, rquire pair rdd\n\nval rdd2 = spark.sparkContext.parallelize(1 to 10, 2).map(row => (row, row*2))\nval rdd3 = spark.sparkContext.parallelize(10 to 20, 2).map(row => (row, row*3))\nval rdd4 = spark.sparkContext.parallelize(20 to 30, 2).map(row => (row, row*4))\n\nrdd2.cogroup(rdd3, rdd4).collect",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "5d1ac5c4710440ed879a3"
+    },
+    {
+      "text": "%spark\n\n    val fileRddSplitted = fileRddWithIndex.map(row => row._1).map(_.split(\",\"))\n    \n    fileRddSplitted.collect\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "1f46df016d2d44379e79e"
+    },
+    {
+      "text": "%spark\n    val headerCount: Int = 0\n\n    val footerCount: Int = 0\n    val finalHeaderCount: Int = headerCount\n\n    val finalFooterCount: Long = if (footerCount == 0) fileRdd.count() else fileRdd.count() - (headerCount + footerCount)\n    val fileRddWithIndex = fileRdd.zipWithIndex().filter(x => x._2 >= finalHeaderCount && x._2 <= finalFooterCount )\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "cd058c3de7694df0bd6e5"
+    },
+    {
+      "text": "%spark\nsampleTxt.map(row => row.split(\" \")).take(1)(0)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "a88a0c4ac6234864a1f25"
+    },
+    {
+      "text": "%spark\nval finalRdd = fileRddSplitted.map({\n      case(row) => Row.fromSeq(row.toSeq.map(x => if(x.isEmpty) null.asInstanceOf[String] else x))\n    })\n\n    val preparedDf = spark.createDataFrame(finalRdd, stgTableDF.schema)\n\n    preparedDf",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "be0e1414934843919d1b4"
+    },
+    {
+      "text": "%spark\n//find the largest string\nsampleTxt.flatMap(x => x.split(\" \")).reduce( (x,y) => if(x.length > y.length) x else y )",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "a5607493a3464c4e8d255"
+    },
+    {
+      "text": "%spark\nfileRddWithIndex.collect\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "3c6fd41e8d2c48d991be1"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "6e7cde79eed8473c8e17b"
+    },
+    {
+      "text": "\n#### Weired file handling",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "ff4551e0d2e447c7a4881"
+    },
+    {
+      "text": "%spark\nsampleTxt.first()",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "c80e5c96789e45d1b0f11"
+    },
+    {
+      "text": "**Q1. count the words in the sample file **",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "af8927bb278e494c8f126"
+    },
+    {
+      "text": "%spark\nsampleTxt.collect",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "c62f009a6e1847cc9c3e3"
+    },
+    {
+      "text": "%spark\nfileRdd.collect",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "e7823940d1404033883e2"
+    },
+    {
+      "text": "%spark\nsampleTxt.map(row => row.split(\" \")).flatMap(x => x).take(2)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "ac22855e25af4851ab61d"
+    },
+    {
+      "text": "%spark\ndbutils.fs.cat(\"/FileStore/tables/suankiData/raw/demo.txt\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "c62c42556531458ea26eb"
+    },
+    {
+      "text": "%spark\nval file=\"/FileStore/tables/suankiData/raw/demo.txt\"\n\nval fileRdd = spark.sparkContext.textFile(file)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "dac87c93f72f4956b9ecc"
+    },
+    {
+      "text": "%spark\nsampleTxt.map(row => row.split(\" \")).flatMap(x => x).collect()",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "0363c653465f4ead98567"
+    },
+    {
+      "text": "%spark\n\nsampleTxt.flatMap(x => x.split(\" \")).map(x => (x,1)).reduceByKey((x,y) => x+y).filter(row => row._1 ==  \"happened\").collect\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "fbea1a8c8a25445a9959c"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "778dc793b4764fc48f046"
+    },
+    {
+      "text": "%spark\n//use case class in rdd\n\n\n\nval fligtRdd = spark.sparkContext.textFile(\"dbfs:/FileStore/tables/suankiData/flightData\")\n\nfligtRdd.map(row => row.split(\",\")).map(row => (row(0),row(1),row(2)))\n.map{\n case (a:String, b:String, c:String) => (a,b,c)\n}.collect\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "5c26d005b3e947c4a895f"
+    },
+    {
+      "text": "%spark\nsampleTxt.flatMap(x => x.split(\" \")).map(rowObject => (rowObject, 1)).reduceByKey((x,y) => x+y).collect",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "c3ebdd931b924a9bbbc3d"
+    }
+  ],
+  "info": {},
+  "noteForms": {},
+  "noteParams": {},
+  "angularObjects": {}
+}

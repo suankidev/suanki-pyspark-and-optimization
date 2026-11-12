@@ -1,0 +1,98 @@
+{
+  "id": "XTAVRLI57",
+  "name": "6_experience_with_data",
+  "paragraphs": [
+    {
+      "text": "%spark\n\n\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "db99ce498fdc4ea7b5ef6"
+    },
+    {
+      "text": "%spark\nimport org.apache.spark.sql.functions.{regexp_replace,col}\nimport org.apache.spark.sql.types.{DecimalType}\n\ndataDf\n.withColumn(\"smoothingFactor\", regexp_replace(col(\"smoothingFactor\"), \"\\\\,\", \".\"))\n.withColumn(\"smoothingFactor\", col(\"smoothingFactor\").cast(DecimalType(10,2)))\n.withColumn(\"meanDemandValue\", regexp_replace(col(\"smoothingFactor\"), \"\\\\,\", \".\"))\n.show",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "feaf82fc70544962b7512"
+    },
+    {
+      "text": "%spark\ndataDf.printSchema",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "f1ee1ee549804e389caac"
+    },
+    {
+      "text": "%spark\n\n//https://sparktpoint.com/spark-regexp_replace-string/\n\n//how to convert EU standard string to deciaml value\n\n\nval dataDf = Seq(\n  (\"+0,00\", \"+000000000,000000\"),\n  (\"-0,60\", \"+000321805,000000\"),\n  (\"+0,41\", \"-000077955,000000\")\n).toDF(\"smoothingFactor\",\"meanDemandValue\")\n\n\ndataDf.show\n\n\ncase class dataDS(smoothingFactor:Double, meanDemandValue:Double)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "32d9017ab631403386c56"
+    }
+  ],
+  "info": {},
+  "noteForms": {},
+  "noteParams": {},
+  "angularObjects": {}
+}

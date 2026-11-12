@@ -1,0 +1,252 @@
+{
+  "id": "TE9YQLMNN",
+  "name": "message_passing_style_and_birth_of_oo",
+  "paragraphs": [
+    {
+      "text": "%spark\n\ntype bankAccount = Symbol => Any\n\ndef bankAccount(initialBalance:Int):bankAccount={\n  var balance:Int = initialBalance\n\n  val withdraw:Int => Unit= amount =>\n    if(balance >= amount)\n      balance = balance - amount\n    else\n      throw new Exception(\"Insufficient funds\")\n\n\n  val deposit:Int=>Unit=amount=>\n    if(amount >= 1) {\n      balance = balance + amount\n      balance\n    }else\n      throw new Exception(\"It's only possible to deposit positive amount_|_\")\n\n\n  def getBalance:()=>Int=()=>balance\n\n  val dispatch:BankAccount=operation=>\n    if(operation == Symbol(\"withdraw\")){\n      withdraw\n    }else if(operation == Symbol(\"deposit\")){\n      deposit\n    }else if(operation == Symbol(\"getBalance\")){\n      getBalance\n    }\n    else\n      throw new Exception(s\"not implemented for ${operation}\")\n\n  dispatch\n\n}",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "89ca861834c4484f954b1"
+    },
+    {
+      "text": "####Second version of Above code",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "38637155104f46c597dea"
+    },
+    {
+      "text": "%spark\n\nval thisOne:bankAccount = bankAccount(initialBalance=1000)\nval thatOne:bankAccount = bankAccount(initialBalance=1000)\n\ndef makeTransfer(from:bankAccount,amount:Int, to:bankAccount):Unit= {\n\nfrom(Symbol(\"withdraw\")).asInstanceOf[Int => Unit](amount)\nto(Symbol(\"deposit\")).asInstanceOf[Int => Unit](amount)\n\nprintln(s\"from account balance: ${from(Symbol(\"getBalance\")).asInstanceOf[() => Int]()}\")\nprintln(s\"to account balance: ${to(Symbol(\"getBalance\")).asInstanceOf[() => Int]()}\")\n\n}\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "c4601aaf67954c9fa1ebb"
+    },
+    {
+      "text": "%spark\nmakeTransfer1(thisOne, 100, thatOne)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "e4f579bb7b1d4177a0b67"
+    },
+    {
+      "text": "%spark\nmakeTransfer(thisOne, 100, thatOne)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "02410c81cec04b6787089"
+    },
+    {
+      "text": "%spark\n\nval bankAccount1 = bankAccount(1000)\nval deposit= Symbol(\"deposit\")\nval withdraw= Symbol(\"withdraw\")\n\nbankAccount1(withdraw).asInstanceOf[Int=>Unit](50)\nbankAccount1(deposit).asInstanceOf[Int=>Unit](100)\n\n//https://stackoverflow.com/questions/65856527/what-is-a-side-effect-in-scala",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "d5f54dc836e648d18a4cc"
+    },
+    {
+      "text": "%spark\nbankAccount1(Symbol(\"getBalance\")).asInstanceOf[()=>Int]()",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "4c612e50f52146b78e0d7"
+    },
+    {
+      "text": "%spark\ndef bankAccount(initialBalance:Int):Symbol=>Any={\n  var balance:Int = initialBalance\n\n  val withdraw:Int => Unit= amount =>\n    if(balance >= amount)\n      balance = balance - amount\n    else\n      throw new Exception(\"Insufficient funds\")\n\n\n  val deposit:Int=>Unit=amount=>\n    if(amount >= 1) {\n      balance = balance + amount\n      balance\n    }else\n      throw new Exception(\"It's only possible to deposit positive amount_|_\")\n\n\n  def getBalance:()=>Int=()=>balance\n\n  val dispatch:Symbol=>Any=operation=>\n    if(operation == Symbol(\"withdraw\")){\n      withdraw\n    }else if(operation == Symbol(\"deposit\")){\n      deposit\n    }else if(operation == Symbol(\"getBalance\")){\n      getBalance\n    }\n    else\n      throw new Exception(s\"not implemented for ${operation}\")\n\n  dispatch\n\n}\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "bea03327af1f446c8b979"
+    },
+    {
+      "text": "\n###Birth of OOO",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "30839105a0e84255a6f8c"
+    },
+    {
+      "text": "%spark\n\n\ntype bankAccount = Symbol => Any\n\nclass BankAccount(initialBalance:Int){\n  self =>\n\n  private[this] var _balance:Int = initialBalance\n\n  val withdraw:Int => Unit= amount =>{\n    if(balance >= amount)\n      this._balance = self._balance - amount\n    else\n      throw new Exception(\"Insufficient funds\")\n  }\n\n  val deposit:Int=>Unit=amount=>{\n    if(amount >= 1) {\n      _balance = _balance + amount\n    }else\n      throw new Exception(\"It's only possible to deposit positive amount_|_\")\n  }\n\n  def balance:Int={\n    self._balance\n  }\n\n}\n\nval thisOne:BankAccount = new BankAccount(initialBalance=1000)\nval thatOne:BankAccount = new BankAccount(initialBalance=1000)\n\ndef makeTransfer1(from:BankAccount,amount:Int, to:BankAccount):Unit= {\n\n   from.withdraw(amount)\n   to.deposit(amount)\n\n   println(s\"from account balance: ${from.balance}\")\n   println(s\"to account balance: ${to.balance}\")\n\n}",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "f98e7bdd08014167aed8a"
+    },
+    {
+      "text": "%spark\n\n\nval demo:Int=>Int = x => x*x\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "6a2aac2398ba4d0ebf11d"
+    }
+  ],
+  "info": {},
+  "noteForms": {},
+  "noteParams": {},
+  "angularObjects": {}
+}

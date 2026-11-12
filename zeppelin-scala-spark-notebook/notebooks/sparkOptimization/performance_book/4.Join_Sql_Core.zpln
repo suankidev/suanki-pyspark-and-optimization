@@ -1,0 +1,406 @@
+{
+  "id": "1TQ6YA6JI",
+  "name": "4.Join_Sql_Core",
+  "paragraphs": [
+    {
+      "text": "\n###Spark sql join",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "aeb9b7f7dab946a893730"
+    },
+    {
+      "text": "%spark\nval scoreData = Seq( (1, 1001), (2, 1002), (3,1003), (4, 10004),(4, 100089))\nval pandaAddress = Seq((1, \"A\"),\n(2, \"B\"),\n(3, \"C\"),\n(4, \"D\"),\n(5, \"E\")\n)\n\n\nval scoreRdd = sc.parallelize(scoreData,2)\nval pandaAddressRdd = sc.parallelize(pandaAddress,2)\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "4f1de0e11aed4f1297ed1"
+    },
+    {
+      "text": "%spark\n\nrslt.reduceByKey((x,y) => if(x._1 > y._1) x else y)\n.collect",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "34060814a2c04a64b51c5"
+    },
+    {
+      "text": "%spark\n\ndef joinScoredsWithAddress1(scoreRdd:RDD[(Int,Int)]):RDD[(Int, (Int, String) )]={\n\n  val joinedRdd = scoreRdd.join(pandaAddressRdd)\n  joinedRdd\n  \n}\n\n\ndef joinScoredsWithAddress2(scoreRdd:RDD[(Int,Int)]):RDD[(Int, (Int, String) )]={\n//removing lower score for the panda\n  val joinedRdd = scoreRdd.reduceByKey((x,y) => if(x > y) x else y).join(pandaAddressRdd)\n  joinedRdd\n  \n}\n\n\n\nval rslt = joinScoredsWithAddress1(scoreRdd)\nval rslt1 = joinScoredsWithAddress2(scoreRdd)\n\nrslt1.collect\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "c49ebee99044444c94f3a"
+    },
+    {
+      "text": "%spark\nscoreRdd.reduceByKey(addressDataPartitioner, (x,y) => if(x>y) x else y)\n.join(pandaAddressRdd)\n.partitions",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "8e4df9d009fd43a1814c5"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "7ecbfb55b1c84753bd5b9"
+    },
+    {
+      "text": "%spark\nspark.conf.set(\"spark.sql.autoBroadcastJoinThreshold\",\"10m\")\nspark.conf.set(\"spark.sql.broadcastTimeout\",\"600s\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "beb5977d057243ada68ff"
+    },
+    {
+      "text": "%spark\nscoreRdd.reduceByKey((x,y) => if(x>y) x else y).collect",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "6574cbdf62e445b0aa9bb"
+    },
+    {
+      "text": "%spark\nsizesdf.join(zipCode, sizesdf(\"name\") === zipCode(\"name\"),\"left_semi\").show  //only matching record from left table without duplicates",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "4fbc44fca98b434f89bd9"
+    },
+    {
+      "text": "https://stackoverflow.com/questions/31424396/how-does-hashpartitioner-work",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/markdown",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "markdown",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "faf5e6590d7d4d43ad697"
+    },
+    {
+      "text": "%spark\nimport org.apache.spark.HashPartitioner\n\nval addressDataPartitioner = pandaAddressRdd.partitioner match{\n  case (Some(p)) => p\n  case (None) => new HashPartitioner(pandaAddressRdd.partitions.length)\n  // case (None) => new HashPartitioner(5)\n}",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "b77acdf8107243bb8dc0d"
+    },
+    {
+      "text": "%spark\nval  sizesdf = Seq(\n  (\"Happy\",1.0),\n  (\"Sad\",0.9),\n  (\"Happy\",1.5),\n  (\"Coffee\",3.0)).toDF(\"name\",\"size\")\n\nval zipCode = Seq(\n  (\"Happy\",94110),\n  (\"Happy\",94103),\n  (\"Coffee\",10504),\n  (\"Tea\",7012)\n).toDF(\"name\",\"zip\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "22e1482269fe4b8c8b485"
+    },
+    {
+      "text": "%spark\nsizesdf.join(zipCode, sizesdf(\"name\") === zipCode(\"name\"),\"left\").show",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "4bdb2abef83f4c3698108"
+    },
+    {
+      "text": "%spark\nscoreRdd.leftOuterJoin(pandaAddressRdd).collect",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "c46a7791cd174f399e3ec"
+    },
+    {
+      "text": "%spark\nimport org.apache.spark.broadcast.Broadcast\n\nval s = sizesdf.join(sc.broadcast(zipCode),sizesdf(\"name\") === zipCode(\"name\"),\"left_anti\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "7dc857f9cf294ba0b9630"
+    },
+    {
+      "text": "%spark\nscoreRdd.rightOuterJoin(pandaAddressRdd).collect",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "b2c7f790d35b47bf8a9b7"
+    },
+    {
+      "text": "%spark\naddressDataPartitioner.numPartitions",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "88b31e8ffe1d443691b30"
+    },
+    {
+      "text": "%spark\nsizesdf.join(zipCode, sizesdf(\"name\") === zipCode(\"name\"),\"left_anti\").show //non matching record from left table",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "9102b902f6814759afe01"
+    }
+  ],
+  "info": {},
+  "noteForms": {},
+  "noteParams": {},
+  "angularObjects": {}
+}

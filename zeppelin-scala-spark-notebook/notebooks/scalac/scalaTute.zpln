@@ -1,0 +1,384 @@
+{
+  "id": "0PUVZG9PE",
+  "name": "scalaTute",
+  "paragraphs": [
+    {
+      "text": "%spark\n\nprintln(1.toBinaryString)\nprintln(1.toHexString)\nprintln(1.toOctalString)\nprintln(8.toOctalString)\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "309589d3eb3a4eacaefcc"
+    },
+    {
+      "text": "%spark\n// Part-9\n//Way of creation\n\n   val b:Byte = 127\n   val c:Byte = 0x7F\n\n   println(b)\n   println(c)\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "fbb32b7a6c784b06ba9a4"
+    },
+    {
+      "text": "%spark\n //Write a Scala program to iterate over a list to print the elements and calculate the sum and product of all elements of this list.\n \n val nums = List(1, 3, 5, 7, 9)\n\n var sum=0\n var prod=1\n for(num <- nums){\n  println(num)\n  sum = sum + num\n  prod = prod * num\n }\n\n println(sum)\n println(prod)\n\n\n\n nums.reduce((x,y) => x+y)\n nums.reduce((x,y) => x*y)\n\n ",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "4540fffe3ea6443f97a1f"
+    },
+    {
+      "text": "%spark\n  var count=0\n  def aRepeatedFunction(aString: String, n: Int): String = {\n    count = count + 1\n    println(s\"running the repeated function ${count}\")\n    if (n == 1) \"hello\"\n    else {\n      println(aString)\n      aString + aRepeatedFunction(aString, n - 1) // last line should be value\n    }\n  }\n\n  println(aRepeatedFunction(\"test-\", 5))\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "4346d62871dc453eafdfe"
+    },
+    {
+      "text": "%spark\n\n\nabstract class Demo{\n\n  implicit lazy val demo = \"this is test string\"\n}\n\n\nclass Test extends Demo{\n\n\ndef printIt(s:String)(implicit demo:String):Unit={\n\n  println(s + demo)\n}\n\n}\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "f377d2f58e3b40ec812fe"
+    },
+    {
+      "text": "%spark\n//what is partial funciton\nval t:PartialFunction[Int,String] = new PartialFunction[Int,String]{\n\n  override def apply(x:Int) = x.toString\n\n  override def isDefinedAt(x:Int):Boolean = x>4\n}\n\nt.isDefinedAt(3)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "d6e549ba6915483fb1742"
+    },
+    {
+      "text": "%spark\nvar fruitList = List.empty[String]\n\nval f = List(\"Banana\",\"Mango\")\n\nfruitList =fruitList :+ \"Apple\"\n\nfruitList = fruitList ++ f\n\nfruitList = \"Grapes\" +: fruitList\n\n\nfruitList = fruitList :- \"Grapes\"\n\nfruitList\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "aff6449de2f347aca3c80"
+    },
+    {
+      "text": "%spark\n\nval x=20\nval y=30\n\ndef demo(implicit a:Int, b:Int):Int =  a + b\n\ndemo\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "edc3998cc89b4de19c247"
+    },
+    {
+      "text": "%spark\n\nval testString = \"A,B,C,D\".split(\",\")\nimport scala.collection.mutable.ListBuffer\n\nval listBuffer:ListBuffer[String] = ListBuffer()\n\ntestString foreach {\n\ncase \"A\" => println(\"Inside A\")\ncase t => println(t)\n\n}\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "06fb621746ba4992b10ca"
+    },
+    {
+      "text": "%spark\n \n val nums = List(1, 3, 5, 7, 9)\n  \n val numsTwo = List(1, 3,78,4,56)\n\n nums.filterNot(numsTwo.toSet)\n\n numsTwo.indexOf(78)\n\n nums.takeRight(2).head",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "516b11f01d104e348c32e"
+    },
+    {
+      "text": "%spark\n//large and smallest\n\nnums.max\nnums.min",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "93e61827788044e4b8018"
+    },
+    {
+      "text": "%spark\nval t = new Test()\nt.printIt(\"hello\")",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "f971f49c24474d59b9ebe"
+    },
+    {
+      "text": "%spark\n//this function convert dec to binary\n\ndef toBinary(x:Long):String = {\ndef loop(x:Long,accu:String):String={\n\n if(x == 0) accu\n else  loop(x/2, (x%2).toString + accu)\n\n}\nloop(x,accu=\"\")\n\n}\n\nprintln(toBinary(14))\n\n\n// 8421",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "5677204f9de8417da2cd6"
+    },
+    {
+      "text": "%spark\n\ndef fact(n:Int):Int={\n  @scala.annotation.tailrec\ndef loop(n:Int,acc:Int=1):Int = {\n  if(n==1) acc\n  else \n    loop(n=n-1,acc=acc*n)\n}\nloop(n)\n}\n\nfact(4)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "c6bad784573b4301b0c98"
+    },
+    {
+      "text": "%spark\n\n\n//premitive type\n\nval a:Byte = 1\nval b:Short = 1  //2 byte\n\nval c:Int =1 //4 byte\nval d:Long = 1L//8 byte\n\n\n\nval f:Float = 0.1f //4\nval g:Double = 0.1  //8\n\n\nval h:Boolean = true //false\n\nval i:Unit = {}\n\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "dd9cfc711cfe4f268bfa4"
+    },
+    {
+      "text": "%spark\nimplicit val test = 5\n\ndef intToString(implicit x:Int):String = x.toString\ndef intToStringOne(y:Int)(implicit x:Int):String = x.toString + y.toString\n\nintToString\nintToStringOne(10)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "75440cada8584bed83621"
+    },
+    {
+      "text": "%spark\n\ndef fact(n:Int):Int = {\n  if(n==1) 1\n  else \n    n*fact(n-1)\n}\n\nfact(4)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "507ee6119d17441d9052c"
+    }
+  ],
+  "info": {},
+  "noteForms": {},
+  "noteParams": {},
+  "angularObjects": {}
+}

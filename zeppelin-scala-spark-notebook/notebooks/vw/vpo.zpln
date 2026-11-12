@@ -1,0 +1,274 @@
+{
+  "id": "NKT7ALV44",
+  "name": "vpo",
+  "paragraphs": [
+    {
+      "text": "%spark\nval t=List(\n  prepareJson(Version(\n      runDate = config.runDate,\n      version = config.version,\n      versionName = s\"${config.runDate}_${config.version}\",\n      bucket = s\"s3://${config.bucket}\",\n      prefix = config.prefix)),\n        prepareJson(Version(\n      runDate = config.runDate,\n      version = config.version,\n      versionName = s\"${config.runDate}_${config.version}\",\n      bucket = s\"s3://${config.bucket}\",\n      prefix = config.prefix))\n\n)\n      ",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "ea53c48e96a0472383b1a"
+    },
+    {
+      "text": "%spark\nimport upickle.default.{ReadWriter, macroRW, read, write}\n\nval lineage= \"\"\"{'bomV1': {'runDate': '2024-10-10',\n  'version': '195451',\n  'versionName': '2024-10-10_195451',\n  'bucket': 's3://fx-live-billofmaterial',\n  'prefix': 'parsed/rundate=2024-10-10/version=195451'},\n 'bomV2': {'runDate': '2024-10-10',\n  'version': '184244',\n  'versionName': '2024-10-10_184244',\n  'bucket': 's3://fx-live-billofmaterial-v2',\n  'prefix': 'parsed/rundate=2024-10-10/version=184244'},\n 'bomPreseries': {'runDate': '2024-10-10',\n  'version': '195435',\n  'versionName': '2024-10-10_195435',\n  'bucket': 's3://fx-live-billofmaterial-preseries',\n  'prefix': 'parsed/rundate=2024-10-10/version=195435'},\n 'vpo': {'runDate': '2024-10-11',\n  'version': '074437',\n  'versionName': '2024-10-11_074437',\n  'bucket': 's3://fx-live-vehicleproductionorder',\n  'prefix': 'parsed/rundate=2024-10-11/version=074437'}}\"\"\"\n\n\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "42d2fe90c0214f3fad6a9"
+    },
+    {
+      "text": "%spark\ndef prepareJson(version:Version) =new GsonBuilder()\n      .setDateFormat(\"yyyy-MM-dd\")\n      .disableHtmlEscaping()\n      .create()\n      .toJson(\n        version\n      )\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "fb2613442f634477b76f3"
+    },
+    {
+      "text": "%spark\nimport com.google.gson.GsonBuilder\n\ncase class Param(runDate:String, version:String, versionName:String,bucket:String, prefix:String, versionType:String)\n\nval config:Param  = \nParam(\"2024-03-24\", \"273927\", \"2024-03-24_273927\", \"s3://test/parsed\",\"parsed\",\"MAJOR\")\n\ncase class Version(\n                      runDate: String,\n                      version: String,\n                      versionName: String,\n                      bucket: String,\n                      prefix: String)\n\ncase class DpvVersion(\n                    `type`:String,\n                    version:Version\n                    )\n\nobject DpvVersion {\n\n  def fromConfig(cfg: Param) = {\n    val versions: List[String] = List(\"major\", \"bom\", \"minor\")\n  \n  versions.map(version => prepareSsm(_, cfg)\n    )\n\n  \n  }\n\n\n  def prepareSsm(value: String, cfg: Param) = {\n\n    val someVersion = Version(\n      runDate = cfg.runDate,\n      version = cfg.version,\n      versionName = s\"${cfg.runDate}_${cfg.version}\",\n      bucket = cfg.bucket,\n      prefix = cfg.prefix)\n\n   scala.collection.immutable.Map(value -> someVersion)\n  }\n\n\n}\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "52cf98b1b7e24d8cbbb74"
+    },
+    {
+      "text": "%spark\nval t=new GsonBuilder()\n      .setDateFormat(\"yyyy-MM-dd\")\n      .disableHtmlEscaping()\n      .create()\n      .toJson(DpvVersion.fromConfig(config))\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "77376a5bcb2e4edc8c64e"
+    },
+    {
+      "text": "%spark\nDpvVersion.fromConfig(config)",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "0ab864f0a7884c168ad66"
+    },
+    {
+      "text": "%spark\nimport org.apache.spark.sql.functions._\nimport org.apache.spark.sql.Column\n\n\nval testUdf = udf(\n  (a:String, b:String) => a + b\n)\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "881c02dc6c434c7283986"
+    },
+    {
+      "text": "%spark\nimport spark.implicits._\nimport org.apache.spark.sql.functions._\n\nval df = Seq(\n  (\"A\",\"B\",32),\n  (\"A\",\"B\",32),\n  (\"A\",\"B\",32)\n).toDF(\"col1\",\"col2\",\"age\")\n\ndf.show\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "25c19581b3d34269a2100"
+    },
+    {
+      "text": "%spark\nval demo = udf( () => \"test\")\n\ndf.select(col(\"col1\"), col(\"col2\"), demo()).show\n\n\ndf.select(testUdf(col(\"col1\"), col(\"col2\"))).show",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "2b999ba7100b4b2eabc42"
+    },
+    {
+      "text": "%spark\nt",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "64e2e1922157473bb77e0"
+    },
+    {
+      "text": "%spark\nimport spark.implicits._\n\nval t=spark.createDataFrame(spark.sparkContext.emptyRDD[Row], spark.range(5).toDF(\"g\").schema)\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "698ce28bd77d48e0bd1c6"
+    },
+    {
+      "text": "%spark\n",
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorSetting": {
+          "params": {},
+          "forms": {},
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "id": "9147870db98c46d8ab53e"
+    }
+  ],
+  "info": {},
+  "noteForms": {},
+  "noteParams": {},
+  "angularObjects": {}
+}
