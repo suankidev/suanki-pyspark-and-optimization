@@ -352,4 +352,4 @@ Thumbs.db
 **/.spark-warehouse/
 
 
-data/tmp/
+data/tmp/docker-desktop.deb
