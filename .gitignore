@@ -353,3 +353,4 @@ Thumbs.db
 **data/tmp
 
 data/tmp/docker-desktop.deb
+/docker-desktop.deb
