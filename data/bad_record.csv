@@ -1,0 +1,6 @@
+id,name,age
+1,Alice,30
+2,Bob,twenty
+3,Charlie,45
+malformed_row_without_proper_columns
+4,David,50

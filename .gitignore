@@ -350,3 +350,6 @@ Thumbs.db
 # Ignore hidden Spark checkpoint and tracking metadata
 **/.sparkStaging/
 **/.spark-warehouse/
+
+
+data/tmp/
